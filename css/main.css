@@ -2,12 +2,13 @@
 	color: #FFF;
 	line-height: 3rem;
 	margin-left: 1rem;
-	width: 330px;
+	width:90%;
 	-webkit-column-break-inside:avoid;
+	position:relative;
 }
 .teacherInfo input {
-	float:right;
-	margin-right:1rem;
+	position:absolute;
+	right:0;
 }
 .behaviors {
 	color: #FFF;
