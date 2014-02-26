@@ -2,11 +2,18 @@
 	color: #FFF;
 	line-height: 3rem;
 	margin-left: 1rem;
+	width: 330px;
+	-webkit-column-break-inside:avoid;
+}
+.teacherInfo input {
+	float:right;
+	margin-right:1rem;
 }
 .behaviors {
 	color: #FFF;
-	line-height: ;
-	margin-left: 1rem;
+	margin: auto 1rem auto 1rem;
+	line-height:2.5rem;
+	-webkit-column-break-inside:avoid;
 }
 .topcoat-dropdown {
 	background: #595B5B;
@@ -28,7 +35,55 @@
 	font-size:1rem;
 	line-height:1rem;
 	margin:5px;
+	float:center;
+	width:98%;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
 }
 .buttonspace {
 	margin:1rem auto;
+}
+body {
+	width:100%;
+}
+@media only screen and (min-width:674px) {
+	.rightAlign, .leftAlign {
+		-webkit-column-break-inside:avoid;
+		display:inline-block;
+		width:100%;
+	}
+	.alignmentBox {
+		width:100%;
+		-webkit-column-count:2;
+		-webkit-column-gap:2%;
+		margin-bottom:1rem;
+	}
+}
+@media only screen and (min-width:1025px) {
+	body {
+		color:#FFF;
+	}
+	.topcoat-list__container {
+		list-style-type:none;
+	}
+	.topcoat-navigation-bar__item {
+		background-color:rgba(0,0,0,.3);
+		height: 60px;
+		line-height:60px;
+		width: 30%;
+		min-width:400px;
+		margin:0 auto 2rem auto;
+		border-radius:3px;
+	}
+	.mobileOnly {
+		display:none;
+	}
+	.teacherInfo {
+		line-height:1rem;
+	}
+	.leftAlign,
+	.rightAlign {
+		width:80%;
+		padding:0 10%;
+	}
 }
