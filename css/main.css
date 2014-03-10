@@ -88,3 +88,81 @@ body {
 		padding:0 10%;
 	}
 }
+.notification {
+	display:block;
+	position:absolute;
+	width:300px;
+	min-height:10px;
+	background-color:#FFF;
+	color:black;
+	margin: -150px 0 0 -150px;
+	left: 50%;
+	top: 50%;
+}
+.notificationHolder {
+	display:block;
+	position:fixed;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	background-color: rgba(0,0,0,.5);
+	z-index: 1000;
+}
+.notification--title {
+	text-align: center;
+	font-size:1.5rem;
+	margin-top:1rem;
+	margin-bottom:.5rem;
+}
+.notification--table {
+
+}
+.notification--message {
+	margin: 1rem;
+	text-align:center;
+	white-space:pre-wrap;
+	white-space:normal;
+}
+.notification--buttonHolder {
+	color:#1D79FA;
+	height:auto;
+	min-height:2.5rem;
+}
+.notification--button {
+	border-top:solid 1px #AAA;
+	font-size:19px;
+	line-height:2.5em;
+	text-align:center;
+}
+.notification--title,
+.notification--message,
+.notification--table,
+.notification--buttonHolder,
+.notification--button {
+	position:static;
+}
+.noDisplay {
+	display:none;
+}
+.oneButton {
+	width:100%;
+	display:block;
+}
+.twoButton {
+	width:50%;
+	display:inline-block;
+	border-right:solid 1px #AAA;
+}
+.threeButton {
+	display:block;
+	width:100%;
+}
+.notification--buttonHolder a.threeButton:last-child,
+.notification--buttonHolder a.twoButton:last-child,
+.oneButton {
+	font-weight:bold;
+}
+.harmfulButton {
+	color:red;
+}

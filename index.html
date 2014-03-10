@@ -7,8 +7,20 @@
 	<link rel="stylesheet" media="only screen and (max-width:1024px)" href="css/topcoat-mobile-dark.css" />
 	<link rel="stylesheet" media="only screen and (min-width:1025px)" href="css/topcoat-desktop-dark.css" />
 	<link rel="stylesheet" href="css/main.css" />
+	<script src="script/main.js"></script>
 </head>
 <body>
+<div class="notificationHolder noDisplay" id="notificationHolder">
+	<div class="notification noDisplay" id="notification">
+		<h1 class="notification--title noDisplay" id="notification--title"></h1>
+		<table class="notification--table noDisplay" id="notification--table">
+		</table>
+		<p class="notification--message noDisplay" id="notification--message">
+		</p>
+		<div class="notification--buttonHolder noDisplay" id="notification--buttonHolder">
+		</div>
+	</div>
+</div>
 <div class="topcoat-navigation-bar">
 	<div class="topcoat-navigation-bar__item left quarter mobileOnly">
 		<button class="topcoat-icon-button--quiet">
@@ -21,6 +33,14 @@
 			5x5 Online
 		</h1>
 	</div>
+</div>
+<div class="debugButtons">
+<h1>Notifications</h1>
+<button onclick="showNotification('Saved', 'The 5x5 has been saved successfully.', [{action:'hideNotification()', text:'OK'}], false)">Debug Notification</button>
+
+<button onclick="showNotification('Confirm Send', 'Are you sure you want to submit this 5x5?', [{action:'hideNotification()', text:'OK'},{action:'hideNotification()', text:'Cancel'}], false)">2 Buttons</button>
+
+<button onclick="showNotification('Save', 'You have made changes. Do you want to save this 5x5?', [{action:'hideNotification()', text:'Save'},{action:'hideNotification()', isHarmful:true, text:'Discard'},{action:'hideNotification()', text:'Cancel'}], false)">3 Buttons</button>
 </div>
 <div class="alignmentBox">
 	<div class="leftAlign">
@@ -246,7 +266,7 @@
 <p class="comments">Questions to Ponder:</p>
 <textarea class="topcoat-textarea smallerFont" rows="5" cols="35"></textarea>
 <div class="center full buttonspace">
-	<button type="submit" class="topcoat-button--cta">Submit</button>
+	<button type="submit" onclick="submitButton()" class="topcoat-button--cta">Submit</button>
 </div>
 </body>
 </html>
