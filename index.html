@@ -34,45 +34,42 @@
 		</h1>
 	</div>
 </div>
-<div class="debugButtons">
-<h1>Notifications</h1>
-<button onclick="showNotification('Saved', 'The 5x5 has been saved successfully.', [{action:'hideNotification()', text:'OK'}], false)">Debug Notification</button>
+<!--<div class="debugButtons">
+	<h1>Notifications</h1>
+	<button onclick="showNotification('Saved', 'The 5x5 has been saved successfully.', [{action:'hideNotification()', text:'OK'}], false)">Debug Notification</button>
 
-<button onclick="showNotification('Confirm Send', 'Are you sure you want to submit this 5x5?', [{action:'hideNotification()', text:'OK'},{action:'hideNotification()', text:'Cancel'}], false)">2 Buttons</button>
+	<button onclick="showNotification('Confirm Send', 'Are you sure you want to submit this 5x5?', [{action:'hideNotification()', text:'OK'},{action:'hideNotification()', text:'Cancel'}], false)">2 Buttons</button>
 
-<button onclick="showNotification('Save', 'You have made changes. Do you want to save this 5x5?', [{action:'hideNotification()', text:'Save'},{action:'hideNotification()', isHarmful:true, text:'Discard'},{action:'hideNotification()', text:'Cancel'}], false)">3 Buttons</button>
-</div>
+	<button onclick="showNotification('Save', 'You have made changes. Do you want to save this 5x5?', [{action:'hideNotification()', text:'Save'},{action:'hideNotification()', isHarmful:true, text:'Discard'},{action:'hideNotification()', text:'Cancel'}], false)">3 Buttons</button>
+</div>-->
 <div class="alignmentBox">
 	<div class="leftAlign">
 		<p class="teacherInfo">Name: <input type="text" name="teacherName" class="topcoat-text-input" placeholder="Last, First" value="" pattern="[A-z-]+, [A-z-]+"/></p>
-		<p class="teacherInfo">Date: <input type="date" name="evalDate" class="topcoat-text-input" placeholder="MM/DD/YYYY" value="" pattern="[0-1][1-9]/[0-3][1-9]/[1-2][0-1][0-9]{2}" /></p>
-		<p class="teacherInfo">Period: <input type="number" name="period" class="topcoat-text-input" placeholder="#" value="" pattern="[1-9]{1}" /></p>
 		<p class="teacherInfo">Subject: <input type="text" name="subject" class="topcoat-text-input" placeholder="Class Name" value="" /></p>
-		<p class="teacherInfo">BME?</p>
-		<p class="teacherInfo">Time: <input type="text" name="time" class="topcoat-text-input" value="" id="time" disabled /></p>
+		<p class="teacherInfo">Time: <input type="text" name="time" class="topcoat-text-input" value="" id="time" pattern="[0-9]{1,2}/[0-9]{1,2}/20[0-9]{2} [0-9]{1,2}:[0-9]{2}" disabled /></p>
 	</div>
 	<div class="rightAlign">
-	<p class="behaviors">The students were&nbsp;
-		<select class="topcoat-dropdown">
-			<option value="engaged">engaged.</option>
-			<option value="somewhat">somewhat engaged.</option>
-			<option value="not">not engaged.</option>
-		</select>
-	</p>
-	<p class="behaviors">The teacher was&nbsp;
-		<select class="topcoat-dropdown">
-			<option value="lecturing">lecturing.</option>
-			<option value="moving">mobile and engaged with students.</option>
-			<option value="unengaged">not engaging with students.</option>
-		</select>
-	</p>
-	<p class="behaviors">The <em>Essential Question</em> was&nbsp;
-		<select class="topcoat-dropdown">
-			<option value="posted">posted.</option>
-			<option value="notPosted">not posted.</option>
-			<option value="irrelevant">irrelevant.</option>
-		</select>
-	</p>
+		<p class="behaviors">The students were&nbsp;
+			<select class="topcoat-dropdown">
+				<option value="engaged">engaged.</option>
+				<option value="somewhat">somewhat engaged.</option>
+				<option value="not">not engaged.</option>
+			</select>
+		</p>
+		<p class="behaviors">The teacher was&nbsp;
+			<select class="topcoat-dropdown">
+				<option value="lecturing">lecturing.</option>
+				<option value="moving">mobile and engaged with students.</option>
+				<option value="unengaged">not engaging with students.</option>
+			</select>
+		</p>
+		<p class="behaviors">The <em>Essential Question</em> was&nbsp;
+			<select class="topcoat-dropdown">
+				<option value="posted">posted.</option>
+				<option value="notPosted">not posted.</option>
+				<option value="irrelevant">irrelevant.</option>
+			</select>
+		</p>
 	</div>
 </div>
 <div class="alignmentBox">
@@ -266,7 +263,9 @@
 <p class="comments">Questions to Ponder:</p>
 <textarea class="topcoat-textarea smallerFont" rows="5" cols="35"></textarea>
 <div class="center full buttonspace">
-	<button type="submit" onclick="submitButton()" class="topcoat-button--cta">Submit</button>
+	<button type="submit" onclick="submitButton()" class="topcoat-button--cta">
+		Submit
+	</button>
 </div>
 </body>
 </html>
