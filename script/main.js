@@ -1,4 +1,4 @@
-function showNotification(title, message, buttons, hasTable) {
+/*function showNotification(title, message, buttons, hasTable) {
 	//Declare element variables
 	backgroundOverlay = document.getElementById('notificationHolder');
 	notification = document.getElementById('notification');
@@ -38,7 +38,7 @@ function hideNotification() {
 	nButtonHolder.classList.add('noDisplay');
 	//Get rid of all of the buttons
 	nButtonHolder.innerHTML = '';
-}
+}*/
 function loadHandler(tableVar) {
 	
 }
@@ -80,12 +80,18 @@ function populateButtons(containerVar, buttons) {
 		}
 	}
 }
-function submitButton() {
-	//Makes a notification that does nothing and says stuff.
-	showNotification('Sent',
-		'The 5x5 has been sent successfully.',
-		[{action:'hideNotification()', text:'OK'}],
-		false);
+function submitButton(skipEmptyCheck) {
+	skipEmptyCheck = false;
+	//Ignore this ->//Makes a notification that does nothing and says stuff.
+	if (skipEmptyCheck) {
+		submitCheck(true);
+	} else {
+		submitCheck();
+	}
+	//showNotification('Sent',
+	//	'The 5x5 has been sent successfully.',
+	//	[{action:'hideNotification()', text:'OK'}],
+	//	false);
 }
 function setTimeField() {
 	//Make a date
@@ -105,7 +111,7 @@ function setTimeField() {
 	//Set the value of the date field to timestring
 	timeField.value = timestring;
 	//Debugging
-	console.log("Logging the current time as " + timestring);
+	//console.log("Logging the current time as " + timestring);
 }
 function getPeriod() {
 	//Get the time now
@@ -175,6 +181,114 @@ function getPeriodDebug(testDate) {
 		return -1;
 	}
 }*/
+function submitCheck(skipEmptyCheck) {
+	skipEmptyCheck = false;
+	//Checks the submission before it is submitted.
+	//Success variable
+	var success = true;
+	//text boxen
+	var name = document.getElementById("teacherName").value;
+	var subject = document.getElementById("subject").value;
+	var time = document.getElementById("time").value;
+	//dropdowns
+	var studentEngagement = document.getElementById("studentEngagement").value;
+	var teacherBehavior = document.getElementById("teacherBehavior").value;
+	var essentialQuestion = document.getElementById("essentialQuestion").value;
+	//section 1
+	var rulesPosted = document.getElementById("rulesPosted").value;
+	var teacherMobile = document.getElementById("teacherMobile").value;
+	var appropriateTone = document.getElementById("appropriateTone").value;
+	var usedPraise = document.getElementById("usedPraise").value;
+	var usedMotivation = document.getElementById("usedMotivation").value;
+	var conseqPosted = document.getElementById("conseqPosted").value;
+	var positiveRapport = document.getElementById("positiveRapport").value;
+	//section 2
+	var diffInstruction = document.getElementById("diffInstruction").value;
+	var activeStudentPart = document.getElementById("activeStudentPart").value;
+	var collabLearnStrat = document.getElementById("collabLearnStrat").value;
+	var activationStrat = document.getElementById("activationStrat").value;
+	var summStrat = document.getElementById("summStrat").value;
+	var criticalThinking = document.getElementById("criticalThinking").value;
+	//section 3
+	var creating = document.getElementById("creating").value;
+	var evaluating = document.getElementById("evaluating").value;
+	var analyzing = document.getElementById("analyzing").value;
+	var applying = document.getElementById("applying").value;
+	var understanding = document.getElementById("understanding").value;
+	var remembering = document.getElementById("remembering").value;
+	//section 4
+	var essays = document.getElementById("essays").value;
+	var oeQuestions = document.getElementById("oeQuestions").value;
+	var lessonDrivenPrompts = document.getElementById("lessonDrivenPrompts").value;
+	//long fields
+	var adminComments = document.getElementById("adminComments");
+	var ponder = document.getElementById("ponder");
+	//Things that require calculation
+	var period = getPeriod();
+	//Did the user check any of the checkboxes?
+	if ((
+		rulesPosted &
+		teacherMobile &
+		appropriateTone &
+		usedPraise &
+		usedMotivation &
+		conseqPosted &
+		positiveRapport &
+		diffInstruction &
+		activeStudentPart &
+		collabLearnStrat &
+		activationStrat &
+		summStrat &
+		criticalThinking &
+		creating &
+		evaluating &
+		analyzing &
+		applying &
+		understanding &
+		remembering &
+		essays &
+		oeQuestions &
+		lessonDrivenPrompts &
+		!skipEmptyCheck) == false) {
+		app.modal({
+			title:"Are You Sure?",
+			text:"You have not selected any checkboxes. Are you sure you want to sumbit?",
+			afterText: "",
+			buttons:[{
+				text:"No",
+				bold: true,
+				onClick: h
+			}]
+
+		})
+		showNotification(,
+			,
+			[{action:"submitButton(true)", text:"Yes"}, {action:"hideNotification()", text:"No"}],
+			false);
+		success = false;
+	}
+	if (name == "") {
+		showNotification("Error", "You must enter a teacher name.", [{action:"hideNotification()", text:"OK"}], false);
+		success = false;
+	}
+	if (subject == "") {
+		showNotification("Error", "You must enter a subject.", [{action:"hideNotification()", text:"OK"}], false);
+		success = false;
+	}
+	if (success) {
+		var nameSplit = name.split(", ");
+		var email = findTeacher(nameSplit[0], nameSplit[1]);
+		showNotification("Debug", "Email: " + email, [{action:"hideNotification()", text:"OK"}], false);
+
+	}
+
+}
+function findTeacher(last, first) {
+	//Find the teacher specified.
+	//Returns false if no teacher found.
+	//Returns email address if found.
+	return "fgleuschner@cdschools.org"
+}
 window.onload = function() {
 	//Set the time field when the page loads.
 	setTimeField();

@@ -4,9 +4,11 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="initial-scale=1,user-scalable=no,width=device-width" />
 	<title>5x5 Online</title>
+	<link rel="stylesheet" href="css/framework7.min.css" />
 	<link rel="stylesheet" media="only screen and (max-width:1024px)" href="css/topcoat-mobile-dark.css" />
 	<link rel="stylesheet" media="only screen and (min-width:1025px)" href="css/topcoat-desktop-dark.css" />
 	<link rel="stylesheet" href="css/main.css" />
+	<script src="script/framework7.min.js"></script>
 	<script src="script/main.js"></script>
 </head>
 <body>
@@ -44,29 +46,29 @@
 </div>-->
 <div class="alignmentBox">
 	<div class="leftAlign">
-		<p class="teacherInfo">Name: <input type="text" name="teacherName" class="topcoat-text-input" placeholder="Last, First" value="" pattern="[A-z-]+, [A-z-]+"/></p>
-		<p class="teacherInfo">Subject: <input type="text" name="subject" class="topcoat-text-input" placeholder="Class Name" value="" /></p>
-		<p class="teacherInfo">Time: <input type="text" name="time" class="topcoat-text-input" value="" id="time" pattern="[0-9]{1,2}/[0-9]{1,2}/20[0-9]{2} [0-9]{1,2}:[0-9]{2}" disabled /></p>
+		<p class="teacherInfo">Name: <input type="text" name="teacherName" id="teacherName" class="topcoat-text-input" placeholder="Last, First" value="" pattern="[A-z-]+, [A-z-]+"/></p>
+		<p class="teacherInfo">Subject: <input type="text" name="subject" id="subject" class="topcoat-text-input" placeholder="Class Name" value="" /></p>
+		<p class="teacherInfo">Time: <input type="text" name="time" id="time" class="topcoat-text-input" value="" id="time" pattern="[0-9]{1,2}/[0-9]{1,2}/20[0-9]{2} [0-9]{1,2}:[0-9]{2}" disabled /></p>
 	</div>
 	<div class="rightAlign">
 		<p class="behaviors">The students were&nbsp;
-			<select class="topcoat-dropdown">
+			<select id="studentEngagement" class="topcoat-dropdown">
 				<option value="engaged">engaged.</option>
-				<option value="somewhat">somewhat engaged.</option>
-				<option value="not">not engaged.</option>
+				<option value="somewhat engaged">somewhat engaged.</option>
+				<option value="not engaged">not engaged.</option>
 			</select>
 		</p>
 		<p class="behaviors">The teacher was&nbsp;
-			<select class="topcoat-dropdown">
+			<select id="teacherBehavior" class="topcoat-dropdown">
 				<option value="lecturing">lecturing.</option>
 				<option value="moving">mobile and engaged with students.</option>
 				<option value="unengaged">not engaging with students.</option>
 			</select>
 		</p>
 		<p class="behaviors">The <em>Essential Question</em> was&nbsp;
-			<select class="topcoat-dropdown">
+			<select id="essentialQuestion" class="topcoat-dropdown">
 				<option value="posted">posted.</option>
-				<option value="notPosted">not posted.</option>
+				<option value="not posted">not posted.</option>
 				<option value="irrelevant">irrelevant.</option>
 			</select>
 		</p>
@@ -80,49 +82,49 @@
 		<ul class="topcoat-list__container">
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="rulesPosted" />
+					<input type="checkbox" name="rulesPosted" id="rulesPosted" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Rules Posted
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="teacherMobile" />
+					<input type="checkbox" name="teacherMobile" id="teacherMobile" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Teacher Mobile
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="appropriateTone" />
+					<input type="checkbox" name="appropriateTone" id="appropriateTone" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Appropriate Tone
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="usedPraise" />
+					<input type="checkbox" name="usedPraise" id="usedPraise" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Used Praise
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="usedMotivation" />
+					<input type="checkbox" name="usedMotivation" id="usedMotivation" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Used Motivational Strategies
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="conseqPosted" />
+					<input type="checkbox" name="conseqPosted" id="conseqPosted" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Consequences Posted
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="positiveRapport" />
+					<input type="checkbox" name="positiveRapport" id="positiveRapport" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Positive Student-Teacher Rapport
 				</label>
@@ -136,42 +138,42 @@
 		<ul class="topcoat-list__container">
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="diffInstruction" />
+					<input type="checkbox" name="diffInstruction" id="diffInstruction" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Differentiate Instruction
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="activeStudentPart" />
+					<input type="checkbox" name="activeStudentPart" id="activeStudentPart" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Active Student Participation
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="collabLearnStrat" />
+					<input type="checkbox" name="collabLearnStrat" id="collabLearnStrat" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Collaborative Learning Strategies
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="activationStrat" />
+					<input type="checkbox" name="activationStrat" id="activationStrat" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Activation Strategy
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="summStrat" />
+					<input type="checkbox" name="summStrat" id="summStrat" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Summarizing Strategy
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="criticalThinking" />
+					<input type="checkbox" name="criticalThinking" id="criticalThinking" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Critical Thinking Activity
 				</label>
@@ -187,42 +189,42 @@
 		<ul class="topcoat-list__container">
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="creating" />
+					<input type="checkbox" name="creating" id="creating" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Creating
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="evaluating" />
+					<input type="checkbox" name="evaluating" id="evaluating" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Evaluating
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="analyzing" />
+					<input type="checkbox" name="analyzing" id="analyzing" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Analyzing
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="applying" />
+					<input type="checkbox" name="applying" id="applying" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Applying
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="understanding" />
+					<input type="checkbox" name="understanding" id="understanding" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Understanding
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="remembering" />
+					<input type="checkbox" name="remembering" id="remembering" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Remembering
 				</label>
@@ -236,21 +238,21 @@
 		<ul class="topcoat-list__container">
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="essays" />
+					<input type="checkbox" name="essays" id="essays" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Essays
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="oeQuestions" />
+					<input type="checkbox" name="oeQuestions" id="oeQuestions" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Open-Ended Questions
 				</label>
 			</li>
 			<li class="topcoat-list__item">
 				<label class="topcoat-checkbox">
-					<input type="checkbox" name="lessonDrivenPrompts" />
+					<input type="checkbox" name="lessonDrivenPrompts" id="lessonDrivenPrompts" />
 					<div class="topcoat-checkbox__checkmark"></div>
 					Lesson-Driven Prompts
 				</label>
@@ -259,9 +261,9 @@
 	</div>
 </div>
 <p class="comments">Administrative Comments:</p>
-<textarea class="topcoat-textarea smallerFont" rows="5" cols="35"></textarea>
+<textarea class="topcoat-textarea smallerFont" id="adminComments" rows="5" cols="35"></textarea>
 <p class="comments">Questions to Ponder:</p>
-<textarea class="topcoat-textarea smallerFont" rows="5" cols="35"></textarea>
+<textarea class="topcoat-textarea smallerFont" id="ponder" rows="5" cols="35"></textarea>
 <div class="center full buttonspace">
 	<button type="submit" onclick="submitButton()" class="topcoat-button--cta">
 		Submit
