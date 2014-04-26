@@ -1,66 +1,6 @@
-.teacherInfo {
-	color: #FFF;
-	line-height: 3rem;
-	margin-left: 1rem;
-	width:90%;
-	-webkit-column-break-inside:avoid;
-	position:relative;
+.center {
+	margin:0 auto;
 }
-.teacherInfo input {
-	position:absolute;
-	right:0;
-}
-.behaviors {
-	color: #FFF;
-	margin: auto 1rem auto 1rem;
-	line-height:2.5rem;
-	-webkit-column-break-inside:avoid;
-}
-.comments {
-	color: #FFF;
-	margin: 1rem 0 5px 1rem;
-}
-.smallerFont {
-	font-size:1rem;
-	line-height:1rem;
-	margin:5px;
-	float:center;
-	width:98%;
-	-webkit-box-sizing:border-box;
-	box-sizing:border-box;
-}
-.buttonspace {
-	margin:1rem auto;
-}
-body {
+input[type="submit"].center {
 	width:100%;
-}
-@media only screen and (min-width:674px) {
-	.rightAlign, .leftAlign {
-		-webkit-column-break-inside:avoid;
-		display:inline-block;
-		width:100%;
-	}
-	.alignmentBox {
-		width:100%;
-		-webkit-column-count:2;
-		-webkit-column-gap:2%;
-		margin-bottom:1rem;
-	}
-}
-@media only screen and (min-width:1025px) {
-	body {
-		color:#FFF;
-	}
-	.mobileOnly {
-		display:none;
-	}
-	.teacherInfo {
-		line-height:1rem;
-	}
-	.leftAlign,
-	.rightAlign {
-		width:80%;
-		padding:0 10%;
-	}
 }
