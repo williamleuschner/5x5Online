@@ -94,130 +94,96 @@ function getPeriodDebug(testDate) {
 function submitCheck() {
 	//Checks the submission before it is submitted.
 	//Success variable
-	console.log("Defining variables for form fields...");
 	//text boxen
 	var name = document.getElementById("teacherName").value;
 	var subject = document.getElementById("subject").value;
 	var time = document.getElementById("time").value;
 	//dropdowns
-	var studentEngagement = document.getElementById("studentEngagement").value;
-	var teacherBehavior = document.getElementById("teacherBehavior").value;
-	var essentialQuestion = document.getElementById("essentialQuestion").value;
+	var behaviors = new Object();
+	behaviors["studentEngagement"] = document.getElementById("studentEngagement").value;
+	behaviors["teacherBehavior"] = document.getElementById("teacherBehavior").value;
+	behaviors["essentialQuestion"] = document.getElementById("essentialQuestion").value;
 	//section 1
-	var rulesPosted = document.getElementById("rulesPosted").value;
-	var teacherMobile = document.getElementById("teacherMobile").value;
-	var appropriateTone = document.getElementById("appropriateTone").value;
-	var usedPraise = document.getElementById("usedPraise").value;
-	var usedMotivation = document.getElementById("usedMotivation").value;
-	var conseqPosted = document.getElementById("conseqPosted").value;
-	var positiveRapport = document.getElementById("positiveRapport").value;
+	var b = new Object();
+	b["rulesPosted"] = document.getElementById("rulesPosted").checked;
+	b["teacherMobile"] = document.getElementById("teacherMobile").checked;
+	b["appropriateTone"] = document.getElementById("appropriateTone").checked;
+	b["usedPraise"] = document.getElementById("usedPraise").checked;
+	b["usedMotivation"] = document.getElementById("usedMotivation").checked;
+	b["conseqPosted"] = document.getElementById("conseqPosted").checked;
+	b["positiveRapport"] = document.getElementById("positiveRapport").checked;
 	//section 2
-	var diffInstruction = document.getElementById("diffInstruction").value;
-	var activeStudentPart = document.getElementById("activeStudentPart").value;
-	var collabLearnStrat = document.getElementById("collabLearnStrat").value;
-	var activationStrat = document.getElementById("activationStrat").value;
-	var summStrat = document.getElementById("summStrat").value;
-	var criticalThinking = document.getElementById("criticalThinking").value;
+	b["diffInstruction"] = document.getElementById("diffInstruction").checked;
+	b["activeStudentPart"] = document.getElementById("activeStudentPart").checked;
+	b["collabLearnStrat"] = document.getElementById("collabLearnStrat").checked;
+	b["activationStrat"] = document.getElementById("activationStrat").checked;
+	b["summStrat"] = document.getElementById("summStrat").checked;
+	b["criticalThinking"] = document.getElementById("criticalThinking").checked;
 	//section 3
-	var creating = document.getElementById("creating").value;
-	var evaluating = document.getElementById("evaluating").value;
-	var analyzing = document.getElementById("analyzing").value;
-	var applying = document.getElementById("applying").value;
-	var understanding = document.getElementById("understanding").value;
-	var remembering = document.getElementById("remembering").value;
+	b["creating"] = document.getElementById("creating").checked;
+	b["evaluating"] = document.getElementById("evaluating").checked;
+	b["analyzing"] = document.getElementById("analyzing").checked;
+	b["applying"] = document.getElementById("applying").checked;
+	b["understanding"] = document.getElementById("understanding").checked;
+	b["remembering"] = document.getElementById("remembering").checked;
 	//section 4
-	var essays = document.getElementById("essays").value;
-	var oeQuestions = document.getElementById("oeQuestions").value;
-	var lessonDrivenPrompts = document.getElementById("lessonDrivenPrompts").value;
+	b["essays"] = document.getElementById("essays").checked;
+	b["oeQuestions"] = document.getElementById("oeQuestions").checked;
+	b["lessonDrivenPrompts"] = document.getElementById("lessonDrivenPrompts").checked;
 	//long fields
 	var adminComments = document.getElementById("adminComments");
 	var ponder = document.getElementById("ponder");
-	console.log("Done");
 	//Things that require calculation
-	console.log("Getting period...");
 	var period = getPeriod();
-	console.log("Done");
 	//did the user enter a name?
-	console.log("Checking for name...");
 	if (name == "") {
 		five.alert('You must enter a teacher name.', 'Error')
 		return;
 	}
-	console.log("Done");
-	console.log("Checking for subject...");
 	if (subject == "") {
 		five.alert('You must enter a subject.', 'Error')
 		return;
 	}
-	console.log("Done");
 	//Did the user check any of the checkboxes?
-	console.log("Checking for any checkbox checked...");
-	if (
-		rulesPosted ||
-		teacherMobile ||
-		appropriateTone ||
-		usedPraise ||
-		usedMotivation ||
-		conseqPosted ||
-		positiveRapport ||
-		diffInstruction ||
-		activeStudentPart ||
-		collabLearnStrat ||
-		activationStrat ||
-		summStrat ||
-		criticalThinking ||
-		creating ||
-		evaluating ||
-		analyzing ||
-		applying ||
-		understanding ||
-		remembering ||
-		essays ||
-		oeQuestions ||
-		lessonDrivenPrompts ) {
-		console.log("Displaying modal");
-		five.modal({
-			title:"Are You Sure?",
-			text:"You have not selected any checkboxes. Are you sure you want to sumbit?",
-			afterText: "",
-			buttons:[{
-				text:"No",
-				bold: true,
-				close: true
-			},{
-				text:"Yes",
-				bold: false,
-				onClick: handleData(name),
-				close: false
-			}]
-		});
-		//showNotification(,
-		//	,
-		//	[{action:"submitButton(true)", text:"Yes"}, {action:"hideNotification()", text:"No"}],
-		//	false);
-		return;
-	}
+	if ( !(b["rulesPosted"] || b["teacherMobile"] || b["appropriateTone"] || b["usedPraise"] || b["usedMotivation"] || b["conseqPosted"] || b["positiveRapport"] || b["diffInstruction"] || b["activeStudentPart"] || b["collabLearnStrat"] || b["activationStrat"] || b["summStrat"] || b["criticalThinking"] || b["creating"] || b["evaluating"] || b["analyzing"] || b["applying"] || b["understanding"] || b["remembering"] || b["essays"] || b["oeQuestions"] || b["lessonDrivenPrompts"]) ) {
+			five.modal({
+				title:"Are You Sure?",
+				text:"You have not selected any checkboxes. Are you sure you want to sumbit?",
+				afterText: "",
+				buttons:[{
+					text:"No",
+					bold: true,
+					close: true
+				},{
+					text:"Yes",
+					bold: false,
+					onClick: handleData(name),
+					close: false
+				}]
+			});
+			return;
+		}
 	var nameSplit = name.split(", ");
 	var email = findTeacher(nameSplit[0], nameSplit[1]);
-	if (email == false) {
-		five.alert('It appears as though that teacher doesn\'t exist. Did you misspell their name?', 'Error')
+	if (email == false || email == undefined) {
+		five.alert('It appears as though that teacher doesn\'t exist. Did you misspell their name?', 'Error');
 		return;
 	}
-	console.log("Done");
-	console.log("Doing data handling...");
-	handleData(name)
-	console.log("Done");
+	handleData(name, subject, time, email, b, behaviors, adminComments, ponder)
 }
-function handleData(name) {
+function handleData(name, subject, time, email, b, behaviors, adminComments, ponder) {
 	five.alert("Email: " + email, "Debug")
 }
 function findTeacher(last, first) {
 	//Find the teacher specified.
 	//Returns false if no teacher found.
 	//Returns email address if found.
-	return "fgleuschner@cdschools.org"
+	return "fgleuschner@cdschools.org";
 }
 window.onload = function() {
 	//Set the time field when the page loads.
 	setTimeField();
+	document.getElementById("teacherName").value = "Leuschner, Frederick";
+	document.getElementById("subject").value = "AP Chemistry";
+	document.getElementById("rulesPosted").checked = true;
 }
