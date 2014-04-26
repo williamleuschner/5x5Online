@@ -1,3 +1,5 @@
+var app = new Framework7();
+var $$ = Framework7.$;
 /*function showNotification(title, message, buttons, hasTable) {
 	//Declare element variables
 	backgroundOverlay = document.getElementById('notificationHolder');
@@ -80,8 +82,8 @@ function populateButtons(containerVar, buttons) {
 		}
 	}
 }
-function submitButton(skipEmptyCheck) {
-	skipEmptyCheck = false;
+/*function submitButton(skipEmptyCheck) {
+	if (skipEmptyCheck === undefined) {skipEmptyCheck = false};
 	//Ignore this ->//Makes a notification that does nothing and says stuff.
 	if (skipEmptyCheck) {
 		submitCheck(true);
@@ -92,7 +94,7 @@ function submitButton(skipEmptyCheck) {
 	//	'The 5x5 has been sent successfully.',
 	//	[{action:'hideNotification()', text:'OK'}],
 	//	false);
-}
+}*/
 function setTimeField() {
 	//Make a date
 	var d = new Date();
@@ -182,7 +184,7 @@ function getPeriodDebug(testDate) {
 	}
 }*/
 function submitCheck(skipEmptyCheck) {
-	skipEmptyCheck = false;
+	if (skipEmptyCheck === undefined) {skipEmptyCheck = false};
 	//Checks the submission before it is submitted.
 	//Success variable
 	var success = true;
@@ -225,6 +227,11 @@ function submitCheck(skipEmptyCheck) {
 	var ponder = document.getElementById("ponder");
 	//Things that require calculation
 	var period = getPeriod();
+	//did the user enter a name?
+	if (name == "") {
+		app.alert('You must enter a teacher name.', 'Error')
+		success = false;
+	}
 	//Did the user check any of the checkboxes?
 	if ((
 		rulesPosted &
@@ -257,28 +264,45 @@ function submitCheck(skipEmptyCheck) {
 			buttons:[{
 				text:"No",
 				bold: true,
-				onClick: h
+				onClick: submitCheck(true),
+				close: false
 			}]
-
 		})
-		showNotification(,
-			,
-			[{action:"submitButton(true)", text:"Yes"}, {action:"hideNotification()", text:"No"}],
-			false);
-		success = false;
-	}
-	if (name == "") {
-		showNotification("Error", "You must enter a teacher name.", [{action:"hideNotification()", text:"OK"}], false);
+		//showNotification(,
+		//	,
+		//	[{action:"submitButton(true)", text:"Yes"}, {action:"hideNotification()", text:"No"}],
+		//	false);
 		success = false;
 	}
 	if (subject == "") {
-		showNotification("Error", "You must enter a subject.", [{action:"hideNotification()", text:"OK"}], false);
+		app.modal({
+			title:"Error",
+			text:"You must enter a subject.",
+			afterText: "",
+			buttons:[{
+				text:"OK",
+				bold: true,
+				onClick: function(){},
+				close: true
+			}]
+		})
 		success = false;
 	}
 	if (success) {
 		var nameSplit = name.split(", ");
 		var email = findTeacher(nameSplit[0], nameSplit[1]);
-		showNotification("Debug", "Email: " + email, [{action:"hideNotification()", text:"OK"}], false);
+		app.modal({
+			title:"Debug",
+			text:"Email: " + email,
+			afterText: "",
+			buttons:[{
+				text:"OK",
+				bold: true,
+				onClick: function(){},
+				close: true
+			}]
+		})
+		//showNotification("Debug", "Email: " + email, [{action:"hideNotification()", text:"OK"}], false);
 
 	}
 
