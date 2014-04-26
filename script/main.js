@@ -1,100 +1,8 @@
-var app = new Framework7();
+var five = new Framework7();
 var $$ = Framework7.$;
-/*function showNotification(title, message, buttons, hasTable) {
-	//Declare element variables
-	backgroundOverlay = document.getElementById('notificationHolder');
-	notification = document.getElementById('notification');
-	nTitle = document.getElementById('notification--title');
-	nTable = document.getElementById('notification--table');
-	nMessage = document.getElementById('notification--message');
-	nButtonHolder = document.getElementById('notification--buttonHolder');
-	//Set notification text
-	nTitle.innerHTML = title;
-	nMessage.innerHTML = message;
-	populateButtons(nButtonHolder, buttons);
-	if (hasTable) {
-		loadHandler(nTable);
-	}
-	//Set notification to be visible
-	backgroundOverlay.classList.remove("noDisplay");
-	notification.classList.remove('noDisplay');
-	nTitle.classList.remove('noDisplay');
-	//nTable.classList.remove('noDisplay');
-	nMessage.classList.remove('noDisplay');
-	nButtonHolder.classList.remove('noDisplay');
-}
-function hideNotification() {
-	//Declare element variables
-	backgroundOverlay = document.getElementById('notificationHolder');
-	notification = document.getElementById('notification');
-	nTitle = document.getElementById('notification--title');
-	//nTable = document.getElementById('notification--table');
-	nMessage = document.getElementById('notification--message');
-	nButtonHolder = document.getElementById('notification--buttonHolder');
-	//Set ALL the elements to be hidden
-	backgroundOverlay.classList.add("noDisplay");
-	notification.classList.add('noDisplay');
-	nTitle.classList.add('noDisplay');
-	//nTable.classList.add('noDisplay');
-	nMessage.classList.add('noDisplay');
-	nButtonHolder.classList.add('noDisplay');
-	//Get rid of all of the buttons
-	nButtonHolder.innerHTML = '';
-}*/
-function loadHandler(tableVar) {
-	
-}
-function populateButtons(containerVar, buttons) {
-	//Initialize classToAdd
-	var classToAdd = null
-	//Set it based on how many buttons there are
-	switch(buttons.length) {
-		case 1:
-			classToAdd = "oneButton";
-			break;
-		case 2:
-			classToAdd = "twoButton";
-			break;
-		case 3:
-			classToAdd = "threeButton";
-			break;
-		default:
-			classToAdd = "threeButton";
-			break;
-	}
-	//For each button in the buttons array,
-	for (button in buttons) {
-		//Make it,
-		link = document.createElement('a');
-		//Insert it into the DOM,
-		temp = containerVar.appendChild(link);
-		//Set it's text,
-		temp.innerHTML = buttons[button].text;
-		//Make it look pretty,
-		temp.classList.add('notification--button');
-		//Make it do stuff,
-		temp.setAttribute("onclick", buttons[button].action);
-		//Make it align correctly in the buttons div,
-		temp.classList.add(classToAdd);
-		//And make it red if it can cause harm.
-		if (buttons[button].isHarmful) {
-			temp.classList.add("harmfulButton");
-		}
-	}
-}
-/*function submitButton(skipEmptyCheck) {
-	if (skipEmptyCheck === undefined) {skipEmptyCheck = false};
-	//Ignore this ->//Makes a notification that does nothing and says stuff.
-	if (skipEmptyCheck) {
-		submitCheck(true);
-	} else {
-		submitCheck();
-	}
-	//showNotification('Sent',
-	//	'The 5x5 has been sent successfully.',
-	//	[{action:'hideNotification()', text:'OK'}],
-	//	false);
-}*/
+var mainView = five.addView('.view-main', {
+	dynamicNavbar: true
+});
 function setTimeField() {
 	//Make a date
 	var d = new Date();
@@ -183,11 +91,10 @@ function getPeriodDebug(testDate) {
 		return -1;
 	}
 }*/
-function submitCheck(skipEmptyCheck) {
-	if (skipEmptyCheck === undefined) {skipEmptyCheck = false};
+function submitCheck() {
 	//Checks the submission before it is submitted.
 	//Success variable
-	var success = true;
+	console.log("Defining variables for form fields...");
 	//text boxen
 	var name = document.getElementById("teacherName").value;
 	var subject = document.getElementById("subject").value;
@@ -225,87 +132,84 @@ function submitCheck(skipEmptyCheck) {
 	//long fields
 	var adminComments = document.getElementById("adminComments");
 	var ponder = document.getElementById("ponder");
+	console.log("Done");
 	//Things that require calculation
+	console.log("Getting period...");
 	var period = getPeriod();
+	console.log("Done");
 	//did the user enter a name?
+	console.log("Checking for name...");
 	if (name == "") {
-		app.alert('You must enter a teacher name.', 'Error')
-		success = false;
+		five.alert('You must enter a teacher name.', 'Error')
+		return;
 	}
+	console.log("Done");
+	console.log("Checking for subject...");
+	if (subject == "") {
+		five.alert('You must enter a subject.', 'Error')
+		return;
+	}
+	console.log("Done");
 	//Did the user check any of the checkboxes?
-	if ((
-		rulesPosted &
-		teacherMobile &
-		appropriateTone &
-		usedPraise &
-		usedMotivation &
-		conseqPosted &
-		positiveRapport &
-		diffInstruction &
-		activeStudentPart &
-		collabLearnStrat &
-		activationStrat &
-		summStrat &
-		criticalThinking &
-		creating &
-		evaluating &
-		analyzing &
-		applying &
-		understanding &
-		remembering &
-		essays &
-		oeQuestions &
-		lessonDrivenPrompts &
-		!skipEmptyCheck) == false) {
-		app.modal({
+	console.log("Checking for any checkbox checked...");
+	if (
+		rulesPosted ||
+		teacherMobile ||
+		appropriateTone ||
+		usedPraise ||
+		usedMotivation ||
+		conseqPosted ||
+		positiveRapport ||
+		diffInstruction ||
+		activeStudentPart ||
+		collabLearnStrat ||
+		activationStrat ||
+		summStrat ||
+		criticalThinking ||
+		creating ||
+		evaluating ||
+		analyzing ||
+		applying ||
+		understanding ||
+		remembering ||
+		essays ||
+		oeQuestions ||
+		lessonDrivenPrompts ) {
+		console.log("Displaying modal");
+		five.modal({
 			title:"Are You Sure?",
 			text:"You have not selected any checkboxes. Are you sure you want to sumbit?",
 			afterText: "",
 			buttons:[{
 				text:"No",
 				bold: true,
-				onClick: submitCheck(true),
+				close: true
+			},{
+				text:"Yes",
+				bold: false,
+				onClick: handleData(name),
 				close: false
 			}]
-		})
+		});
 		//showNotification(,
 		//	,
 		//	[{action:"submitButton(true)", text:"Yes"}, {action:"hideNotification()", text:"No"}],
 		//	false);
-		success = false;
+		return;
 	}
-	if (subject == "") {
-		app.modal({
-			title:"Error",
-			text:"You must enter a subject.",
-			afterText: "",
-			buttons:[{
-				text:"OK",
-				bold: true,
-				onClick: function(){},
-				close: true
-			}]
-		})
-		success = false;
+	var nameSplit = name.split(", ");
+	var email = findTeacher(nameSplit[0], nameSplit[1]);
+	if (email == false) {
+		five.alert('It appears as though that teacher doesn\'t exist. Did you misspell their name?', 'Error')
+		return;
 	}
-	if (success) {
-		var nameSplit = name.split(", ");
-		var email = findTeacher(nameSplit[0], nameSplit[1]);
-		app.modal({
-			title:"Debug",
-			text:"Email: " + email,
-			afterText: "",
-			buttons:[{
-				text:"OK",
-				bold: true,
-				onClick: function(){},
-				close: true
-			}]
-		})
-		//showNotification("Debug", "Email: " + email, [{action:"hideNotification()", text:"OK"}], false);
-
-	}
-
+	console.log("Done");
+	console.log("Doing data handling...");
+	handleData(name)
+	console.log("Done");
+}
+function handleData(name) {
+	five.alert("Email: " + email, "Debug")
 }
 function findTeacher(last, first) {
 	//Find the teacher specified.
