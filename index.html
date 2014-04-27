@@ -11,24 +11,69 @@
 </head>
 <body>
 	<div class="statusbar-overlay"></div>
-	<div class="panel-overlay"></div>
-	<div class="panel panel-left panel-reveal">
+	<div class="panel panel-right panel-reveal">
 		<div class="content-block">
-			<p>Left panel content here later.<br />Probably somthing along the lines of a save menu.</p>
+			<p>Right panel content here. Maybe</p>
 		</div>
 	</div>
 	<div class="views">
-		<div class="view view-main">
-			<div class="navbar">
-				<div class="navbar-inner">
-					<div class="center sliding">5x5 Online</div>
-					<div class="right">
-						<a href="#" class="link icon-only open-panel"><i class="icon icon-bars-blue"></i></a>
+		<div class="panel-overlay"></div>
+		<div class="panel panel-left panel-cover">
+			<div class="view view-left navbar-through" data-page="index-left">
+				<div class="navbar">
+					<div class="navbar-inner navbar-on-center">
+						<div class="left"></div>
+						<div class="center sliding">
+							Settings
+						</div>
+						<div class="right"></div>
+					</div>
+				</div>
+				<div class="pages">
+					<div data-page="index-left" class="page page-on-center">
+						<div class="page-content">
+							<div class="list-block">
+								<ul>
+									<li>
+										<a href="#" onclick="save5x5()" data-view=".view-main" class="item-link close-panel">
+											<div class="item-content">
+												<div class="item-inner">
+													<div class="item-title">
+														Save 5x5
+													</div>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="#" onclick="load5x5()" data-view=".view-main" class="item-link close-panel">
+											<div class="item-content">
+												<div class="item-inner">
+													<div class="item-title">
+														Load 5x5
+													</div>
+												</div>
+											</div>
+										</a>
+									</li>
+								</ul>	
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="pages navbar-through toolbar-through">
-				<div data-page="index" class="page">
+		</div>
+		<div class="view view-main navbar-through" data-page="index-1">
+			<div class="navbar">
+				<div class="navbar-inner navbar-on-center">
+					<div class="center sliding">5x5 Online</div>
+					<div class="right">
+						<a href="#" data-panel="left" class="link icon-only open-panel"><i class="icon icon-bars-blue"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="pages">
+				<div data-page="index-1" class="page page-on-center">
 					<div class="page-content">
 						<!--Name, Subject, and Time-->
 						<div class="list-block">
@@ -427,7 +472,7 @@
 			</div>
 		</div>
 	</div>
-	<script src="script/framework7.min.js"></script>
+	<script src="script/framework7.js"></script>
 	<script src="script/main.js"></script>
 </body>
 </html>

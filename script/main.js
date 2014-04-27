@@ -1,8 +1,15 @@
 var five = new Framework7();
 var $$ = Framework7.$;
+var leftView = five.addView('.view-left', {
+	dynamicNavbar: true
+});
 var mainView = five.addView('.view-main', {
 	dynamicNavbar: true
 });
+$$('.panel-left').on('open', function() {
+	five.sizeNavbars($$('.view-left'));
+});
+five.params["modalTitle"] = '5x5 Online';
 function setTimeField() {
 	//Make a date
 	var d = new Date();
@@ -180,10 +187,16 @@ function findTeacher(last, first) {
 	//Returns email address if found.
 	return "fgleuschner@cdschools.org";
 }
+function save5x5() {
+	five.alert("I haven't written this yet.");
+}
+function load5x5() {
+	five.alert("I haven't written this yet.");
+}
 window.onload = function() {
 	//Set the time field when the page loads.
 	setTimeField();
-	document.getElementById("teacherName").value = "Leuschner, Frederick";
-	document.getElementById("subject").value = "AP Chemistry";
-	document.getElementById("rulesPosted").checked = true;
+	//document.getElementById("teacherName").value = "Leuschner, Frederick";
+	//document.getElementById("subject").value = "AP Chemistry";
+	//document.getElementById("rulesPosted").checked = true;
 }
