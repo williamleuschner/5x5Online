@@ -1,0 +1,23 @@
+CACHE MANIFEST
+
+CACHE:
+index.html
+apple-touch-icon-144x144-precomposed.png
+apple-touch-icon-74x74-precomposed.png
+apple-touch-icon-precomposed.png
+apple-touch-startup-image-1024x748.png
+apple-touch-startup-image-2048x1496.png
+apple-touch-startup-image-320x460.png
+apple-touch-startup-image-640x1096.png
+apple-touch-startup-image-640x920.png
+apple-touch-startup-image-768x1004.png
+css/framework7.min.css
+css/main.css
+script/framework7.min.js
+script/main.js
+img/i-form-checkbox-white.png
+
+NETWORK:
+app.manifest
+
+# rev 0.2

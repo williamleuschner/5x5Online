@@ -60,3 +60,6 @@ body.with-panel-right-reveal .panel-overlay {
     display: none;
   }
 }
+.button-fix {
+	-webkit-appearance:none;
+}

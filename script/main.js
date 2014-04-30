@@ -10,6 +10,7 @@ $$('.panel-left').on('open', function() {
 	five.sizeNavbars($$('.view-left'));
 });
 five.params["modalTitle"] = '5x5 Online';
+var connected = false;
 function setTimeField() {
 	//Make a date
 	var d = new Date();
@@ -193,10 +194,25 @@ function save5x5() {
 function load5x5() {
 	five.alert("I haven't written this yet.");
 }
+function connectionState(bool) {
+	if (bool) {
+		connected = true;
+	} else {
+		connected = false;
+	}
+}
 window.onload = function() {
 	//Set the time field when the page loads.
 	setTimeField();
 	//document.getElementById("teacherName").value = "Leuschner, Frederick";
 	//document.getElementById("subject").value = "AP Chemistry";
 	//document.getElementById("rulesPosted").checked = true;
+	if (!navigator.onLine) {
+		five.alert("You appear to be offline. Sending 5x5s will not be possible until you reconnect.");
+		connected = false;
+	} else {
+		connected = true;
+	}
+	window.addEventListener("offline", connectionState(false));
+	window.addEventListener("online", connectionState(true));
 }
