@@ -1,14 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="app.manifest">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui" />
 	<meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<title>5x5 Online</title>
+	<!-- For third-generation iPad with high-resolution Retina display: -->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="apple-touch-icon-144x144-precomposed.png">
+	<!-- For iPhone with high-resolution Retina display: -->
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="apple-touch-icon-114x114-precomposed.png">
+	<!-- For first- and second-generation iPad: -->
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="apple-touch-icon-72x72-precomposed.png">
+	<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+	<link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+
+	<!-- iPhone SPLASHSCREEN-->
+	<link href="apple-touch-startup-image-320x460.png" media="(device-width: 320px)" rel="apple-touch-startup-image">
+	<!-- iPhone (Retina) SPLASHSCREEN-->
+	<link href="apple-touch-startup-image-640x920.png" media="(device-width: 320px) and (device-height: 460px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+	<!-- iPhone 5 (Retina) SPLASHSCREEN-->
+	<link href="apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+	<!-- iPad (non-Retina) (Portrait) -->
+	<link href="apple-touch-startup-image-768x1004.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)" rel="apple-touch-startup-image" />
+	<!-- iPad (non-Retina) (Landscape) -->
+	<link href="apple-touch-startup-image-1024x748.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)" rel="apple-touch-startup-image" />
+	<!-- iPad (Retina) (Portrait) -->
+	<link href="apple-touch-startup-image-1536x2008.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) and (-webkit-min-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+	<!-- iPad (Retina) (Landscape) -->
+	<link href="apple-touch-startup-image-2048x1496.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) and (-webkit-min-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+	<!--
 	<link rel="apple-touch-icon" sizes="152x152" href="img/5x5iconRam.png" />
 	<link rel="apple-touch-icon" sizes="120x120" href="img/5x5iconRam120.png" />
 	<link rel="apple-touch-icon" sizes="76x76" href="img/5x5iconRam76.png" />
+	<link rel="apple-touch-startup-image" sizes="640x960" href="img/5x5splash4.png" />
+	<link rel="apple-touch-startup-image" sizes="640X1136" href="img/5x5splash5.png" />-->
 	<link rel="stylesheet" href="css/framework7.min.css" />
 	<link rel="stylesheet" href="css/main.css" />
 </head>
@@ -465,7 +491,7 @@
 						<div class="content-block">
 							<div class="row">
 								<div class="col-100">
-									<input type="submit" value="Send" onclick="submitCheck(false)" class="center button button-big button-submit"></input>
+									<input type="submit" value="Send" onclick="submitCheck(false)" class="center button button-big button-submit button-fix"></input>
 								</div>
 							</div>
 						</div>
@@ -475,7 +501,7 @@
 			</div>
 		</div>
 	</div>
-	<script src="script/framework7.js"></script>
+	<script src="script/framework7.min.js"></script>
 	<script src="script/main.js"></script>
 </body>
 </html>
