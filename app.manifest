@@ -16,8 +16,9 @@ css/main.css
 script/framework7.min.js
 script/main.js
 img/i-form-checkbox-white.png
+img/i-form-radio-blue.png
 
 NETWORK:
 app.manifest
 
-# rev 0.3
+# rev 0.4

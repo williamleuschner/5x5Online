@@ -163,11 +163,12 @@ function submitCheck() {
 			buttons:[{
 				text:"No",
 				bold: true,
-				close: true
+				onClick: yesNoHandler1(false)
+				close: false
 			},{
 				text:"Yes",
 				bold: false,
-				onClick: yesNoHandler1(),
+				onClick: yesNoHandler1(true),
 				close: false
 			}]
 		});
