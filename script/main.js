@@ -163,12 +163,11 @@ function submitCheck() {
 			buttons:[{
 				text:"No",
 				bold: true,
-				onClick: yesNoHandler1(false),
-				close: false
+				close:true
 			},{
 				text:"Yes",
 				bold: false,
-				onClick: yesNoHandler1(true),
+				onClick: handleData(name, subject, time, b, behaviors, adminComments, ponder),
 				close: false
 			}]
 		});
@@ -181,28 +180,23 @@ function submitCheck() {
 }
 function handleData(name, subject, time, b, behaviors, adminComments, ponder) {
 	console.log("Handle function called.");
-	while (!modalCallbackFinished) {
-		console.log("Waiting for user...");
-	}
-	if (!userDidSkipYesNo) {
-		return;
-	}
 	bJSON = JSON.stringify(b);
 	behaviorsJSON = JSON.stringify(behaviors);
 	var submitAjax = new XMLHttpRequest();
 	submitAjax.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			five.alert(submitAjax.responseText);
+		if (submitAjax.readyState == 4 && submitAjax.status == 200) {
+			responseObj = JSON.parse(submitAjax.responseText);
+			if (responseObj['s']) {
+				console.log("AJAX Success!");
+			} else {
+				console.log("AJAX Error.");
+			}
+			five.alert(responseObj['message'], responseObj['title']);
 		}
 	}
-	submitAjax.open("POST", "/5x5Online/send5x5", true);
+	submitAjax.open("POST", "https://s0ph0s.linuxd.net/5x5Online/ajax", true);
 	submitAjax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	submitAjax.send("name=" + name + "&subject=" + subject + "&time=" + time + "&adminComments=" + adminComments + "&ponder=" + ponder + "&b=" + bJSON + "&behaviors=" + behaviorsJSON);
-}
-function yesNoHandler1(userDidSkip) {
-	five.closeModal();
-	userDidSkipYesNo = userDidSkip;
-	modalCallbackFinished = true;
 }
 function save5x5() {
 	five.alert("I haven't written this yet.");
@@ -252,9 +246,9 @@ function banner(text) {
 window.onload = function() {
 	//Set the time field when the page loads.
 	setTimeField();
-	//document.getElementById("teacherName").value = "Leuschner, Frederick";
-	//document.getElementById("subject").value = "AP Chemistry";
-	//document.getElementById("rulesPosted").checked = true;
+	document.getElementById("teacherName").value = "Frederick Leuschner";
+	document.getElementById("subject").value = "AP Chemistry";
+	document.getElementById("rulesPosted").checked = true;
 	if (!navigator.onLine) {
 		five.alert("You appear to be offline. Sending 5x5s will not be possible until you reconnect.");
 		connected = false;
