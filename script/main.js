@@ -13,7 +13,6 @@ five.params["modalTitle"] = '5x5 Online';
 var connected = false;
 var modalCallbackFinished = false;
 var userDidSkipYesNo = false;
-var firstOpen = true;
 function setTimeField() {
 	//Make a date
 	var d = new Date();
@@ -28,7 +27,9 @@ function setTimeField() {
 		timestring = timestring + d.getMinutes();
 	};
 	//Get the date field
-	$("#time").val(timestring);
+	var timeField = document.getElementById("time");
+	//Set the value of the date field to timestring
+	timeField.value = timestring;
 	//Debugging
 	//console.log("Logging the current time as " + timestring);
 }
@@ -104,44 +105,44 @@ function submitCheck() {
 	//Checks the submission before it is submitted.
 	//Success variable for yes/no box
 	//text boxen
-	var name = $$("#teacherName").val();
-	var subject = $$("#subject").val();
-	var time = $$("#time").val();
+	var name = document.getElementById("teacherName").value;
+	var subject = document.getElementById("subject").value;
+	var time = document.getElementById("time").value;
 	//dropdowns
 	var behaviors = new Object();
-	behaviors["studentEngagement"] = $$("#studentEngagement").val();
-	behaviors["teacherBehavior"] = $$("#teacherBehavior").val();
-	behaviors["essentialQuestion"] = $$("#essentialQuestion").val();
+	behaviors["studentEngagement"] = document.getElementById("studentEngagement").value;
+	behaviors["teacherBehavior"] = document.getElementById("teacherBehavior").value;
+	behaviors["essentialQuestion"] = document.getElementById("essentialQuestion").value;
 	//section 1
 	var b = new Object();
-	b["rulesPosted"] = $("#rulesPosted").prop("checked");
-	b["teacherMobile"] = $("#teacherMobile").prop("checked");
-	b["appropriateTone"] = $("#appropriateTone").prop("checked");
-	b["usedPraise"] = $("#usedPraise").prop("checked");
-	b["usedMotivation"] = $("#usedMotivation").prop("checked");
-	b["conseqPosted"] = $("#conseqPosted").prop("checked");
-	b["positiveRapport"] = $("#positiveRapport").prop("checked");
+	b["rulesPosted"] = document.getElementById("rulesPosted").checked;
+	b["teacherMobile"] = document.getElementById("teacherMobile").checked;
+	b["appropriateTone"] = document.getElementById("appropriateTone").checked;
+	b["usedPraise"] = document.getElementById("usedPraise").checked;
+	b["usedMotivation"] = document.getElementById("usedMotivation").checked;
+	b["conseqPosted"] = document.getElementById("conseqPosted").checked;
+	b["positiveRapport"] = document.getElementById("positiveRapport").checked;
 	//section 2
-	b["diffInstruction"] = $("#diffInstruction").prop("checked");
-	b["activeStudentPart"] = $("#activeStudentPart").prop("checked");
-	b["collabLearnStrat"] = $("#collabLearnStrat").prop("checked");
-	b["activationStrat"] = $("#activationStrat").prop("checked");
-	b["summStrat"] = $("#summStrat").prop("checked");
-	b["criticalThinking"] = $("#criticalThinking").prop("checked");
+	b["diffInstruction"] = document.getElementById("diffInstruction").checked;
+	b["activeStudentPart"] = document.getElementById("activeStudentPart").checked;
+	b["collabLearnStrat"] = document.getElementById("collabLearnStrat").checked;
+	b["activationStrat"] = document.getElementById("activationStrat").checked;
+	b["summStrat"] = document.getElementById("summStrat").checked;
+	b["criticalThinking"] = document.getElementById("criticalThinking").checked;
 	//section 3
-	b["creating"] = $("#creating").prop("checked");
-	b["evaluating"] = $("#evaluating").prop("checked");
-	b["analyzing"] = $("#analyzing").prop("checked");
-	b["applying"] = $("#applying").prop("checked");
-	b["understanding"] = $("#understanding").prop("checked");
-	b["remembering"] = $("#remembering").prop("checked");
+	b["creating"] = document.getElementById("creating").checked;
+	b["evaluating"] = document.getElementById("evaluating").checked;
+	b["analyzing"] = document.getElementById("analyzing").checked;
+	b["applying"] = document.getElementById("applying").checked;
+	b["understanding"] = document.getElementById("understanding").checked;
+	b["remembering"] = document.getElementById("remembering").checked;
 	//section 4
-	b["essays"] = $("#essays").prop("checked");
-	b["oeQuestions"] = $("#oeQuestions").prop("checked");
-	b["lessonDrivenPrompts"] = $("#lessonDrivenPrompts").prop("checked");
+	b["essays"] = document.getElementById("essays").checked;
+	b["oeQuestions"] = document.getElementById("oeQuestions").checked;
+	b["lessonDrivenPrompts"] = document.getElementById("lessonDrivenPrompts").checked;
 	//long fields
-	var adminComments = $$("#adminComments");
-	var ponder = $$("#ponder");
+	var adminComments = document.getElementById("adminComments");
+	var ponder = document.getElementById("ponder");
 	//Things that require calculation
 	var period = getPeriod();
 	//did the user enter a name?
@@ -162,15 +163,15 @@ function submitCheck() {
 			buttons:[{
 				text:"No",
 				bold: true,
-				close: true
+				onClick: yesNoHandler1(false),
+				close: false
 			},{
 				text:"Yes",
 				bold: false,
-				onClick: handleData(name, subject, time, b, behaviors, adminComments, ponder),
+				onClick: yesNoHandler1(true),
 				close: false
 			}]
 		});
-		return;
 	}
 	/*if (email == false || email == undefined) {
 		five.alert('It appears as though that teacher doesn\'t exist. Did you misspell their name?', 'Error');
@@ -180,46 +181,42 @@ function submitCheck() {
 }
 function handleData(name, subject, time, b, behaviors, adminComments, ponder) {
 	console.log("Handle function called.");
-	/*if (!userDidSkipYesNo) {
+	while (!modalCallbackFinished) {
+		console.log("Waiting for user...");
+	}
+	if (!userDidSkipYesNo) {
 		return;
-	}*/
+	}
 	bJSON = JSON.stringify(b);
 	behaviorsJSON = JSON.stringify(behaviors);
-	ajaxString = "name=" + encodeURIComponent(name) +
-				 "&subject=" + encodeURIComponent(subject);
-	$.post("https://s0ph0s.linuxd.net/5x5Online/ajax", {
-		name:name,
-		subject:subject,
-		time:time,
-		b:b,
-		behaviors:behaviors,
-		adminComments:adminComments,
-		ponder:ponder
-	}, function(data, status) {
-			five.alert(String(data), status);
-	});
+	var submitAjax = new XMLHttpRequest();
+	submitAjax.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			five.alert(submitAjax.responseText);
+		}
+	}
+	submitAjax.open("POST", "/5x5Online/send5x5", true);
+	submitAjax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	submitAjax.send("name=" + name + "&subject=" + subject + "&time=" + time + "&adminComments=" + adminComments + "&ponder=" + ponder + "&b=" + bJSON + "&behaviors=" + behaviorsJSON);
 }
 function yesNoHandler1(userDidSkip) {
 	five.closeModal();
-	console.log("Modal button handler did stuff.");
 	userDidSkipYesNo = userDidSkip;
 	modalCallbackFinished = true;
-	handleData()
+}
+function save5x5() {
+	five.alert("I haven't written this yet.");
+}
+function load5x5() {
+	five.alert("I haven't written this yet.");
 }
 function connectionState(bool) {
-	console.log("Connection event: " + bool)
-	if (bool & !firstOpen) {
+	if (bool) {
 		connected = true;
-		banner("Connected to server.");
-	} else if (bool & firstOpen) {
-		connected = true;
-		firstOpen = false;
-	} else if (!bool & firstOpen) {
-		connected = false;
-		firstOpen = false;
+		banner("Internet connected.");
 	} else {
 		connected = false;
-		banner("Disconnected from server.");
+		banner("Internet disconnected.");
 	}
 }
 function banner(text) {
@@ -252,12 +249,12 @@ function banner(text) {
     });
 
 }
-$(function() {
+window.onload = function() {
 	//Set the time field when the page loads.
 	setTimeField();
-	//$$("#teacherName").value = "Leuschner, Frederick";
-	//$$("#subject").value = "AP Chemistry";
-	//$$("#rulesPosted").checked = true;
+	//document.getElementById("teacherName").value = "Leuschner, Frederick";
+	//document.getElementById("subject").value = "AP Chemistry";
+	//document.getElementById("rulesPosted").checked = true;
 	if (!navigator.onLine) {
 		five.alert("You appear to be offline. Sending 5x5s will not be possible until you reconnect.");
 		connected = false;
@@ -266,4 +263,4 @@ $(function() {
 	}
 	window.addEventListener("offline", connectionState(false));
 	window.addEventListener("online", connectionState(true));
-});
+}
