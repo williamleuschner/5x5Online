@@ -15,9 +15,42 @@
 <div class="pages">
 	<div data-page="settings" class="page">
 		<div class="page-content">
-			<div class="content-block">
-				<p>Settings here. Later.</p>
+			<div class="content-block-title">
+				Authentication
+			</div>
+			<div class="content-block width-fix">
+				<div class="list-block">
+					<ul>
+						<li>
+							<div class="item-content">
+								<div class="item-inner">
+									<div class="item-title label">Username</div>
+									<div class="item-input">
+										<input type="text" name="username" id="username" value="" />
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item-content">
+								<div class="item-inner">
+									<div class="item-title label">Token</div>
+									<div class="item-input">
+										<input type="text" name="token" id="token" value="" />
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="content-block">
+					<div class="row">
+						<div class="col-100">
+							<input type="button" value="Save" onclick="saveSettings()" class="center button button-big button-submit button-fix"></input>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>  
+</div>

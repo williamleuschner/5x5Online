@@ -13,6 +13,7 @@ five.params["modalTitle"] = '5x5 Online';
 var connected = false;
 var modalCallbackFinished = false;
 var userDidSkipYesNo = false;
+var hasHTML5Storage = false;
 function setTimeField() {
 	//Make a date
 	var d = new Date();
@@ -141,8 +142,8 @@ function submitCheck() {
 	b["oeQuestions"] = document.getElementById("oeQuestions").checked;
 	b["lessonDrivenPrompts"] = document.getElementById("lessonDrivenPrompts").checked;
 	//long fields
-	var adminComments = document.getElementById("adminComments");
-	var ponder = document.getElementById("ponder");
+	var adminComments = document.getElementById("adminComments").value;
+	var ponder = document.getElementById("ponder").value;
 	//Things that require calculation
 	var period = getPeriod();
 	//did the user enter a name?
@@ -196,7 +197,15 @@ function handleData(name, subject, time, b, behaviors, adminComments, ponder) {
 	}
 	submitAjax.open("POST", "https://s0ph0s.linuxd.net/5x5Online/ajax", true);
 	submitAjax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	submitAjax.send("name=" + name + "&subject=" + subject + "&time=" + time + "&adminComments=" + adminComments + "&ponder=" + ponder + "&b=" + bJSON + "&behaviors=" + behaviorsJSON);
+	submitAjax.send("name=" + name +
+		"&subject=" + subject +
+		"&time=" + time +
+		"&adminComments=" + adminComments +
+		"&ponder=" + ponder +
+		"&b=" + bJSON +
+		"&behaviors=" + behaviorsJSON +
+		"&uname=" + localStorage['username'] +
+		"&token=" + localStorage['token']);
 }
 function save5x5() {
 	five.alert("I haven't written this yet.");
@@ -243,12 +252,26 @@ function banner(text) {
     });
 
 }
+function supports_html5_storage() {
+	try {
+		return 'localStorage' in window && window['localStorage'] !== null;
+	} catch (e) {
+		return false;
+	}
+}
+function saveSettings() {
+	var username = $$("#username").val();
+	var token = $$("#token").val();
+	localStorage['username'] = username;
+	localStorage['token'] = token;
+	console.log("Settings saved.")
+	}
 window.onload = function() {
 	//Set the time field when the page loads.
 	setTimeField();
-	document.getElementById("teacherName").value = "Frederick Leuschner";
-	document.getElementById("subject").value = "AP Chemistry";
-	document.getElementById("rulesPosted").checked = true;
+	/*document.getElementById("teacherName").value = "Admin Admin";
+	document.getElementById("subject").value = "Test";
+	document.getElementById("rulesPosted").checked = true;*/
 	if (!navigator.onLine) {
 		five.alert("You appear to be offline. Sending 5x5s will not be possible until you reconnect.");
 		connected = false;
@@ -257,4 +280,14 @@ window.onload = function() {
 	}
 	window.addEventListener("offline", connectionState(false));
 	window.addEventListener("online", connectionState(true));
+	if (supports_html5_storage()) {
+		hasHTML5Storage = true;
+	} else {
+		hasHTML5Storage = false;
+		five.alert("Your browser does not support HTML5 local storage. This web app will not work.");
+	}
 }
+$$(document).on('pageInit', '.page[data-page="settings"]', function (e) {
+	$$("#username").val(localStorage['username']);
+	$$("#token").val(localStorage['token']);
+})

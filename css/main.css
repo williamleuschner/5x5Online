@@ -66,6 +66,9 @@ body {
 .button-fix {
 	-webkit-appearance:none;
 }
+.width-fix {
+	padding:0;
+}
 #banner {
 	background-color: #F7F7F8;
 	position: absolute;
