@@ -308,7 +308,6 @@ function clearForm() {
 	setTimeField();
 }
 window.onload = function() {
-	banner("Debugging mode on.");
 	//Set the time field when the page loads.
 	setTimeField();
 	/*document.getElementById("teacherName").value = "Admin Admin";
