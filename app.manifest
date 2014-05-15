@@ -2,6 +2,9 @@ CACHE MANIFEST
 
 CACHE:
 index.html
+settings.html
+load.html
+save.html
 apple-touch-icon-144x144-precomposed.png
 apple-touch-icon-74x74-precomposed.png
 apple-touch-icon-precomposed.png
@@ -20,5 +23,6 @@ img/i-form-radio-blue.png
 
 NETWORK:
 app.manifest
+*
 
-# rev 0.5
+# rev 0.8
