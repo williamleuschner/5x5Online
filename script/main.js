@@ -168,7 +168,7 @@ function submitCheck() {
 			},{
 				text:"Yes",
 				bold: false,
-				onClick: handleData(name, subject, time, b, behaviors, adminComments, ponder),
+				onClick: handleData(name, subject, period, time, b, behaviors, adminComments, ponder),
 				close: false
 			}]
 		});
@@ -177,10 +177,9 @@ function submitCheck() {
 		five.alert('It appears as though that teacher doesn\'t exist. Did you misspell their name?', 'Error');
 		return;
 	}*/
-	handleData(name, subject, time, b, behaviors, adminComments, ponder)
+	handleData(name, subject, period, time, b, behaviors, adminComments, ponder)
 }
-function handleData(name, subject, time, b, behaviors, adminComments, ponder) {
-	console.log("Handle function called.");
+function handleData(name, subject, period, time, b, behaviors, adminComments, ponder) {
 	bJSON = JSON.stringify(b);
 	behaviorsJSON = JSON.stringify(behaviors);
 	var submitAjax = new XMLHttpRequest();
@@ -188,17 +187,18 @@ function handleData(name, subject, time, b, behaviors, adminComments, ponder) {
 		if (submitAjax.readyState == 4 && submitAjax.status == 200) {
 			responseObj = JSON.parse(submitAjax.responseText);
 			if (responseObj['s']) {
-				console.log("AJAX Success!");
+				clearForm()
 			} else {
 				console.log("AJAX Error.");
 			}
 			five.alert(responseObj['message'], responseObj['title']);
 		}
 	}
-	submitAjax.open("POST", "https://s0ph0s.linuxd.net/5x5Online/ajax", true);
+	submitAjax.open("POST", "http://s0ph0s.linuxd.net/5x5Online/ajax", true);
 	submitAjax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	submitAjax.send("name=" + name +
 		"&subject=" + subject +
+		"&period=" + period +
 		"&time=" + time +
 		"&adminComments=" + adminComments +
 		"&ponder=" + ponder +
@@ -246,6 +246,7 @@ function banner(text) {
 
     notification.on('touchstart', function() {
         notification.addClass('close');
+        $$('.views').removeClass('reduce');
         setTimeout(function() {
             notification.remove();
         }, 300 );
@@ -264,9 +265,48 @@ function saveSettings() {
 	var token = $$("#token").val();
 	localStorage['username'] = username;
 	localStorage['token'] = token;
-	console.log("Settings saved.")
 	}
+function clearForm() {
+	document.getElementById("teacherName").value = "";
+	document.getElementById("subject").value = "";
+	document.getElementById("time").value = "";
+	//dropdowns
+	document.getElementById("studentEngagement").value = "engaged";
+	document.getElementById("teacherBehavior").value = "lecturing";
+	document.getElementById("essentialQuestion").value = "posted";
+	//section 1
+	document.getElementById("rulesPosted").checked = false;
+	document.getElementById("teacherMobile").checked = false;
+	document.getElementById("appropriateTone").checked = false;
+	document.getElementById("usedPraise").checked = false;
+	document.getElementById("usedMotivation").checked = false;
+	document.getElementById("conseqPosted").checked = false;
+	document.getElementById("positiveRapport").checked = false;
+	//section 2
+	document.getElementById("diffInstruction").checked = false;
+	document.getElementById("activeStudentPart").checked = false;
+	document.getElementById("collabLearnStrat").checked = false;
+	document.getElementById("activationStrat").checked = false;
+	document.getElementById("summStrat").checked = false;
+	document.getElementById("criticalThinking").checked = false;
+	//section 3
+	document.getElementById("creating").checked = false;
+	document.getElementById("evaluating").checked = false;
+	document.getElementById("analyzing").checked = false;
+	document.getElementById("applying").checked = false;
+	document.getElementById("understanding").checked = false;
+	document.getElementById("remembering").checked = false;
+	//section 4
+	document.getElementById("essays").checked = false;
+	document.getElementById("oeQuestions").checked = false;
+	document.getElementById("lessonDrivenPrompts").checked = false;
+	//long fields
+	document.getElementById("adminComments").value = "";
+	document.getElementById("ponder").value = "";
+	setTimeField();
+}
 window.onload = function() {
+	banner("Debugging mode on.");
 	//Set the time field when the page loads.
 	setTimeField();
 	/*document.getElementById("teacherName").value = "Admin Admin";
