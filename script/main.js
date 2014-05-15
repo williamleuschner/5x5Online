@@ -186,6 +186,7 @@ function handleData(name, subject, period, time, b, behaviors, adminComments, po
 	submitAjax.onreadystatechange = function() {
 		if (submitAjax.readyState == 4 && submitAjax.status == 200) {
 			responseObj = JSON.parse(submitAjax.responseText);
+			five.hideIndicator()
 			if (responseObj['s']) {
 				clearForm()
 			} else {
@@ -194,6 +195,7 @@ function handleData(name, subject, period, time, b, behaviors, adminComments, po
 			five.alert(responseObj['message'], responseObj['title']);
 		}
 	}
+	five.showIndicator()
 	submitAjax.open("POST", "http://s0ph0s.linuxd.net/5x5Online/ajax", true);
 	submitAjax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	submitAjax.send("name=" + name +
