@@ -14,6 +14,7 @@ var connected = false;
 var modalCallbackFinished = false;
 var userDidSkipYesNo = false;
 var hasHTML5Storage = false;
+var version = 1.0
 function setTimeField() {
 	//Make a date
 	var d = new Date();
@@ -210,10 +211,112 @@ function handleData(name, subject, period, time, b, behaviors, adminComments, po
 		"&token=" + localStorage['token']);
 }
 function save5x5() {
-	five.alert("I haven't written this yet.");
+	five.showIndicator();
+	//text boxen
+	var name = document.getElementById("teacherName").value;
+	var subject = document.getElementById("subject").value;
+	var time = document.getElementById("time").value;
+	//dropdowns
+	var behaviors = new Object();
+	behaviors["studentEngagement"] = document.getElementById("studentEngagement").value;
+	behaviors["teacherBehavior"] = document.getElementById("teacherBehavior").value;
+	behaviors["essentialQuestion"] = document.getElementById("essentialQuestion").value;
+	//section 1
+	var b = new Object();
+	b["rulesPosted"] = document.getElementById("rulesPosted").checked;
+	b["teacherMobile"] = document.getElementById("teacherMobile").checked;
+	b["appropriateTone"] = document.getElementById("appropriateTone").checked;
+	b["usedPraise"] = document.getElementById("usedPraise").checked;
+	b["usedMotivation"] = document.getElementById("usedMotivation").checked;
+	b["conseqPosted"] = document.getElementById("conseqPosted").checked;
+	b["positiveRapport"] = document.getElementById("positiveRapport").checked;
+	//section 2
+	b["diffInstruction"] = document.getElementById("diffInstruction").checked;
+	b["activeStudentPart"] = document.getElementById("activeStudentPart").checked;
+	b["collabLearnStrat"] = document.getElementById("collabLearnStrat").checked;
+	b["activationStrat"] = document.getElementById("activationStrat").checked;
+	b["summStrat"] = document.getElementById("summStrat").checked;
+	b["criticalThinking"] = document.getElementById("criticalThinking").checked;
+	//section 3
+	b["creating"] = document.getElementById("creating").checked;
+	b["evaluating"] = document.getElementById("evaluating").checked;
+	b["analyzing"] = document.getElementById("analyzing").checked;
+	b["applying"] = document.getElementById("applying").checked;
+	b["understanding"] = document.getElementById("understanding").checked;
+	b["remembering"] = document.getElementById("remembering").checked;
+	//section 4
+	b["essays"] = document.getElementById("essays").checked;
+	b["oeQuestions"] = document.getElementById("oeQuestions").checked;
+	b["lessonDrivenPrompts"] = document.getElementById("lessonDrivenPrompts").checked;
+	//long fields
+	var adminComments = document.getElementById("adminComments").value;
+	var ponder = document.getElementById("ponder").value;
+	//Calculated values
+	var period = getPeriod();
+	otherSaves = localStorage["5x5saves"].split(",");
+	console.log(toString(otherSaves));
+	if (otherSaves.indexOf(name) != -1) {
+		five.alert("A 5x5 with this name is already saved.", "Save Error")
+		return;
+	}
+	console.log("Writing save...")
+	localStorage[name] = JSON.stringify({'name':name, 'subject':subject, 'period':period, 'time':time, 'behaviors':behaviors, 'b':b, 'adminComments':adminComments, 'ponder':ponder});
+	otherSaves.push(name);
+	localStorage['5x5saves'] = otherSaves.toString();
+	five.hideIndicator();
+	five.alert("5x5 Saved as \"" + name + "\".");
 }
 function load5x5() {
-	five.alert("I haven't written this yet.");
+	five.showIndicator();
+	otherSaves = localStorage["5x5saves"].split(",");
+
+	//Ask which one here later.
+	/*
+	selectedSave = getUserInupt()
+	*/
+
+	selectedSave = "Admin Admin";
+	toLoad = JSON.parse(localStorage[selectedSave]);
+
+	document.getElementById("teacherName").value = toLoad['name'];
+	document.getElementById("subject").value = toLoad['subject'];
+	document.getElementById("time").value = toLoad['time'];
+	//dropdowns
+	document.getElementById("studentEngagement").value = toLoad['behaviors']['studentEngagement'];
+	document.getElementById("teacherBehavior").value = toLoad['behaviors']['teacherBehavior'];
+	document.getElementById("essentialQuestion").value = toLoad['behaviors']['essentialQuestion'];
+	//section 1
+	document.getElementById("rulesPosted").checked = toLoad['b']['rulesPosted'];
+	document.getElementById("teacherMobile").checked = toLoad['b']['teacherMobile'];
+	document.getElementById("appropriateTone").checked = toLoad['b']['appropriateTone'];
+	document.getElementById("usedPraise").checked = toLoad['b']['usedPraise'];
+	document.getElementById("usedMotivation").checked = toLoad['b']['usedMotivation'];
+	document.getElementById("conseqPosted").checked = toLoad['b']['conseqPosted'];
+	document.getElementById("positiveRapport").checked = toLoad['b']['positiveRapport'];
+	//section 2
+	document.getElementById("diffInstruction").checked = toLoad['b']['diffInstruction'];
+	document.getElementById("activeStudentPart").checked = toLoad['b']['activeStudentPart'];
+	document.getElementById("collabLearnStrat").checked = toLoad['b']['collabLearnStrat'];
+	document.getElementById("activationStrat").checked = toLoad['b']['activationStrat'];
+	document.getElementById("summStrat").checked = toLoad['b']['summStrat'];
+	document.getElementById("criticalThinking").checked = toLoad['b']['criticalThinking'];
+	//section 3
+	document.getElementById("creating").checked = toLoad['b']['creating'];
+	document.getElementById("evaluating").checked = toLoad['b']['evaluating'];
+	document.getElementById("analyzing").checked = toLoad['b']['analyzing'];
+	document.getElementById("applying").checked = toLoad['b']['applying'];
+	document.getElementById("understanding").checked = toLoad['b']['understanding'];
+	document.getElementById("remembering").checked = toLoad['b']['remembering'];
+	//section 4
+	document.getElementById("essays").checked = toLoad['b']['essays'];
+	document.getElementById("oeQuestions").checked = toLoad['b']['oeQuestions'];
+	document.getElementById("lessonDrivenPrompts").checked = toLoad['b']['lessonDrivenPrompts'];
+	//long fields
+	document.getElementById("adminComments").value = toLoad['adminComments'];
+	document.getElementById("ponder").value = toLoad["ponder"];
+	otherSaves = otherSaves.pop(otherSaves.indexOf(selectedSave));
+	five.hideIndicator();
+	localStorage['5x5saves'] = otherSaves.toString();
 }
 function connectionState(bool) {
 	if (bool) {
@@ -267,7 +370,8 @@ function saveSettings() {
 	var token = $$("#token").val();
 	localStorage['username'] = username;
 	localStorage['token'] = token;
-	}
+	mainView.goBack();
+}
 function clearForm() {
 	document.getElementById("teacherName").value = "";
 	document.getElementById("subject").value = "";
@@ -325,7 +429,14 @@ window.onload = function() {
 		hasHTML5Storage = true;
 	} else {
 		hasHTML5Storage = false;
-		five.alert("Your browser does not support HTML5 local storage. This web app will not work.");
+		five.alert("Your browser does not support HTML5 local storage. This web app WILL NOT work.");
+	}
+	if (localStorage['5x5version'] < version) {
+		banner("5x5 Online Updated");
+		localStorage['5x5version'] = version;
+	}
+	if (localStorage['5x5saves'] == undefined) {
+		localStorage['5x5saves'] = [""].toString();
 	}
 }
 $$(document).on('pageInit', '.page[data-page="settings"]', function (e) {
