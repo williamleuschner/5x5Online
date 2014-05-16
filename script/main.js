@@ -411,6 +411,14 @@ function clearForm() {
 	document.getElementById("ponder").value = "";
 	setTimeField();
 }
+window.addEventListener('load', function(e) {
+	window.applicationCache.addEventListener('updateready', function(e) {
+		if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+			banner("5x5 Online Updated");
+			window.applicationCache.swapCache();
+		}
+	}, false);
+}, false);
 window.onload = function() {
 	//Set the time field when the page loads.
 	setTimeField();
