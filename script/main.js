@@ -14,7 +14,8 @@ var connected = false;
 var modalCallbackFinished = false;
 var userDidSkipYesNo = false;
 var hasHTML5Storage = false;
-var version = 1.0
+var rrQuadrant = '0';
+var rrQuads = [];
 function setTimeField() {
 	//Make a date
 	var d = new Date();
@@ -117,7 +118,7 @@ function submitCheck() {
 	behaviors["essentialQuestion"] = document.getElementById("essentialQuestion").value;
 	//section 1
 	var b = new Object();
-	b["rulesPosted"] = document.getElementById("rulesPosted").checked;
+	b["procedureManagement"] = document.getElementById("procedureManagement").checked;
 	b["teacherMobile"] = document.getElementById("teacherMobile").checked;
 	b["appropriateTone"] = document.getElementById("appropriateTone").checked;
 	b["usedPraise"] = document.getElementById("usedPraise").checked;
@@ -131,6 +132,8 @@ function submitCheck() {
 	b["activationStrat"] = document.getElementById("activationStrat").checked;
 	b["summStrat"] = document.getElementById("summStrat").checked;
 	b["criticalThinking"] = document.getElementById("criticalThinking").checked;
+	b["feedback"] = document.getElementById("feedback").checked;
+	b["assessment"] = document.getElementById("assessment").checked;
 	//section 3
 	b["creating"] = document.getElementById("creating").checked;
 	b["evaluating"] = document.getElementById("evaluating").checked;
@@ -156,8 +159,12 @@ function submitCheck() {
 		five.alert('You must enter a subject.', 'Error')
 		return;
 	}
+	if (rrQuadrant == '0'){
+		five.alert('You must select a Rigor/Relevance Framework quadrant.', 'Error');
+		return;
+	}
 	//Did the user check any of the checkboxes?
-	if ( !(b["rulesPosted"] || b["teacherMobile"] || b["appropriateTone"] || b["usedPraise"] || b["usedMotivation"] || b["conseqPosted"] || b["positiveRapport"] || b["diffInstruction"] || b["activeStudentPart"] || b["collabLearnStrat"] || b["activationStrat"] || b["summStrat"] || b["criticalThinking"] || b["creating"] || b["evaluating"] || b["analyzing"] || b["applying"] || b["understanding"] || b["remembering"] || b["essays"] || b["oeQuestions"] || b["lessonDrivenPrompts"]) ) {
+	if ( !(b["procedureManagement"] || b["teacherMobile"] || b["appropriateTone"] || b["usedPraise"] || b["usedMotivation"] || b["conseqPosted"] || b["positiveRapport"] || b["diffInstruction"] || b["activeStudentPart"] || b["collabLearnStrat"] || b["activationStrat"] || b["summStrat"] || b["criticalThinking"] || b["creating"] || b["evaluating"] || b["analyzing"] || b["applying"] || b["understanding"] || b["remembering"] || b["essays"] || b["oeQuestions"] || b["lessonDrivenPrompts"]) ) {
 		five.modal({
 			title:"Are You Sure?",
 			text:"You have not selected any checkboxes. Are you sure you want to sumbit?",
@@ -169,18 +176,15 @@ function submitCheck() {
 			},{
 				text:"Yes",
 				bold: false,
-				onClick: handleData(name, subject, period, time, b, behaviors, adminComments, ponder),
-				close: false
+				onClick: handleData(name, subject, period, time, b, behaviors, rrQuadrant, adminComments, ponder),
+				close: true
 			}]
 		});
-	}
-	/*if (email == false || email == undefined) {
-		five.alert('It appears as though that teacher doesn\'t exist. Did you misspell their name?', 'Error');
 		return;
-	}*/
-	handleData(name, subject, period, time, b, behaviors, adminComments, ponder)
+	}
+	handleData(name, subject, period, time, b, behaviors, rrQuadrant, adminComments, ponder)
 }
-function handleData(name, subject, period, time, b, behaviors, adminComments, ponder) {
+function handleData(name, subject, period, time, b, behaviors, quad, adminComments, ponder) {
 	bJSON = JSON.stringify(b);
 	behaviorsJSON = JSON.stringify(behaviors);
 	var submitAjax = new XMLHttpRequest();
@@ -203,6 +207,7 @@ function handleData(name, subject, period, time, b, behaviors, adminComments, po
 		"&subject=" + subject +
 		"&period=" + period +
 		"&time=" + time +
+		"&quad=" + quad +
 		"&adminComments=" + adminComments +
 		"&ponder=" + ponder +
 		"&b=" + bJSON +
@@ -223,7 +228,7 @@ function save5x5() {
 	behaviors["essentialQuestion"] = document.getElementById("essentialQuestion").value;
 	//section 1
 	var b = new Object();
-	b["rulesPosted"] = document.getElementById("rulesPosted").checked;
+	b["procedureManagement"] = document.getElementById("procedureManagement").checked;
 	b["teacherMobile"] = document.getElementById("teacherMobile").checked;
 	b["appropriateTone"] = document.getElementById("appropriateTone").checked;
 	b["usedPraise"] = document.getElementById("usedPraise").checked;
@@ -237,6 +242,8 @@ function save5x5() {
 	b["activationStrat"] = document.getElementById("activationStrat").checked;
 	b["summStrat"] = document.getElementById("summStrat").checked;
 	b["criticalThinking"] = document.getElementById("criticalThinking").checked;
+	b["feedback"] = document.getElementById("feedback").checked;
+	b["assessment"] = document.getElementById("assessment").checked;
 	//section 3
 	b["creating"] = document.getElementById("creating").checked;
 	b["evaluating"] = document.getElementById("evaluating").checked;
@@ -256,11 +263,12 @@ function save5x5() {
 	otherSaves = localStorage["5x5saves"].split(",");
 	console.log(toString(otherSaves));
 	if (otherSaves.indexOf(name) != -1) {
+		five.hideIndicator();
 		five.alert("A 5x5 with this name is already saved.", "Save Error")
 		return;
 	}
 	console.log("Writing save...")
-	localStorage[name] = JSON.stringify({'name':name, 'subject':subject, 'period':period, 'time':time, 'behaviors':behaviors, 'b':b, 'adminComments':adminComments, 'ponder':ponder});
+	localStorage[name] = JSON.stringify({'name':name, 'subject':subject, 'period':period, 'time':time, 'behaviors':behaviors, 'b':b, 'quad':rrQuadrant, 'adminComments':adminComments, 'ponder':ponder});
 	otherSaves.push(name);
 	localStorage['5x5saves'] = otherSaves.toString();
 	five.hideIndicator();
@@ -286,7 +294,7 @@ function load5x5() {
 	document.getElementById("teacherBehavior").value = toLoad['behaviors']['teacherBehavior'];
 	document.getElementById("essentialQuestion").value = toLoad['behaviors']['essentialQuestion'];
 	//section 1
-	document.getElementById("rulesPosted").checked = toLoad['b']['rulesPosted'];
+	document.getElementById("procedureManagement").checked = toLoad['b']['procedureManagement'];
 	document.getElementById("teacherMobile").checked = toLoad['b']['teacherMobile'];
 	document.getElementById("appropriateTone").checked = toLoad['b']['appropriateTone'];
 	document.getElementById("usedPraise").checked = toLoad['b']['usedPraise'];
@@ -300,6 +308,8 @@ function load5x5() {
 	document.getElementById("activationStrat").checked = toLoad['b']['activationStrat'];
 	document.getElementById("summStrat").checked = toLoad['b']['summStrat'];
 	document.getElementById("criticalThinking").checked = toLoad['b']['criticalThinking'];
+	document.getElementById("feedback").checked = toLoad['b']['feedback'];
+	document.getElementById("assessment").checked = toLoad['b']['assessment'];
 	//section 3
 	document.getElementById("creating").checked = toLoad['b']['creating'];
 	document.getElementById("evaluating").checked = toLoad['b']['evaluating'];
@@ -311,6 +321,15 @@ function load5x5() {
 	document.getElementById("essays").checked = toLoad['b']['essays'];
 	document.getElementById("oeQuestions").checked = toLoad['b']['oeQuestions'];
 	document.getElementById("lessonDrivenPrompts").checked = toLoad['b']['lessonDrivenPrompts'];
+	//rrFramework
+	rrQuadrant = toLoad['quad'];
+	for (var i = 0; i < 4; i++) {
+		if (rrQuads[i].getAttribute("value") == rrQuadrant) {
+			rrQuads[i].classList.toggle("selected", true);
+		} else {
+			rrQuads[i].classList.toggle("selected", false);
+		}
+	}
 	//long fields
 	document.getElementById("adminComments").value = toLoad['adminComments'];
 	document.getElementById("ponder").value = toLoad["ponder"];
@@ -378,10 +397,11 @@ function clearForm() {
 	document.getElementById("time").value = "";
 	//dropdowns
 	document.getElementById("studentEngagement").value = "engaged";
-	document.getElementById("teacherBehavior").value = "lecturing";
+	document.getElementById("teacherBehavior").value = "explaining";
 	document.getElementById("essentialQuestion").value = "posted";
+	$$("#formPage").trigger('pageInit');
 	//section 1
-	document.getElementById("rulesPosted").checked = false;
+	document.getElementById("procedureManagement").checked = false;
 	document.getElementById("teacherMobile").checked = false;
 	document.getElementById("appropriateTone").checked = false;
 	document.getElementById("usedPraise").checked = false;
@@ -395,6 +415,8 @@ function clearForm() {
 	document.getElementById("activationStrat").checked = false;
 	document.getElementById("summStrat").checked = false;
 	document.getElementById("criticalThinking").checked = false;
+	document.getElementById("feedback").checked = false;
+	document.getElementById("assessment").checked = false;
 	//section 3
 	document.getElementById("creating").checked = false;
 	document.getElementById("evaluating").checked = false;
@@ -406,10 +428,21 @@ function clearForm() {
 	document.getElementById("essays").checked = false;
 	document.getElementById("oeQuestions").checked = false;
 	document.getElementById("lessonDrivenPrompts").checked = false;
+	//rrFramework
+	for (var i = 0; i < 4; i++) {
+		rrQuads[i].classList.toggle("selected", false);
+	}
 	//long fields
 	document.getElementById("adminComments").value = "";
 	document.getElementById("ponder").value = "";
 	setTimeField();
+}
+function rr() {
+	rrQuadrant = this.getAttribute("value");
+	for (var i = 0; i < 4; i++) {
+		rrQuads[i].classList.toggle("selected", false);
+	}
+	this.classList.toggle("selected", true);
 }
 window.addEventListener('load', function(e) {
 	window.applicationCache.addEventListener('updateready', function(e) {
@@ -424,7 +457,7 @@ window.onload = function() {
 	setTimeField();
 	/*document.getElementById("teacherName").value = "Admin Admin";
 	document.getElementById("subject").value = "Test";
-	document.getElementById("rulesPosted").checked = true;*/
+	document.getElementById("procedureManagement").checked = true;*/
 	if (!navigator.onLine) {
 		five.alert("You appear to be offline. Sending 5x5s will not be possible until you reconnect.");
 		connected = false;
@@ -439,13 +472,52 @@ window.onload = function() {
 		hasHTML5Storage = false;
 		five.alert("Your browser does not support HTML5 local storage. This web app WILL NOT work.");
 	}
-	if (localStorage['5x5version'] < version) {
-		banner("5x5 Online Updated");
-		localStorage['5x5version'] = version;
-	}
 	if (localStorage['5x5saves'] == undefined) {
 		localStorage['5x5saves'] = [""].toString();
 	}
+	rrQuads = document.getElementsByClassName("rrQuad");
+	for (var anchor in rrQuads) {
+		rrQuads[anchor].onclick = rr;
+	}
+	/*******************
+	*                  *
+	* RRR Grid Flipper *
+	*                  *
+	*******************/
+	 // Checking for CSS 3D transformation support
+    css3dSupport = supportsCSS3D();
+
+    var formContainer = $$('#flipHolder');
+
+    // Listening for clicks on the ribbon links
+    $$('.flipLink').click(function(e){
+
+        // Flipping the forms
+        formContainer.toggleClass('flipped');
+
+        // If there is no CSS3 3D support, simply
+        // hide the login form (exposing the recover one)
+        if(!css3dSupport){
+            $$('#rrframeworkSelect').toggle();
+        }
+        e.preventDefault();
+    });
+
+    // A helper function that checks for the
+    // support of the 3D CSS3 transformations.
+    function supportsCSS3D() {
+        var props = [
+            'perspectiveProperty', 'WebkitPerspective', 'MozPerspective'
+        ], testDom = document.createElement('a');
+
+        for(var i=0; i<props.length; i++){
+            if(props[i] in testDom.style){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 $$(document).on('pageInit', '.page[data-page="settings"]', function (e) {
 	$$("#username").val(localStorage['username']);

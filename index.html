@@ -128,7 +128,7 @@
 				</div>
 			</div>
 			<div class="pages">
-				<div data-page="index-1" class="page page-on-center">
+				<div data-page="index-1" id="formPage" class="page page-on-center">
 					<div class="page-content">
 						<!--Name, Subject, and Time-->
 						<div class="list-block">
@@ -188,7 +188,7 @@
 								<li>
 									<a href="#" class="item-link smart-select">
 										<select id="teacherBehavior">
-											<option value="lecturing">was lecturing</option>
+											<option value="explaining">was explaining</option>
 											<option value="moving">was mobile; engaged</option>
 											<option value="unengaged">was not engaged</option>
 										</select>
@@ -219,18 +219,18 @@
 						</div>
 						<!--Section 1-->
 						<div class="content-block-title">
-							Classroom Management
+							Domain 2
 						</div>
 						<div class="list-block">
 							<ul>
 								<li>
 									<label class="label-checkbox item-content">
-										<input type="checkbox" name="rulesPosted" id="rulesPosted" />
+										<input type="checkbox" name="procedureManagement" id="procedureManagement" />
 										<div class="item-media">
 											<i class="icon icon-form-checkbox"></i>
 										</div>
 										<div class="item-inner">
-											<div class="item-title">Rules Posted</div>
+											<div class="item-title">Managed Classroom Procedures</div>
 										</div>
 									</label>
 								</li>
@@ -304,7 +304,7 @@
 						</div>
 						<!--Section 2-->
 						<div class="content-block-title">
-							Lesson
+							Domain 3
 						</div>
 						<div class="list-block">
 							<ul>
@@ -374,11 +374,33 @@
 										</div>
 									</label>
 								</li>
+								<li>
+									<label class="label-checkbox item-content">
+									<input type="checkbox" name="feedback" id="feedback" />
+										<div class="item-media">
+											<i class="icon icon-form-checkbox"></i>
+										</div>
+										<div class="item-inner">
+											<div class="item-title">Feedback to Students</div>
+										</div>
+									</label>
+								</li>
+								<li>
+									<label class="label-checkbox item-content">
+									<input type="checkbox" name="assessment" id="assessment" />
+										<div class="item-media">
+											<i class="icon icon-form-checkbox"></i>
+										</div>
+										<div class="item-inner">
+											<div class="item-title">Assessment Given</div>
+										</div>
+									</label>
+								</li>
 							</ul>
 						</div>
 						<!--Section 3-->
 						<div class="content-block-title">
-							Questioning Strategies
+							Domain 3D
 						</div>
 						<div class="list-block">
 							<ul>
@@ -452,7 +474,7 @@
 						</div>
 						<!--Section 4-->
 						<div class="content-block-title">
-							Writing Strategies
+							Domain 3
 						</div>
 						<div class="list-block">
 							<ul>
@@ -491,6 +513,49 @@
 								</li>
 							</ul>
 						</div>
+						<!--RRR Quad Flipper -->
+						<div class="content-block-title">
+							Rigor/Relevance Framework
+						</div>
+						<div class="content-block" id="flipHolder">
+							<div id="rrframeworkSelect" class="content-block-inner reallyTall">
+								<table class="rrFramework">
+									<tr>
+										<td>
+											<a href="#" class="rrQuad" value="c">
+											<p class="rrLabel">Assimilation</p>
+											<p class="rrLetter">C</p>
+											</a>
+										</td>
+										<td>
+											<a href="#" class="rrQuad" value="d">
+											<p class="rrLabel">Adaptation</p>
+											<p class="rrLetter">D</p>
+											</a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<a href="#" class="rrQuad" value="a">
+											<p class="rrLabel">Acquisition</p>
+											<p class="rrLetter">A</p>
+											</a>
+										</td>
+										<td>
+											<a href="#" class="rrQuad" value="b">
+											<p class="rrLabel">Application</p>
+											<p class="rrLetter">B</p>
+											</a>
+										</td>
+									</tr>
+								</table>
+								<a href="#" class="flipLink"><i class="icon icon-info-blue"></i></a>
+							</div>
+							<div id="rrframeworkExample" class="content-block-inner">
+								<img src="http://www.orca.uconn.edu/orca/assets/Image/rigor-relevance-framework.png">
+								<a href="#" class="flipLink">Back</a><br />
+							</div>
+						</div>	
 						<!--Textareas-->
 						<div class="list-block">
 							<ul>
