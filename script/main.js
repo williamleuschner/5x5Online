@@ -447,7 +447,8 @@ function rr() {
 window.addEventListener('load', function(e) {
 	window.applicationCache.addEventListener('updateready', function(e) {
 		if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-			banner("5x5 Online Updated");
+			banner("Update downloaded. Restart to install...");
+			localStorage['com.5x5Online.updateReady'] = 1;
 			window.applicationCache.swapCache();
 		}
 	}, false);
@@ -478,6 +479,10 @@ window.onload = function() {
 	rrQuads = document.getElementsByClassName("rrQuad");
 	for (var anchor in rrQuads) {
 		rrQuads[anchor].onclick = rr;
+	}
+	if (localStorage['com.5x5Online.updateReady'] == 1) {
+		localStorage['com.5x5Online.updateReady'] = 0;
+		banner("Update installed!")
 	}
 	/*******************
 	*                  *
