@@ -4,6 +4,9 @@
 input[type="submit"].center {
 	width:100%;
 }
+.tiny-text {
+	font-size:9px;
+}
 /* Your app custom files in this file */
 .view-left {
   border-right: 1px solid #b2b2b2;
