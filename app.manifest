@@ -21,8 +21,10 @@ script/framework7.min.js
 script/main.js
 img/i-form-checkbox-white.png
 img/i-form-radio-blue.png
+http://www.orca.uconn.edu/orca/assets/Image/rigor-relevance-framework.png
 
 NETWORK:
 *
 
-# rev 1.1b
+# rev 1.1c
+# subversion 2
