@@ -16,6 +16,7 @@ var userDidSkipYesNo = false;
 var hasHTML5Storage = false;
 var rrQuadrant = '0';
 var rrQuads = [];
+var didJustStart = 0;
 function setTimeField() {
 	//Make a date
 	var d = new Date();
@@ -106,6 +107,11 @@ function getPeriodDebug(testDate) {
 }*/
 function submitCheck() {
 	//Checks the submission before it is submitted.
+	//Is the user online?
+	if (!connected) {
+		five.alert("You are not online. Save the 5x5 and reconnect to submit.", "Error");
+		return;
+	}
 	//Success variable for yes/no box
 	//text boxen
 	var name = document.getElementById("teacherName").value;
@@ -337,12 +343,17 @@ function load5x5() {
 	five.hideIndicator();
 	localStorage['5x5saves'] = otherSaves.toString();
 }
-function connectionState(bool) {
-	if (bool) {
-		connected = true;
+function connectionStateOn() {
+	++didJustStart;
+	connected = true;
+	if (didJustStart > 1) {
 		banner("Internet connected.");
-	} else {
-		connected = false;
+	}
+}
+function connectionStateOff() {
+	++didJustStart
+	connected = false;
+	if (didJustStart > 0) {
 		banner("Internet disconnected.");
 	}
 }
@@ -456,30 +467,37 @@ window.addEventListener('load', function(e) {
 window.onload = function() {
 	//Set the time field when the page loads.
 	setTimeField();
-	/*document.getElementById("teacherName").value = "Admin Admin";
-	document.getElementById("subject").value = "Test";
-	document.getElementById("procedureManagement").checked = true;*/
+	//Connection checking
+	if(window.addEventListener) {
+	    window.addEventListener('offline', connectionStateOff);
+	    window.addEventListener('online', connectionStateOn);
+	} else {
+	    document.body.attachEvent('onoffline', connectionStateOff);
+	    document.body.attachEvent('ononline', connectionStateOn);
+	}
 	if (!navigator.onLine) {
 		five.alert("You appear to be offline. Sending 5x5s will not be possible until you reconnect.");
 		connected = false;
 	} else {
 		connected = true;
 	}
-	window.addEventListener("offline", connectionState(false));
-	window.addEventListener("online", connectionState(true));
+	//HTML5 offline storage support
 	if (supports_html5_storage()) {
 		hasHTML5Storage = true;
 	} else {
 		hasHTML5Storage = false;
 		five.alert("Your browser does not support HTML5 local storage. This web app WILL NOT work.");
 	}
+	//Initializing saves
 	if (localStorage['5x5saves'] == undefined) {
 		localStorage['5x5saves'] = [""].toString();
 	}
+	//Binding click event to RR framework quads
 	rrQuads = document.getElementsByClassName("rrQuad");
 	for (var anchor in rrQuads) {
 		rrQuads[anchor].onclick = rr;
 	}
+	//Notify if update installed
 	if (localStorage['com.5x5Online.updateReady'] == 1) {
 		localStorage['com.5x5Online.updateReady'] = 0;
 		banner("Update installed!")
