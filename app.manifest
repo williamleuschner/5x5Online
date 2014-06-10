@@ -19,6 +19,7 @@ css/framework7.min.css
 css/main.css
 script/framework7.min.js
 script/main.js
+script/string-format.js
 img/i-form-checkbox-white.png
 img/i-form-radio-blue.png
 http://www.orca.uconn.edu/orca/assets/Image/rigor-relevance-framework.png

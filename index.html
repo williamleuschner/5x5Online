@@ -37,14 +37,10 @@
 	<link rel="apple-touch-startup-image" sizes="640X1136" href="img/5x5splash5.png" />-->
 	<link rel="stylesheet" href="css/framework7.min.css" />
 	<link rel="stylesheet" href="css/main.css" />
+	<script src="script/string-format.js"></script>
 </head>
 <body>
 	<div class="statusbar-overlay"></div>
-	<div class="panel panel-right panel-reveal">
-		<div class="content-block">
-			<p>Right panel content here. Maybe</p>
-		</div>
-	</div>
 	<div class="views">
 		<div class="panel-overlay"></div>
 		<div class="panel panel-left panel-cover">
@@ -75,7 +71,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="#" onclick="load5x5()" class="item-link close-panel">
+										<a href="#" onclick="openLoadModal()" class="item-link close-panel">
 											<div class="item-content">
 												<div class="item-inner">
 													<div class="item-title">
