@@ -267,29 +267,42 @@ function save5x5() {
 	//Calculated values
 	var period = getPeriod();
 	otherSaves = localStorage["5x5saves"].split(",");
-	console.log(toString(otherSaves));
 	if (otherSaves.indexOf(name) != -1) {
 		five.hideIndicator();
 		five.alert("A 5x5 with this name is already saved.", "Save Error")
 		return;
 	}
-	console.log("Writing save...")
 	localStorage[name] = JSON.stringify({'name':name, 'subject':subject, 'period':period, 'time':time, 'behaviors':behaviors, 'b':b, 'quad':rrQuadrant, 'adminComments':adminComments, 'ponder':ponder});
 	otherSaves.push(name);
 	localStorage['5x5saves'] = otherSaves.toString();
 	five.hideIndicator();
 	five.alert("5x5 Saved as \"" + name + "\".");
 }
-function load5x5() {
+function openLoadModal() {
+	var segment1 = '<div class="popup load_popup"><div class="view navbar-fixed"><div class="page"><div class="navbar"><div class="navbar-inner"><div class="center">Load 5x5</div><div class="right"><a href="#" class="link close-popup">Cancel</a></div></div></div><div class="page-content">';
+	var segment2_withItems = '<div class="list-block"><ul>';
+	var segment2_withoutItems = '<div class="content-block"><div class="content-block-inner"><p>No saved 5x5s.</p></div></div>';
+	var listItem = '<li><a href="#" onclick="load5x5(\'{0}\')" class="item-link close-popup"><div class="item-content"><div class="item-inner"><div class="item-title">{0}</div></div></div></a></li>';
+	var items = '';
+	var segment3_withItems = '</ul></div>';
+	var segment4 = '</div></div></div>';
+	var otherSaves = localStorage['5x5saves'].split(",");
+	for (var item in otherSaves) {
+		if (otherSaves[item] != "dummy") {
+			items += listItem.format(otherSaves[item]);
+		}
+	}
+	var modalHTML = "";
+	if (otherSaves.length == 1) {
+		modalHTML = segment1 + segment2_withoutItems + segment4;
+	} else if (otherSaves.length > 1) {
+		modalHTML = segment1 + segment2_withItems + items + segment3_withItems + segment4;
+	}
+	five.popup(modalHTML);
+}
+function load5x5(selectedSave) {
 	five.showIndicator();
 	otherSaves = localStorage["5x5saves"].split(",");
-
-	//Ask which one here later.
-	/*
-	selectedSave = getUserInupt()
-	*/
-
-	selectedSave = "Admin Admin";
 	toLoad = JSON.parse(localStorage[selectedSave]);
 
 	document.getElementById("teacherName").value = toLoad['name'];
@@ -339,7 +352,9 @@ function load5x5() {
 	//long fields
 	document.getElementById("adminComments").value = toLoad['adminComments'];
 	document.getElementById("ponder").value = toLoad["ponder"];
-	otherSaves = otherSaves.pop(otherSaves.indexOf(selectedSave));
+	console.log(otherSaves.indexOf(selectedSave));
+	otherSaves.splice(otherSaves.indexOf(selectedSave), 1);
+	localStorage.removeItem(selectedSave);
 	five.hideIndicator();
 	localStorage['5x5saves'] = otherSaves.toString();
 }
@@ -501,6 +516,10 @@ window.onload = function() {
 	if (localStorage['com.5x5Online.updateReady'] == 1) {
 		localStorage['com.5x5Online.updateReady'] = 0;
 		banner("Update installed!")
+	}
+	if (localStorage['5x5saves'] == "") {
+		console.log("Local storage array of saves was empty. Inserting dummy value...");
+		localStorage['5x5saves'] = "dummy";
 	}
 	/*******************
 	*                  *
