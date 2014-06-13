@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" manifest="mgmt.manifest">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Management Console</title>
+	<!-- For third-generation iPad with high-resolution Retina display: -->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="apple-touch-icon-144x144-precomposed.png">
+	<!-- For iPhone with high-resolution Retina display: -->
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="apple-touch-icon-114x114-precomposed.png">
+	<!-- For first- and second-generation iPad: -->
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="apple-touch-icon-72x72-precomposed.png">
+	<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+	<link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+
+	<!-- iPhone SPLASHSCREEN-->
+	<link href="apple-touch-startup-image-320x460.png" media="(device-width: 320px)" rel="apple-touch-startup-image">
+	<!-- iPhone (Retina) SPLASHSCREEN-->
+	<link href="apple-touch-startup-image-640x920.png" media="(device-width: 320px) and (device-height: 460px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+	<!-- iPhone 5 (Retina) SPLASHSCREEN-->
+	<link href="apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+	<!-- iPad (non-Retina) (Portrait) -->
+	<link href="apple-touch-startup-image-768x1004.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)" rel="apple-touch-startup-image" />
+	<!-- iPad (non-Retina) (Landscape) -->
+	<link href="apple-touch-startup-image-1024x748.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)" rel="apple-touch-startup-image" />
+	<!-- iPad (Retina) (Portrait) -->
+	<link href="apple-touch-startup-image-1536x2008.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) and (-webkit-min-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+	<!-- iPad (Retina) (Landscape) -->
+	<link href="apple-touch-startup-image-2048x1496.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) and (-webkit-min-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+	<link rel="stylesheet" href="css/framework7.min.css" />
+	<link rel="stylesheet" href="css/main.css" />
+	<script src="script/string-format.js"></script>
+</head>
+<body>
+	<div class="statusbar-overlay"></div>
+	<div class="views tabs toolbar-through">
+		<div class="view view-teach navbar-through tab active" id="view-teach" data-page="index-teach">
+			<div class="navbar">
+				<div class="navbar-inner navbar-on-center">
+					<div class="left">
+						<a href="#" id="swipeDelT" class="link">Edit</a>
+					</div>
+					<div class="center sliding">Manage Teachers</div>
+					<div class="right">
+						<a href="#" data-popup=".new_teacher_popup" class="link open-popup">
+							<i class="icon icon-arrows-plus"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="pages">
+				<div data-page="index-1" id="mainPage" class="page page-on-center">
+					<div class="page-content" id="insert_list_here_t">
+						<div class="content-block">
+							<div class="content-block-inner" id="delete_me_t">
+								<p>Please wait. The data is being sent and processed...</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="view view-admin navbar-through tab" id="view-admin" data-page="index-admin">
+			<div class="navbar">
+				<div class="navbar-inner navbar-on-center">
+					<div class="left">
+						<a href="#" id="swipeDelT" class="link">Edit</a>
+					</div>
+					<div class="center sliding">Manage Adminstrators</div>
+					<div class="right">
+						<a href="#" data-popup=".new_admin_popup" class="link open-popup">
+							<i class="icon icon-arrows-plus"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="pages">
+				<div class="page" data-page="index-2">
+					<div class="page-content" id="insert_list_here_a">
+						<div class="content-block">
+							<div class="content-block-inner" id="delete_me_a">
+								<p>Please wait. The data is being sent and processed...</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="toolbar tabbar tabbar-views">
+			<div class="toolbar-inner">
+				<a href="#view-teach" class="tab-link active">
+					<i class="icon icon-apple"></i>
+					<span class="tabbar-label">Teachers</span>
+				</a>
+				<a href="#view-admin" class="tab-link">
+					<i class="icon icon-clipboard"></i>
+					<span class="tabbar-label">Administrators</span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="popup auth_popup">
+		<div class="view navbar-fixed">
+			<div class="page">
+				<div class="navbar">
+					<div class="navbar-inner">
+						<div class="center">Log In</div>
+					</div>
+				</div>
+				<div class="page-content">
+					<div class="content-block width-fix">
+						<div class="list-block">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">Username</div>
+											<div class="item-input">
+												<input type="text" name="username" id="username" value="" />
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">Token</div>
+											<div class="item-input">
+												<input type="text" name="token" id="token" value="" />
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="error"></div>
+						<div class="content-block">
+							<div class="row">
+								<div class="col-100">
+									<input type="button" value="Go" onclick="authenticate(true)" class="center button button-big button-submit button-fix"></input>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="popup new_teacher_popup">
+		<div class="view navbar-fixed">
+			<div class="page">
+				<div class="navbar">
+					<div class="navbar-inner">
+						<div class="left">
+							<a href="#" class="close-popup link">Cancel</a>
+						</div>
+						<div class="center">Add Teacher</div>
+					</div>
+				</div>
+				<div class="page-content">
+					<div class="content-block width-fix">
+						<div class="list-block">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">First Name</div>
+											<div class="item-input">
+												<input type="text" name="fname" id="fname" value="" placeholder="Fred" />
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">Last Name</div>
+											<div class="item-input">
+												<input type="text" name="lname" id="lname" value="" placeholder="Jones" />
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">Email</div>
+											<div class="item-input">
+												<input type="email" name="email" id="email" value="" placeholder="fajones@cdschools.org" />
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="content-block">
+							<div class="row">
+								<div class="col-100">
+									<input type="button" value="Add" onclick="addTeacher()" class="center button button-big button-submit button-fix"></input>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="popup new_admin_popup">
+		<div class="view navbar-fixed">
+			<div class="page">
+				<div class="navbar">
+					<div class="navbar-inner">
+						<div class="left">
+							<a href="#" class="close-popup link">Cancel</a>
+						</div>
+						<div class="center">Add Administrator</div>
+					</div>
+				</div>
+				<div class="page-content">
+					<div class="content-block width-fix">
+						<div class="list-block">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">Username</div>
+											<div class="item-input">
+												<input type="text" name="addUname" id="addUname" value="" placeholder="eshrader" />
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">Token</div>
+											<div class="item-input">
+												<input type="text" name="addToken" id="addToken" disabled placeholder="Will be auto-generated" />
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="content-block">
+							<div class="row">
+								<div class="col-100">
+									<input type="button" value="Add" onclick="addTeacher()" class="center button button-big button-submit button-fix"></input>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="script/framework7.min.js"></script>
+	<script src="script/micropost.min.js"></script>
+	<script src="script/mgmt.js"></script>
+</body>
+</html>

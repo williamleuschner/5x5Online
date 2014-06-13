@@ -7,6 +7,42 @@ input[type="submit"].center {
 .tiny-text {
 	font-size:9px;
 }
+.error {
+	width:100%;
+	height:auto;
+	color:#F00;
+	text-align:center;
+}
+.icon-arrows-plus {
+	width:30px;
+	height:30px;
+	background-image:url("../img/arrows_plus.svg");
+}
+.icon-apple {
+	width:30px;
+	height:30px;
+	background-image:url("../img/apple-gray.svg");
+}
+a.tab-link.active i.icon-apple {
+	background-image:url("../img/apple.svg");
+}
+.icon-clipboard{
+	width:30px;
+	height:30px;
+	background-image:url("../img/basic_todo_txt_gray.svg");
+}
+a.tab-link.active i.icon-clipboard {	
+	background-image:url("../img/basic_todo_txt.svg");
+}
+.tabbar-label {
+	line-height: 1;
+	display: block;
+	letter-spacing: .01em;
+	font-size: 10px;
+	position: relative;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 /* Your app custom files in this file */
 .view-left {
   border-right: 1px solid #b2b2b2;
