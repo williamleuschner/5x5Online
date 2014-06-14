@@ -46,7 +46,7 @@ function authenticate(isForm) {
 	five.showIndicator();
 	console.log("AJAX sent...");
 	// Send the request
-	micropost("http://s0ph0s.linuxd.net/5x5Online/manage", reqData, function(response) {
+	micropost(ajaxURL, reqData, function(response) {
 		console.log("...and recieved.");
 		// Hide the loading indicator
 		five.hideIndicator();
@@ -56,6 +56,7 @@ function authenticate(isForm) {
 			five.closeModal(".auth_popup");
 			// Fill in the lists of stuff with the data the server sent.
 			populateLists("all", response['data']);
+			bindItems();
 		} else {
 			// Otherwise, tell the user they dun goofed.
 			popupError(response['message']);
@@ -78,7 +79,7 @@ function populateLists(which, data) {
 	// List string bits
 	console.log("Populating list " + which + ".");
 	var part1 = '<div class="list-block"><ul>';
-	var listItemTemplate = '<li><div class="item-content"><div class="item-inner"><div class="item-title">{0}</div><div class="item-after">{1}</div></div></div></li>';
+	var listItemTemplate = '<li class="swipeout {2}-remove-call"><div class="item-content swipeout-content"><div class="item-inner"><div class="item-title">{0}</div><div class="item-after">{1}</div></div></div><div class="swipeout-actions"><div class="swipeout-actions-inner"><a href="#" class="swipeout-delete">Delete</a></div></div></li>';
 	var part2 = '</ul></div>';
 	var listItems = "";
 	switch (which) {
@@ -88,7 +89,7 @@ function populateLists(which, data) {
 			break;
 		case "admins":
 			for (var key in data) {
-				listItems += listItemTemplate.format(key, data[key]);
+				listItems += listItemTemplate.format(key, data[key], "admin");
 			}
 			listContent = part1 + listItems + part2;
 			listItems = "";
@@ -97,7 +98,7 @@ function populateLists(which, data) {
 			break;
 		case "teachers":
 			for (var key in data) {
-				listItems += listItemTemplate.format(key, data[key]);
+				listItems += listItemTemplate.format(key, data[key], "teacher");
 			}
 			listContent = part1 + listItems + part2;
 			listItems = "";
@@ -106,6 +107,54 @@ function populateLists(which, data) {
 			break;
 	}
 }
+//Adds an event listener to all list items with the correct classes to send a remove request to the server.
+function bindItems() {
+	$$(".admin-remove-call").on("deleted", function(){removeAdministrator(this)});
+	$$(".teacher-remove-call").on("deleted", function(){removeTeacher(this)});
+}
+//Will eventually remove an administrator.
+function removeAdministrator(e) {
+	console.log("Dead function call. This == " + e);
+	five.alert("Hello! I'm the developer. This function doesn't do anything yet. Please refresh the page or close and re-open the app to get that administrator back.");
+}
+//Will eventually remove a teacher.
+function removeTeacher(e) {
+	console.log("Dead function call. This == " + e);
+	five.alert("Hello! I'm the developer. This function doesn't do anything yet. Please refresh the page or close and re-open the app to get that teacher back.");
+}
+// Adds an administrator
+function addAdministrator() {
+	// Get form data
+	var newUname = $$("#addUname").val();
+	// Validate form data
+	if (newUname == "") {
+		five.alert("You must enter a username.");
+		return;
+	}
+	// Make request object
+	var reqData = {
+		method:"add_admin",
+		contents: {
+			uname:localStorage[packagePrefix + "uname"],
+			token:localStorage[packagePrefix + "token"],
+			newUname:newUname
+		}
+	};
+	// Send request
+	five.showIndicator();
+	micropost(ajaxURL, reqData, function(response) {
+		five.hideIndicator();
+		if (response['s'] == true) {	
+			populateLists("all", response['data']);
+			bindItems();
+		} else {
+			five.alert(response['message'],response['title']);
+		}
+	}, function(src,errorCode) {
+		five.alert("Sending the teacher add request failed. (" + src + " error " + errorCode + ")");
+	})
+}
+// Adds a teacher
 //Function that runs on startup to check various required states.
 function startupCheck() {
 	// Alert the user if they are offline
