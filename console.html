@@ -39,9 +39,6 @@
 		<div class="view view-teach navbar-through tab active" id="view-teach" data-page="index-teach">
 			<div class="navbar">
 				<div class="navbar-inner navbar-on-center">
-					<div class="left">
-						<a href="#" id="swipeDelT" class="link">Edit</a>
-					</div>
 					<div class="center sliding">Manage Teachers</div>
 					<div class="right">
 						<a href="#" data-popup=".new_teacher_popup" class="link open-popup">
@@ -53,8 +50,8 @@
 			<div class="pages">
 				<div data-page="index-1" id="mainPage" class="page page-on-center">
 					<div class="page-content" id="insert_list_here_t">
-						<div class="content-block">
-							<div class="content-block-inner" id="delete_me_t">
+						<div class="content-block delete_me_t">
+							<div class="content-block-inner">
 								<p>Please wait. The data is being sent and processed...</p>
 							</div>
 						</div>
@@ -65,9 +62,6 @@
 		<div class="view view-admin navbar-through tab" id="view-admin" data-page="index-admin">
 			<div class="navbar">
 				<div class="navbar-inner navbar-on-center">
-					<div class="left">
-						<a href="#" id="swipeDelT" class="link">Edit</a>
-					</div>
 					<div class="center sliding">Manage Adminstrators</div>
 					<div class="right">
 						<a href="#" data-popup=".new_admin_popup" class="link open-popup">
@@ -79,8 +73,8 @@
 			<div class="pages">
 				<div class="page" data-page="index-2">
 					<div class="page-content" id="insert_list_here_a">
-						<div class="content-block">
-							<div class="content-block-inner" id="delete_me_a">
+						<div class="content-block delete_me_a">
+							<div class="content-block-inner">
 								<p>Please wait. The data is being sent and processed...</p>
 							</div>
 						</div>
@@ -196,6 +190,11 @@
 							</ul>
 						</div>
 						<div class="content-block">
+							<p>
+								Please use the correct capitalization in the teacher's name.
+							</p>
+						</div>
+						<div class="content-block">
 							<div class="row">
 								<div class="col-100">
 									<input type="button" value="Add" onclick="addTeacher()" class="center button button-big button-submit button-fix"></input>
@@ -225,9 +224,9 @@
 								<li>
 									<div class="item-content">
 										<div class="item-inner">
-											<div class="item-title label">Username</div>
+											<div class="item-title label">First Name</div>
 											<div class="item-input">
-												<input type="text" name="addUname" id="addUname" value="" placeholder="eshrader" />
+												<input type="text" name="addAFname" id="addAFname" value="" placeholder="Eric" />
 											</div>
 										</div>
 									</div>
@@ -235,14 +234,19 @@
 								<li>
 									<div class="item-content">
 										<div class="item-inner">
-											<div class="item-title label">Token</div>
+											<div class="item-title label">Last Name</div>
 											<div class="item-input">
-												<input type="text" name="addToken" id="addToken" disabled placeholder="Will be auto-generated" />
+												<input type="text" name="addALname" id="addALname" value="" placeholder="Shrader" />
 											</div>
 										</div>
 									</div>
 								</li>
 							</ul>
+						</div>
+						<div class="content-block">
+							<p>
+								The username and token for this administrator will be automatically generated. Please use the correct case on the administrator's name.
+							</p>
 						</div>
 						<div class="content-block">
 							<div class="row">
