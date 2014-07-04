@@ -10,6 +10,8 @@ $$('.panel-left').on('open', function() {
 	five.sizeNavbars($$('.view-left'));
 });
 five.params["modalTitle"] = '5x5 Online';
+ajaxURL = "http://s0ph0s.linuxd.net/5x5Online/ajax";
+packagePrefix = "com.5x5Online."
 var connected = false;
 var modalCallbackFinished = false;
 var userDidSkipYesNo = false;
@@ -191,35 +193,36 @@ function submitCheck() {
 	handleData(name, subject, period, time, b, behaviors, rrQuadrant, adminComments, ponder)
 }
 function handleData(name, subject, period, time, b, behaviors, quad, adminComments, ponder) {
-	bJSON = JSON.stringify(b);
-	behaviorsJSON = JSON.stringify(behaviors);
-	var submitAjax = new XMLHttpRequest();
-	submitAjax.onreadystatechange = function() {
-		if (submitAjax.readyState == 4 && submitAjax.status == 200) {
-			responseObj = JSON.parse(submitAjax.responseText);
-			five.hideIndicator()
-			if (responseObj['s']) {
-				clearForm()
-			} else {
-				console.log("AJAX Error.");
-			}
-			five.alert(responseObj['message'], responseObj['title']);
+	var reqData = {
+		name:name,
+		subject:subject,
+		period:period,
+		time:time,
+		quad:quad,
+		adminComments:adminComments,
+		ponder:ponder,
+		b:b,
+		behaviors:behaviors,
+		uname:localStorage[packagePrefix + 'username'],
+		token:localStorage[packagePrefix + 'token']
+	};
+	five.showIndicator();
+	micropost(ajaxURL, reqData, function(response){
+		five.hideIndicator()
+		if (response['s']) {
+			clearForm()
+		} else {
+			console.log("AJAX Error.");
 		}
-	}
-	five.showIndicator()
-	submitAjax.open("POST", "http://s0ph0s.linuxd.net/5x5Online/ajax", true);
-	submitAjax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	submitAjax.send("name=" + name +
-		"&subject=" + subject +
-		"&period=" + period +
-		"&time=" + time +
-		"&quad=" + quad +
-		"&adminComments=" + adminComments +
-		"&ponder=" + ponder +
-		"&b=" + bJSON +
-		"&behaviors=" + behaviorsJSON +
-		"&uname=" + localStorage['username'] +
-		"&token=" + localStorage['token']);
+		five.alert(response['message'], response['title']);
+	}, function(src, errorCode){
+		if (errorCode == "") {
+			errorString = " error";
+		} else {
+			errorString = " error "
+		}
+		five.alert("Sending the 5x5 failed (" + src + errorString + errorCode + ").", "Error");
+	})
 }
 function save5x5() {
 	five.showIndicator();
@@ -266,15 +269,15 @@ function save5x5() {
 	var ponder = document.getElementById("ponder").value;
 	//Calculated values
 	var period = getPeriod();
-	otherSaves = localStorage["5x5saves"].split(",");
+	otherSaves = localStorage[packagePrefix + "5x5saves"].split(",");
 	if (otherSaves.indexOf(name) != -1) {
 		five.hideIndicator();
 		five.alert("A 5x5 with this name is already saved.", "Save Error")
 		return;
 	}
-	localStorage[name] = JSON.stringify({'name':name, 'subject':subject, 'period':period, 'time':time, 'behaviors':behaviors, 'b':b, 'quad':rrQuadrant, 'adminComments':adminComments, 'ponder':ponder});
+	localStorage[packagePrefix + name] = JSON.stringify({'name':name, 'subject':subject, 'period':period, 'time':time, 'behaviors':behaviors, 'b':b, 'quad':rrQuadrant, 'adminComments':adminComments, 'ponder':ponder});
 	otherSaves.push(name);
-	localStorage['5x5saves'] = otherSaves.toString();
+	localStorage[packagePrefix + '5x5saves'] = otherSaves.toString();
 	five.hideIndicator();
 	five.alert("5x5 Saved as \"" + name + "\".");
 }
@@ -286,7 +289,7 @@ function openLoadModal() {
 	var items = '';
 	var segment3_withItems = '</ul></div>';
 	var segment4 = '</div></div></div>';
-	var otherSaves = localStorage['5x5saves'].split(",");
+	var otherSaves = localStorage[packagePrefix + '5x5saves'].split(",");
 	for (var item in otherSaves) {
 		if (otherSaves[item] != "dummy") {
 			items += listItem.format(otherSaves[item]);
@@ -302,8 +305,8 @@ function openLoadModal() {
 }
 function load5x5(selectedSave) {
 	five.showIndicator();
-	otherSaves = localStorage["5x5saves"].split(",");
-	toLoad = JSON.parse(localStorage[selectedSave]);
+	otherSaves = localStorage[packagePrefix + "5x5saves"].split(",");
+	toLoad = JSON.parse(localStorage[packagePrefix + selectedSave]);
 
 	document.getElementById("teacherName").value = toLoad['name'];
 	document.getElementById("subject").value = toLoad['subject'];
@@ -356,7 +359,7 @@ function load5x5(selectedSave) {
 	otherSaves.splice(otherSaves.indexOf(selectedSave), 1);
 	localStorage.removeItem(selectedSave);
 	five.hideIndicator();
-	localStorage['5x5saves'] = otherSaves.toString();
+	localStorage[packagePrefix + '5x5saves'] = otherSaves.toString();
 }
 function connectionStateOn() {
 	++didJustStart;
@@ -413,8 +416,8 @@ function supports_html5_storage() {
 function saveSettings() {
 	var username = $$("#username").val();
 	var token = $$("#token").val();
-	localStorage['username'] = username;
-	localStorage['token'] = token;
+	localStorage[packagePrefix + 'username'] = username;
+	localStorage[packagePrefix + 'token'] = token;
 	mainView.goBack();
 }
 function clearForm() {
@@ -474,7 +477,7 @@ window.addEventListener('load', function(e) {
 	window.applicationCache.addEventListener('updateready', function(e) {
 		if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
 			banner("Update downloaded. Restart to install...");
-			localStorage['com.5x5Online.updateReady'] = 1;
+			localStorage[packagePrefix + 'com.5x5Online.updateReady'] = 1;
 			window.applicationCache.swapCache();
 		}
 	}, false);
@@ -504,8 +507,8 @@ window.onload = function() {
 		five.alert("Your browser does not support HTML5 local storage. This web app WILL NOT work.");
 	}
 	//Initializing saves
-	if (localStorage['5x5saves'] == undefined) {
-		localStorage['5x5saves'] = [""].toString();
+	if (localStorage[packagePrefix + '5x5saves'] == undefined) {
+		localStorage[packagePrefix + '5x5saves'] = [""].toString();
 	}
 	//Binding click event to RR framework quads
 	rrQuads = document.getElementsByClassName("rrQuad");
@@ -513,13 +516,13 @@ window.onload = function() {
 		rrQuads[anchor].onclick = rr;
 	}
 	//Notify if update installed
-	if (localStorage['com.5x5Online.updateReady'] == 1) {
-		localStorage['com.5x5Online.updateReady'] = 0;
+	if (localStorage[packagePrefix + 'com.5x5Online.updateReady'] == 1) {
+		localStorage[packagePrefix + 'com.5x5Online.updateReady'] = 0;
 		banner("Update installed!")
 	}
-	if (localStorage['5x5saves'] == "") {
+	if (localStorage[packagePrefix + '5x5saves'] == "") {
 		console.log("Local storage array of saves was empty. Inserting dummy value...");
-		localStorage['5x5saves'] = "dummy";
+		localStorage[packagePrefix + '5x5saves'] = "dummy";
 	}
 	/*******************
 	*                  *
@@ -562,6 +565,6 @@ window.onload = function() {
     }
 }
 $$(document).on('pageInit', '.page[data-page="settings"]', function (e) {
-	$$("#username").val(localStorage['username']);
-	$$("#token").val(localStorage['token']);
+	$$("#username").val(localStorage[packagePrefix + 'username']);
+	$$("#token").val(localStorage[packagePrefix + 'token']);
 })

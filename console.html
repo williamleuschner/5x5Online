@@ -31,6 +31,7 @@
 	<link href="apple-touch-startup-image-2048x1496.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) and (-webkit-min-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
 	<link rel="stylesheet" href="css/framework7.min.css" />
 	<link rel="stylesheet" href="css/main.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
 	<script src="script/string-format.js"></script>
 </head>
 <body>
@@ -39,6 +40,9 @@
 		<div class="view view-teach navbar-through tab active" id="view-teach" data-page="index-teach">
 			<div class="navbar">
 				<div class="navbar-inner navbar-on-center">
+					<div class="left">
+						<a href="#" onclick="logOut(true);">Log Out</a>
+					</div>
 					<div class="center sliding">Manage Teachers</div>
 					<div class="right">
 						<a href="#" data-popup=".new_teacher_popup" class="link open-popup">
@@ -49,7 +53,20 @@
 			</div>
 			<div class="pages">
 				<div data-page="index-1" id="mainPage" class="page page-on-center">
+					<form class="searchbar" data-search-list=".list-block-search" data-search-in=".item-title">
+						<div class="searchbar-input">
+							<input type="search" placeholder="Search">
+							<a href="#" class="searchbar-clear"></a>
+						</div>
+						<a href="#" class="searchbar-cancel">Cancel</a>
+					</form>
+					<div class="searchbar-overlay"></div>
 					<div class="page-content" id="insert_list_here_t">
+						<div class="content-block searchbar-not-found">
+							<div class="content-block-inner">
+								No Matches
+							</div>
+						</div>
 						<div class="content-block delete_me_t">
 							<div class="content-block-inner">
 								<p>Please wait. The data is being sent and processed...</p>
@@ -62,6 +79,9 @@
 		<div class="view view-admin navbar-through tab" id="view-admin" data-page="index-admin">
 			<div class="navbar">
 				<div class="navbar-inner navbar-on-center">
+					<div class="left">
+						<a href="#" onclick="logOut(true);">Log Out</a>
+					</div>
 					<div class="center sliding">Manage Adminstrators</div>
 					<div class="right">
 						<a href="#" data-popup=".new_admin_popup" class="link open-popup">
@@ -82,6 +102,32 @@
 				</div>
 			</div>
 		</div>
+		<div class="view view-schools navbar-through tab" id="view-schools" data-page="index-schools">
+			<div class="navbar">
+				<div class="navbar-inner navbar-on-center">
+					<div class="left">
+						<a href="#" onclick="logOut(true);">Log Out</a>
+					</div>
+					<div class="center sliding">Manage Schools</div>
+					<div class="right">
+						<a href="#" data-popup=".new_school_popup" class="link open-popup">
+							<i class="icon icon-arrows-plus"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="pages">
+				<div class="page" data-page="index-3">
+					<div class="page-content" id="insert_list_here_s">
+						<div class="content-block delete_me_s">
+							<div class="content-block-inner">
+								<p>Please wait. The data is being sent and processed...</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="toolbar tabbar tabbar-views">
 			<div class="toolbar-inner">
 				<a href="#view-teach" class="tab-link active">
@@ -91,6 +137,10 @@
 				<a href="#view-admin" class="tab-link">
 					<i class="icon icon-clipboard"></i>
 					<span class="tabbar-label">Administrators</span>
+				</a>
+				<a href="#view-schools" class="tab-link">
+					<i class="icon icon-school"></i>
+					<span class="tabbar-label">Schools</span>
 				</a>
 			</div>
 		</div>
@@ -143,7 +193,7 @@
 		</div>
 	</div>
 	<div class="popup new_teacher_popup">
-		<div class="view navbar-fixed">
+		<div class="view view-add-teach navbar-fixed">
 			<div class="page">
 				<div class="navbar">
 					<div class="navbar-inner">
@@ -187,6 +237,20 @@
 										</div>
 									</div>
 								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">School</div>
+											<div class="item-input">
+												<select id="newTSchool" class="insert_schoolSelect">
+													<option value="CDEHS" class="delete_me_sel">CDEHS</option>
+													<option value="CDHS" class="delete_me_sel">CDHS</option>
+													<option value="all" class="delete_me_sel">all</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</li>
 							</ul>
 						</div>
 						<div class="content-block">
@@ -207,7 +271,7 @@
 		</div>
 	</div>
 	<div class="popup new_admin_popup">
-		<div class="view navbar-fixed">
+		<div class="view view-add-admin navbar-fixed">
 			<div class="page">
 				<div class="navbar">
 					<div class="navbar-inner">
@@ -241,6 +305,17 @@
 										</div>
 									</div>
 								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">School</div>
+											<div class="item-input">
+												<select id="newASchool" class="insert_schoolSelect">
+												</select>
+											</div>
+										</div>
+									</div>
+								</li>
 							</ul>
 						</div>
 						<div class="content-block">
@@ -260,8 +335,52 @@
 			</div>
 		</div>
 	</div>
+	<div class="popup new_school_popup">
+		<div class="view navbar-fixed">
+			<div class="page">
+				<div class="navbar">
+					<div class="navbar-inner">
+						<div class="left">
+							<a href="#" class="close-popup link">Cancel</a>
+						</div>
+						<div class="center">Add School</div>
+					</div>
+				</div>
+				<div class="page-content">
+					<div class="content-block width-fix">
+						<div class="list-block">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">School Abbreviation</div>
+											<div class="item-input">
+												<input type="text" name="abbr" id="abbr" value="" placeholder="CDEHS" />
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="content-block">
+							<p>
+								Enter the abbreviation for this school.
+							</p>
+						</div>
+						<div class="content-block">
+							<div class="row">
+								<div class="col-100">
+									<input type="button" value="Add" onclick="addSchool()" class="center button button-big button-submit button-fix"></input>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script src="script/framework7.min.js"></script>
 	<script src="script/micropost.min.js"></script>
-	<script src="script/mgmt.js"></script>
+	<script src="script/console.js"></script>
 </body>
 </html>
