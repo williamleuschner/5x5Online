@@ -26,13 +26,24 @@ input[type="submit"].center {
 a.tab-link.active i.icon-apple {
 	background-image:url("../img/apple.svg");
 }
-.icon-clipboard{
+.icon-clipboard {
 	width:30px;
 	height:30px;
 	background-image:url("../img/basic_todo_txt_gray.svg");
 }
 a.tab-link.active i.icon-clipboard {	
 	background-image:url("../img/basic_todo_txt.svg");
+}
+.icon-school {
+	width:30px;
+	height:30px;
+	background-image:url("../img/city7.svg");
+}
+a.tab-link.active i.icon-school {
+	background-image:url("../img/city7-blue.svg");
+}
+.fa.icon {
+	font-size:30px;
 }
 .tabbar-label {
 	line-height: 1;
