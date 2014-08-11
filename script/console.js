@@ -230,6 +230,10 @@ function addAdministrator() {
 		five.alert("You must enter a last name.");
 		return;
 	}
+	if (newEmail == "") {
+		five.alert("You must enter an email address.")
+		return;
+	}
 	if (newASchool == "") {
 		five.alert("You must select a school.");
 		return;
@@ -242,7 +246,8 @@ function addAdministrator() {
 			token:localStorage[packagePrefix + "token"],
 			fname:newAFname,
 			lname:newALname,
-			school:newASchool
+			school:newASchool,
+			email:newEmail
 		}
 	};
 	// Send request

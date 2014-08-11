@@ -216,6 +216,7 @@ function handleData(name, subject, period, time, b, behaviors, quad, adminCommen
 		}
 		five.alert(response['message'], response['title']);
 	}, function(src, errorCode){
+		five.hideIndicator();
 		if (errorCode == "") {
 			errorString = " error";
 		} else {

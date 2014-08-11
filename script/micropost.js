@@ -35,6 +35,6 @@ function micropost(url, json, successCallback, failCallback) {
 		this.timeoutID = setTimeout(function() {
 			this.request.abort();
 			this.failCall("timeout","");
-		}, 3000);
+		}, 4000);
 	}
 }
