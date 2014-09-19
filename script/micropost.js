@@ -30,11 +30,10 @@ function micropost(url, json, successCallback, failCallback) {
 		req.open("POST", url, true);
 		req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		req.setRequestHeader('Content-type', 'application/json');
-		req.setRequestHeader('Connection', 'close');
 		req.send(JSON.stringify(json));
 		this.timeoutID = setTimeout(function() {
 			this.request.abort();
 			this.failCall("timeout","");
-		}, 4000);
+		}, 6000);
 	}
 }
