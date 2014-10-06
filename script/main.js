@@ -10,7 +10,7 @@ $$('.panel-left').on('open', function() {
 	five.sizeNavbars($$('.view-left'));
 });
 five.params["modalTitle"] = '5x5 Online';
-ajaxURL = "http://s0ph0s.linuxd.net/5x5Online/ajax";
+ajaxURL = "http://s0ph0s.linuxd.org/5x5Online/ajax";
 packagePrefix = "com.5x5Online."
 var connected = false;
 var modalCallbackFinished = false;
@@ -511,6 +511,11 @@ window.onload = function() {
 	if (localStorage[packagePrefix + '5x5saves'] == undefined) {
 		localStorage[packagePrefix + '5x5saves'] = [""].toString();
 	}
+  //Initializing last message keeper
+  if (localStorage[packagePrefix + '5x5msg'] == undefined) {
+    console.log("Setting local storage for last message to 0.");
+    localStorage[packagePrefix + '5x5msg'] = 0;
+  }
 	//Binding click event to RR framework quads
 	rrQuads = document.getElementsByClassName("rrQuad");
 	for (var anchor in rrQuads) {
@@ -525,7 +530,25 @@ window.onload = function() {
 		console.log("Local storage array of saves was empty. Inserting dummy value...");
 		localStorage[packagePrefix + '5x5saves'] = "dummy";
 	}
-	/*******************
+  req_data = {sendStartup:true};
+  micropost("http://s0ph0s.linuxd.org/5x5Online/startup", req_data, function(response){
+    if (response['s']) {
+      if (parseInt(response['msgId']) > parseInt(localStorage[packagePrefix + '5x5msg'])) {
+        five.alert(response['message'],response['title']);
+        localStorage[packagePrefix + '5x5msg'] = parseInt(response['msgId']);
+      }
+    } else {
+      five.alert(response['message'],response['title']);
+    }
+  }, function(src, errorCode){
+    if (errorCode == "") {
+      errorString = " error";
+    } else {
+      errorString = " error ";
+    }
+    five.alert("Sending the startup request failed (" + src + errorString + errorCode + "). Is the server down?","Error");
+  });
+  /*******************
 	*                  *
 	* RRR Grid Flipper *
 	*                  *
