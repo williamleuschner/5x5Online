@@ -18,6 +18,7 @@ css/main.css
 script/framework7.min.js
 script/main.js
 script/string-format.js
+script/micropost.min.js
 img/i-form-checkbox-white.png
 img/i-form-radio-blue.png
 img/rigor-relevance-framework.png
@@ -25,5 +26,5 @@ img/rigor-relevance-framework.png
 NETWORK:
 *
 
-# rev 1.2
+# rev 1.2b
 # subversion 3
