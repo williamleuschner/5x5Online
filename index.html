@@ -124,21 +124,24 @@
 						<div class="list-block">
 							<ul>
 								<li>
-									<div class="item-content">
-										<div class="item-inner">
-											<div class="item-title label">Name</div>
-											<div class="item-input">
-												<input type="text" name="teacherName" id="teacherName" placeholder="First Last" value="" pattern="[A-z-]+ [A-z-]+"/>
+									<a href="#" class="item-link smart-select" data-searchbar="true" data-searchbar-placeholder="Search Teachers" data-back-onselect="true">
+										<select id="teacherName">
+											
+										</select>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title">Name</div>
+												<div class="item-after"></div>
 											</div>
 										</div>
-									</div>
+									</a>
 								</li>
 								<li>
 									<div class="item-content">
 										<div class="item-inner">
 											<div class="item-title label">Subject</div>
 											<div class="item-input">
-												<input type="text" name="subject" id="subject" class="topcoat-text-input" placeholder="Class Name" value="" />
+												<input type="text" name="subject" id="subject" placeholder="Class Name" value="" />
 											</div>
 										</div>
 									</div>
@@ -148,7 +151,7 @@
 										<div class="item-inner">
 											<div class="item-title label">Time</div>
 											<div class="item-input">
-												<input type="text" name="time" id="time" class="topcoat-text-input" value="" pattern="[0-9]{1,2}/[0-9]{1,2}/20[0-9]{2} [0-9]{1,2}:[0-9]{2}" disabled />
+												<input type="text" name="time" id="time" value="" pattern="[0-9]{1,2}/[0-9]{1,2}/20[0-9]{2} [0-9]{1,2}:[0-9]{2}" disabled />
 											</div>
 										</div>
 									</div>
