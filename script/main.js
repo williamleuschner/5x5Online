@@ -1,6 +1,7 @@
-var five = new Framework7({
+var five = new Framework7();
+/*{
 	swipePanel:'left'
-});
+}*/
 var $$ = Framework7.$;
 var leftView = five.addView('.view-left', {
 	dynamicNavbar: true
