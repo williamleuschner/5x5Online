@@ -1,4 +1,6 @@
-var five = new Framework7();
+var five = new Framework7({
+	swipePanel:'left'
+});
 var $$ = Framework7.$;
 var leftView = five.addView('.view-left', {
 	dynamicNavbar: true
@@ -362,6 +364,48 @@ function load5x5(selectedSave) {
 	five.hideIndicator();
 	localStorage[packagePrefix + '5x5saves'] = otherSaves.toString();
 }
+// Requests teacher list for autocomplete
+function fillAutocompleteSelect() {
+	var uname = localStorage[packagePrefix + 'username'];
+	var token = localStorage[packagePrefix + 'token'];
+	var reqData = {
+		method:"auth",
+		contents:{
+			uname:uname,
+			token:token
+		}
+	};
+	five.showIndicator();
+	micropost("http://s0ph0s.linuxd.org/5x5Online/manage", reqData, function(response) {
+		// Hide the loading indicator
+		five.hideIndicator();
+		// If the login attempt succeeded,
+		if (response['s'] == true) {
+			// Fill in the lists of stuff with the data the server sent.
+			populateList(response['data']);
+		} else {
+			// Otherwise, tell the user they dun goofed.
+			five.alert(response['message'],response['title']);
+		}
+	}, function(src, errorCode) {
+		five.hideIndicator();
+		five.alert("Sending credentials failed. (" + src + " error " + errorCode + ")","Error");
+	});
+}
+// Populates the autocomplete list
+function populateList(data) {
+	var fakeSelect = document.createElement("select");
+	var optionString = '<option value="{0}" class="delete_me_sel">{0}</option>';
+	var options = "";
+	for (var key in data['teachers']) {
+			options += optionString.format(undoNameSplit(key));
+		}
+		$$(".delete_me_sel").remove();
+		$$("#teacherName").append(options);
+}
+function undoNameSplit(toFix) {
+	return toFix.split(", ").reverse().join(" ");
+}
 function connectionStateOn() {
 	++didJustStart;
 	connected = true;
@@ -548,6 +592,7 @@ window.onload = function() {
     }
     five.alert("Sending the startup request failed (" + src + errorString + errorCode + "). Is the server down?","Error");
   });
+  fillAutocompleteSelect();
   /*******************
 	*                  *
 	* RRR Grid Flipper *

@@ -115,6 +115,9 @@ body {
 }
 .button-fix {
 	-webkit-appearance:none;
+	border:none;
+	background-color:##00DD00;
+	color:#FFF;
 }
 .width-fix {
 	padding:0;

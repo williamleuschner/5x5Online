@@ -82,7 +82,7 @@ function populateLists(which, data) {
 	five.destroySearchbar("#mainPage");
 	// List string bits
 	var part1 = '<div class="list-block list-block-search searchbar-found delete_me_{0}"><ul>';
-	var listItemTemplate = '<li class="swipeout {2}-remove-call"><div class="item-content swipeout-content"><div class="item-inner"><div class="item-title">{0}</div><div class="item-after">{1}</div></div></div><div class="swipeout-actions"><div class="swipeout-actions-inner"><a href="#" class="swipeout-delete">Delete</a></div></div></li>';
+	var listItemTemplate = '<li class="swipeout {2}-remove-call"><div class="item-content swipeout-content"><div class="item-inner"><div class="item-title">{0}</div><div class="item-after">{1}</div></div></div><div class="swipeout-actions-right"><a href="#" class="swipeout-delete">Delete</a></div></li>';
 	var part2 = '</ul></div>';
 	var listItems = "";
 	var optionTemplate = '<option value="{0}" class="delete_me_sel">{0}</option>';
