@@ -197,15 +197,18 @@ function submitCheck() {
 }
 function handleData(name, subject, period, time, b, behaviors, quad, adminComments, ponder) {
 	var reqData = {
-		name:name,
-		subject:subject,
-		period:period,
-		time:time,
-		quad:quad,
-		adminComments:adminComments,
-		ponder:ponder,
-		b:b,
-		behaviors:behaviors,
+		method:"send",
+		contents:{
+			name:name,
+			subject:subject,
+			period:period,
+			time:time,
+			quad:quad,
+			adminComments:adminComments,
+			ponder:ponder,
+			b:b,
+			behaviors:behaviors
+		}
 		uname:localStorage[packagePrefix + 'username'],
 		token:localStorage[packagePrefix + 'token']
 	};
