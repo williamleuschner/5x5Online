@@ -208,7 +208,7 @@ function handleData(name, subject, period, time, b, behaviors, quad, adminCommen
 			ponder:ponder,
 			b:b,
 			behaviors:behaviors
-		}
+		},
 		uname:localStorage[packagePrefix + 'username'],
 		token:localStorage[packagePrefix + 'token']
 	};
