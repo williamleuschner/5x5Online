@@ -322,6 +322,9 @@ function load5x5(selectedSave) {
 	document.getElementById("studentEngagement").value = toLoad['behaviors']['studentEngagement'];
 	document.getElementById("teacherBehavior").value = toLoad['behaviors']['teacherBehavior'];
 	document.getElementById("essentialQuestion").value = toLoad['behaviors']['essentialQuestion'];
+	fixSmartSelect("#selectEngagement");
+	fixSmartSelect("#selectTeacher");
+	fixSmartSelect("#selectEQ");
 	//section 1
 	document.getElementById("procedureManagement").checked = toLoad['b']['procedureManagement'];
 	document.getElementById("teacherMobile").checked = toLoad['b']['teacherMobile'];
@@ -401,16 +404,15 @@ function load5x5(selectedSave) {
 // }
 // Populates the autocomplete list
 function populateList(data) {
-	five.destroySearchbar('.searchbar');
 	var fakeSelect = document.createElement("select");
 	var optionString = '<option value="{0}" class="delete_me_sel">{0}</option>';
 	var options = "";
 	for (var key in data) {
 			options += optionString.format(undoNameSplit(key));
-		}
-		$$(".delete_me_sel").remove();
-		$$("#teacherName").append(options);
-		five.initSearchbar('.search');
+	}
+	$$(".delete_me_sel").remove();
+	$$("#teacherName").append(options);
+	fixSmartSelect('#ssFix');
 }
 function undoNameSplit(toFix) {
 	return toFix.split(", ").reverse().join(" ");
@@ -470,6 +472,11 @@ function popupError(text) {
 	if (text == undefined) text = "undefined";
 	$$(".error").text(text);
 	setTimeout(function(){$$(".error").text("")}, 5000);
+}
+function fixSmartSelect(smartSelect) {
+	var selectElement = $$(smartSelect).children("#teacherName");
+	var selectName = $$("#ssFix").children('.item-content').children('.item-inner').children('.item-after');
+	selectName.text(selectElement.val());
 }
 function connectionStateOn() {
 	++didJustStart;
