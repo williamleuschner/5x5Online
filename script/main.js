@@ -34,7 +34,7 @@ function setTimeField() {
 		timestring = timestring + "0" + d.getMinutes();
 	} else {
 		timestring = timestring + d.getMinutes();
-	};
+	}
 	//Get the date field
 	var timeField = document.getElementById("time");
 	//Set the value of the date field to timestring
@@ -48,7 +48,7 @@ function getPeriod() {
 	//Get a time for midnight this morning
 	var midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
 	//Get the difference between those two times
-	var diff = now - midnight
+	var diff = now - midnight;
 	//Figure out what period that is
 	if (diff < 27600000) { //before pd 1
 		return -1;
@@ -123,12 +123,12 @@ function submitCheck() {
 	var subject = document.getElementById("subject").value;
 	var time = document.getElementById("time").value;
 	//dropdowns
-	var behaviors = new Object();
+	var behaviors = {};
 	behaviors["studentEngagement"] = document.getElementById("studentEngagement").value;
 	behaviors["teacherBehavior"] = document.getElementById("teacherBehavior").value;
 	behaviors["essentialQuestion"] = document.getElementById("essentialQuestion").value;
 	//section 1
-	var b = new Object();
+	var b = {};
 	b["procedureManagement"] = document.getElementById("procedureManagement").checked;
 	b["teacherMobile"] = document.getElementById("teacherMobile").checked;
 	b["appropriateTone"] = document.getElementById("appropriateTone").checked;
@@ -163,11 +163,11 @@ function submitCheck() {
 	var period = getPeriod();
 	//did the user enter a name?
 	if (name == "") {
-		five.alert('You must enter a teacher name.', 'Error')
+		five.alert('You must enter a teacher name.', 'Error');
 		return;
 	}
 	if (subject == "") {
-		five.alert('You must enter a subject.', 'Error')
+		five.alert('You must enter a subject.', 'Error');
 		return;
 	}
 	if (rrQuadrant == '0'){
