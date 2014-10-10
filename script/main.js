@@ -395,7 +395,7 @@ function fillAutocompleteSelect() {
 }
 // Populates the autocomplete list
 function populateList(data) {
-	five.destroySearchbar('#formPage');
+	five.destroySearchbar('.searchbar');
 	var fakeSelect = document.createElement("select");
 	var optionString = '<option value="{0}" class="delete_me_sel">{0}</option>';
 	var options = "";
@@ -404,7 +404,7 @@ function populateList(data) {
 		}
 		$$(".delete_me_sel").remove();
 		$$("#teacherName").append(options);
-		five.initSearchbar('#formPage');
+		five.initSearchbar('.searchbar');
 }
 function undoNameSplit(toFix) {
 	return toFix.split(", ").reverse().join(" ");
