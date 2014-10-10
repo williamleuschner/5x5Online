@@ -474,8 +474,8 @@ function popupError(text) {
 	setTimeout(function(){$$(".error").text("")}, 5000);
 }
 function fixSmartSelect(smartSelect) {
-	var selectElement = $$(smartSelect).children("#teacherName");
-	var selectName = $$("#ssFix").children('.item-content').children('.item-inner').children('.item-after');
+	var selectElement = $$(smartSelect).children("select");
+	var selectName = $$(smartSelect).children('.item-content').children('.item-inner').children('.item-after');
 	selectName.text(selectElement.val());
 }
 function connectionStateOn() {
