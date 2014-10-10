@@ -13,7 +13,7 @@ $$('.panel-left').on('open', function() {
 	five.sizeNavbars($$('.view-left'));
 });
 five.params["modalTitle"] = '5x5 Online';
-ajaxURL = "http://s0ph0s.linuxd.org/5x5Online/ajax";
+ajaxURL = "http://s0ph0s.linuxd.org/5x5Online.dev/ajax";
 packagePrefix = "com.5x5Online."
 var connected = false;
 var modalCallbackFinished = false;
