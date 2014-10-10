@@ -366,33 +366,36 @@ function load5x5(selectedSave) {
 	localStorage[packagePrefix + '5x5saves'] = otherSaves.toString();
 }
 // Requests teacher list for autocomplete
-function fillAutocompleteSelect() {
-	var uname = localStorage[packagePrefix + 'username'];
-	var token = localStorage[packagePrefix + 'token'];
-	var reqData = {
-		method:"auth",
-		contents:{
-			uname:uname,
-			token:token
-		}
-	};
-	five.showIndicator();
-	micropost("http://s0ph0s.linuxd.org/5x5Online/manage", reqData, function(response) {
-		// Hide the loading indicator
-		five.hideIndicator();
-		// If the login attempt succeeded,
-		if (response['s'] == true) {
-			// Fill in the lists of stuff with the data the server sent.
-			populateList(response['data']);
-		} else {
-			// Otherwise, tell the user they dun goofed.
-			five.alert(response['message'],response['title']);
-		}
-	}, function(src, errorCode) {
-		five.hideIndicator();
-		five.alert("Sending credentials failed. (" + src + " error " + errorCode + ")","Error");
-	});
-}
+// function fillAutocompleteSelect() {
+// 	var uname = localStorage[packagePrefix + 'username'];
+// 	var token = localStorage[packagePrefix + 'token'];
+// 	if (uname == undefined || token == undefined || uname == null || token == null) {
+//
+// 	}
+// 	var reqData = {
+// 		method:"auth",
+// 		contents:{
+// 			uname:uname,
+// 			token:token
+// 		}
+// 	};
+// 	five.showIndicator();
+// 	micropost("http://s0ph0s.linuxd.org/5x5Online/manage", reqData, function(response) {
+// 		// Hide the loading indicator
+// 		five.hideIndicator();
+// 		// If the login attempt succeeded,
+// 		if (response['s'] == true) {
+// 			// Fill in the lists of stuff with the data the server sent.
+// 			populateList(response['data']);
+// 		} else {
+// 			// Otherwise, tell the user they dun goofed.
+// 			five.alert(response['message'],response['title']);
+// 		}
+// 	}, function(src, errorCode) {
+// 		five.hideIndicator();
+// 		five.alert("Sending credentials failed. (" + src + " error " + errorCode + ")","Error");
+// 	});
+// }
 // Populates the autocomplete list
 function populateList(data) {
 	five.destroySearchbar('.searchbar');
@@ -408,6 +411,62 @@ function populateList(data) {
 }
 function undoNameSplit(toFix) {
 	return toFix.split(", ").reverse().join(" ");
+}
+function authenticate(isForm) {
+	// Initialize variables for username and token
+	var uname = "";
+	var token = "";
+	// Assign them differently based on whether the function call came from another function or the form
+	if (isForm) {
+		// get the values from the form first
+		uname = $$("#username").val();
+		token = $$("#token").val();
+		// then write them to the local storage
+		localStorage[packagePrefix + "uname"] = uname
+		localStorage[packagePrefix + "token"] = token
+	} else {
+		// read the values from local storage
+		uname = localStorage[packagePrefix + "uname"];
+		token = localStorage[packagePrefix + "token"];
+	}
+	// Make an object to hold the startup request data
+	var reqData = {
+		method:"startup",
+		uname:uname,
+		token:token
+	};
+	// Show a loading indicator
+	five.showIndicator();
+	// Send the request
+	micropost(ajaxURL, reqData, function(response) {
+		// Hide the loading indicator
+		five.hideIndicator();
+		// If the login attempt succeeded,
+		if (response['s'] == true) {
+			// Close the login modal, if open.
+			five.closeModal(".auth_popup");
+			// Fill in the lists of stuff with the data the server sent.
+			populateList(response['data']['teachers']);
+			//
+			if (parseInt(response['data']['msgId']) > parseInt(localStorage[packagePrefix + '5x5msg'])) {
+				five.alert(response['data']['message'],response['data']['title']);
+				localStorage[packagePrefix + '5x5msg'] = parseInt(response['data']['msgId']);
+			}
+		} else {
+			// Otherwise, tell the user they dun goofed.
+			popupError(response['message']);
+			five.popup(".auth_popup");
+		}
+	}, function(src, errorCode) {
+		five.hideIndicator();
+		popupError("Sending credentials failed. (" + src + " error " + errorCode + ")");
+		five.popup(".auth_popup");
+	});
+}
+function popupError(text) {
+	if (text == undefined) text = "undefined";
+	$$(".error").text(text);
+	setTimeout(function(){$$(".error").text("")}, 5000);
 }
 function connectionStateOn() {
 	++didJustStart;
@@ -563,6 +622,20 @@ window.onload = function() {
     console.log("Setting local storage for last message to 0.");
     localStorage[packagePrefix + '5x5msg'] = 0;
   }
+	//Create local storage for uname and token
+	if (localStorage[packagePrefix + "uname"] == undefined) {
+		localStorage[packagePrefix + "uname"] = "";
+	}
+	if (localStorage[packagePrefix + "token"] == undefined) {
+		localStorage[packagePrefix + "token"] = "";
+	}
+	// Log the user in
+	if (localStorage[packagePrefix + 'uname'] != "" && localStorage[packagePrefix + 'token'] != "") {
+		console.log("User identity fields not blank. Attempting login...");
+		authenticate(false);
+	} else {
+		five.popup(".auth_popup");
+	}
 	//Binding click event to RR framework quads
 	rrQuads = document.getElementsByClassName("rrQuad");
 	for (var anchor in rrQuads) {
@@ -577,25 +650,6 @@ window.onload = function() {
 		console.log("Local storage array of saves was empty. Inserting dummy value...");
 		localStorage[packagePrefix + '5x5saves'] = "dummy";
 	}
-  req_data = {sendStartup:true};
-  micropost("http://s0ph0s.linuxd.org/5x5Online/startup", req_data, function(response){
-    if (response['s']) {
-      if (parseInt(response['msgId']) > parseInt(localStorage[packagePrefix + '5x5msg'])) {
-        five.alert(response['message'],response['title']);
-        localStorage[packagePrefix + '5x5msg'] = parseInt(response['msgId']);
-      }
-    } else {
-      five.alert(response['message'],response['title']);
-    }
-  }, function(src, errorCode){
-    if (errorCode == "") {
-      errorString = " error";
-    } else {
-      errorString = " error ";
-    }
-    five.alert("Sending the startup request failed (" + src + errorString + errorCode + "). Is the server down?","Error");
-  });
-  fillAutocompleteSelect();
   /*******************
 	*                  *
 	* RRR Grid Flipper *

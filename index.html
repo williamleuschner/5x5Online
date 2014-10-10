@@ -674,6 +674,53 @@
 			</div>
 		</div>
 	</div>
+	<div class="popup auth_popup">
+		<div class="view navbar-fixed">
+			<div class="page">
+				<div class="navbar">
+					<div class="navbar-inner">
+						<div class="center">Log In</div>
+					</div>
+				</div>
+				<div class="page-content">
+					<div class="content-block width-fix">
+						<div class="list-block">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">Username</div>
+											<div class="item-input">
+												<input type="text" name="username" id="username" value="" />
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">Token</div>
+											<div class="item-input">
+												<input type="text" name="token" id="token" value="" />
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="error"></div>
+						<div class="content-block">
+							<div class="row">
+								<div class="col-100">
+									<input type="button" value="Go" onclick="authenticate(true)" class="center button button-big button-submit button-fix"></input>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script src="script/framework7.min.js"></script>
 	<script src="script/micropost.min.js"></script>
 	<script src="script/main.js"></script>
