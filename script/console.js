@@ -22,7 +22,7 @@ five.params["modalTitle"] = '5x5 Online';
 five.params["modalPopupCloseByOutside"] = false;
 //Declare global variables
 var packagePrefix = "com.5x5manage.";
-var ajaxURL = 'http://s0ph0s.linuxd.org/5x5Online/manage'
+var ajaxURL = 'http://s0ph0s.linuxd.org/5x5Online/manage';
 function authenticate(isForm) {
 	// Initialize variables for username and token
 	var uname = "";
@@ -33,8 +33,8 @@ function authenticate(isForm) {
 		uname = $$("#username").val();
 		token = $$("#token").val();
 		// then write them to the local storage
-		localStorage[packagePrefix + "uname"] = uname
-		localStorage[packagePrefix + "token"] = token
+		localStorage[packagePrefix + "uname"] = uname;
+		localStorage[packagePrefix + "token"] = token;
 	} else {
 		// read the values from local storage
 		uname = localStorage[packagePrefix + "uname"];
@@ -82,7 +82,7 @@ function populateLists(which, data) {
 	five.destroySearchbar("#mainPage");
 	// List string bits
 	var part1 = '<div class="list-block list-block-search searchbar-found delete_me_{0}"><ul>';
-	var listItemTemplate = '<li class="swipeout {2}-remove-call"><div class="item-content swipeout-content"><div class="item-inner"><div class="item-title">{0}</div><div class="item-after">{1}</div></div></div><div class="swipeout-actions"><div class="swipeout-actions-inner"><a href="#" class="swipeout-delete">Delete</a></div></div></li>';
+	var listItemTemplate = '<li class="swipeout {2}-remove-call"><div class="item-content swipeout-content"><div class="item-inner"><div class="item-title">{0}</div><div class="item-after">{1}</div></div></div><div class="swipeout-actions-right"><a href="#" class="swipeout-delete">Delete</a></div></li>';
 	var part2 = '</ul></div>';
 	var listItems = "";
 	var optionTemplate = '<option value="{0}" class="delete_me_sel">{0}</option>';
@@ -150,7 +150,7 @@ function removeAdministrator(e) {
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response) {
 		five.hideIndicator();
-		if (response['s'] == true) {	
+		if (response['s'] == true) {
 			populateLists("admins", response['data']);
 			bindItems();
 		} else {
@@ -177,7 +177,7 @@ function removeTeacher(e) {
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response) {
 		five.hideIndicator();
-		if (response['s'] == true) {	
+		if (response['s'] == true) {
 			populateLists("teachers", response['data']);
 			bindItems();
 		} else {
@@ -204,7 +204,7 @@ function removeSchool() {
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response) {
 		five.hideIndicator();
-		if (response['s'] == true) {	
+		if (response['s'] == true) {
 			populateLists("schools", response['data']);
 			bindItems();
 		} else {
@@ -254,7 +254,7 @@ function addAdministrator() {
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response) {
 		five.hideIndicator();
-		if (response['s'] == true) {	
+		if (response['s'] == true) {
 			populateLists("admins", response['data']);
 			bindItems();
 			five.closeModal(".new_admin_popup");
@@ -327,7 +327,7 @@ function addSchool() {
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response) {
 		five.hideIndicator();
-		if (response['s'] == true) {	
+		if (response['s'] == true) {
 			populateLists("schools", response['data']);
 			bindItems();
 			five.closeModal(".new_school_popup");

@@ -1,4 +1,7 @@
 var five = new Framework7();
+/*{
+	swipePanel:'left'
+}*/
 var $$ = Framework7.$;
 var leftView = five.addView('.view-left', {
 	dynamicNavbar: true
@@ -10,7 +13,7 @@ $$('.panel-left').on('open', function() {
 	five.sizeNavbars($$('.view-left'));
 });
 five.params["modalTitle"] = '5x5 Online';
-ajaxURL = "http://s0ph0s.linuxd.org/5x5Online/ajax";
+ajaxURL = "http://s0ph0s.linuxd.org/5x5Online.dev/ajax";
 packagePrefix = "com.5x5Online."
 var connected = false;
 var modalCallbackFinished = false;
@@ -31,7 +34,7 @@ function setTimeField() {
 		timestring = timestring + "0" + d.getMinutes();
 	} else {
 		timestring = timestring + d.getMinutes();
-	};
+	}
 	//Get the date field
 	var timeField = document.getElementById("time");
 	//Set the value of the date field to timestring
@@ -45,7 +48,7 @@ function getPeriod() {
 	//Get a time for midnight this morning
 	var midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
 	//Get the difference between those two times
-	var diff = now - midnight
+	var diff = now - midnight;
 	//Figure out what period that is
 	if (diff < 27600000) { //before pd 1
 		return -1;
@@ -120,12 +123,12 @@ function submitCheck() {
 	var subject = document.getElementById("subject").value;
 	var time = document.getElementById("time").value;
 	//dropdowns
-	var behaviors = new Object();
+	var behaviors = {};
 	behaviors["studentEngagement"] = document.getElementById("studentEngagement").value;
 	behaviors["teacherBehavior"] = document.getElementById("teacherBehavior").value;
 	behaviors["essentialQuestion"] = document.getElementById("essentialQuestion").value;
 	//section 1
-	var b = new Object();
+	var b = {};
 	b["procedureManagement"] = document.getElementById("procedureManagement").checked;
 	b["teacherMobile"] = document.getElementById("teacherMobile").checked;
 	b["appropriateTone"] = document.getElementById("appropriateTone").checked;
@@ -160,11 +163,11 @@ function submitCheck() {
 	var period = getPeriod();
 	//did the user enter a name?
 	if (name == "") {
-		five.alert('You must enter a teacher name.', 'Error')
+		five.alert('You must enter a teacher name.', 'Error');
 		return;
 	}
 	if (subject == "") {
-		five.alert('You must enter a subject.', 'Error')
+		five.alert('You must enter a subject.', 'Error');
 		return;
 	}
 	if (rrQuadrant == '0'){
@@ -194,15 +197,18 @@ function submitCheck() {
 }
 function handleData(name, subject, period, time, b, behaviors, quad, adminComments, ponder) {
 	var reqData = {
-		name:name,
-		subject:subject,
-		period:period,
-		time:time,
-		quad:quad,
-		adminComments:adminComments,
-		ponder:ponder,
-		b:b,
-		behaviors:behaviors,
+		method:"send",
+		contents:{
+			name:name,
+			subject:subject,
+			period:period,
+			time:time,
+			quad:quad,
+			adminComments:adminComments,
+			ponder:ponder,
+			b:b,
+			behaviors:behaviors
+		},
 		uname:localStorage[packagePrefix + 'username'],
 		token:localStorage[packagePrefix + 'token']
 	};
@@ -316,6 +322,9 @@ function load5x5(selectedSave) {
 	document.getElementById("studentEngagement").value = toLoad['behaviors']['studentEngagement'];
 	document.getElementById("teacherBehavior").value = toLoad['behaviors']['teacherBehavior'];
 	document.getElementById("essentialQuestion").value = toLoad['behaviors']['essentialQuestion'];
+	fixSmartSelect("#selectEngagement");
+	fixSmartSelect("#selectTeacher");
+	fixSmartSelect("#selectEQ");
 	//section 1
 	document.getElementById("procedureManagement").checked = toLoad['b']['procedureManagement'];
 	document.getElementById("teacherMobile").checked = toLoad['b']['teacherMobile'];
@@ -361,6 +370,119 @@ function load5x5(selectedSave) {
 	localStorage.removeItem(selectedSave);
 	five.hideIndicator();
 	localStorage[packagePrefix + '5x5saves'] = otherSaves.toString();
+}
+// Requests teacher list for autocomplete
+// function fillAutocompleteSelect() {
+// 	var uname = localStorage[packagePrefix + 'username'];
+// 	var token = localStorage[packagePrefix + 'token'];
+// 	if (uname == undefined || token == undefined || uname == null || token == null) {
+//
+// 	}
+// 	var reqData = {
+// 		method:"auth",
+// 		contents:{
+// 			uname:uname,
+// 			token:token
+// 		}
+// 	};
+// 	five.showIndicator();
+// 	micropost("http://s0ph0s.linuxd.org/5x5Online/manage", reqData, function(response) {
+// 		// Hide the loading indicator
+// 		five.hideIndicator();
+// 		// If the login attempt succeeded,
+// 		if (response['s'] == true) {
+// 			// Fill in the lists of stuff with the data the server sent.
+// 			populateList(response['data']);
+// 		} else {
+// 			// Otherwise, tell the user they dun goofed.
+// 			five.alert(response['message'],response['title']);
+// 		}
+// 	}, function(src, errorCode) {
+// 		five.hideIndicator();
+// 		five.alert("Sending credentials failed. (" + src + " error " + errorCode + ")","Error");
+// 	});
+// }
+// Populates the autocomplete list
+function populateList(data) {
+	var fakeSelect = document.createElement("select");
+	var optionString = '<option value="{0}" class="delete_me_sel">{0}</option>';
+	var options = "";
+	for (var key in data) {
+			options += optionString.format(undoNameSplit(key));
+	}
+	$$(".delete_me_sel").remove();
+	$$("#teacherName").append(options);
+	fixSmartSelect('#ssFix');
+}
+function undoNameSplit(toFix) {
+	return toFix.split(", ").reverse().join(" ");
+}
+function authenticate(isForm) {
+	// Initialize variables for username and token
+	var uname = "";
+	var token = "";
+	// Assign them differently based on whether the function call came from another function or the form
+	if (isForm) {
+		// get the values from the form first
+		uname = $$("#username").val();
+		token = $$("#token").val();
+		// then write them to the local storage
+		localStorage[packagePrefix + "uname"] = uname
+		localStorage[packagePrefix + "token"] = token
+	} else {
+		// read the values from local storage
+		uname = localStorage[packagePrefix + "uname"];
+		token = localStorage[packagePrefix + "token"];
+	}
+	// Make an object to hold the startup request data
+	var reqData = {
+		method:"startup",
+		uname:uname,
+		token:token
+	};
+	// Show a loading indicator
+	five.showIndicator();
+	// Send the request
+	micropost(ajaxURL, reqData, function(response) {
+		// Hide the loading indicator
+		five.hideIndicator();
+		// If the login attempt succeeded,
+		if (response['s'] == true) {
+			// Close the login modal, if open.
+			five.closeModal(".auth_popup");
+			// Fill in the lists of stuff with the data the server sent.
+			populateList(response['data']['teachers']);
+			//
+			if (parseInt(response['data']['msgId']) > parseInt(localStorage[packagePrefix + '5x5msg'])) {
+				five.alert(response['data']['message'],response['data']['title']);
+				localStorage[packagePrefix + '5x5msg'] = parseInt(response['data']['msgId']);
+			}
+		} else {
+			// Otherwise, tell the user they dun goofed.
+			popupError(response['message']);
+			five.popup(".auth_popup");
+		}
+	}, function(src, errorCode) {
+		five.hideIndicator();
+		popupError("Sending credentials failed. (" + src + " error " + errorCode + ")");
+		five.popup(".auth_popup");
+	});
+}
+function popupError(text) {
+	if (text == undefined) text = "undefined";
+	$$(".error").text(text);
+	setTimeout(function(){$$(".error").text("")}, 5000);
+}
+function fixSmartSelect(smartSelect) {
+	var selectElement = $$(smartSelect).children("select");
+	var selectText = $$(smartSelect).children('.item-content').children('.item-inner').children('.item-after');
+	var selectElementSelectedOption = selectElement.children('option[value=\"'+selectElement.val()+'\"]').text();
+	selectText.text(selectElementSelectedOption);
+}
+function logOut() {
+	localStorage[packagePrefix + 'uname'] = "";
+	localStorage[packagePrefix + 'token'] = "";
+	authenticate(true);
 }
 function connectionStateOn() {
 	++didJustStart;
@@ -484,6 +606,8 @@ window.addEventListener('load', function(e) {
 	}, false);
 }, false);
 window.onload = function() {
+	$$('.view').addClass('theme-' + localStorage[packagePrefix + 'theme']);
+	$$('.view').addClass(localStorage[packagePrefix + 'layout']);
 	//Set the time field when the page loads.
 	setTimeField();
 	//Connection checking
@@ -516,6 +640,20 @@ window.onload = function() {
     console.log("Setting local storage for last message to 0.");
     localStorage[packagePrefix + '5x5msg'] = 0;
   }
+	//Create local storage for uname and token
+	if (localStorage[packagePrefix + "uname"] == undefined) {
+		localStorage[packagePrefix + "uname"] = "";
+	}
+	if (localStorage[packagePrefix + "token"] == undefined) {
+		localStorage[packagePrefix + "token"] = "";
+	}
+	// Log the user in
+	if (localStorage[packagePrefix + 'uname'] != "" && localStorage[packagePrefix + 'token'] != "") {
+		console.log("User identity fields not blank. Attempting login...");
+		authenticate(false);
+	} else {
+		five.popup(".auth_popup");
+	}
 	//Binding click event to RR framework quads
 	rrQuads = document.getElementsByClassName("rrQuad");
 	for (var anchor in rrQuads) {
@@ -530,24 +668,6 @@ window.onload = function() {
 		console.log("Local storage array of saves was empty. Inserting dummy value...");
 		localStorage[packagePrefix + '5x5saves'] = "dummy";
 	}
-  req_data = {sendStartup:true};
-  micropost("http://s0ph0s.linuxd.org/5x5Online/startup", req_data, function(response){
-    if (response['s']) {
-      if (parseInt(response['msgId']) > parseInt(localStorage[packagePrefix + '5x5msg'])) {
-        five.alert(response['message'],response['title']);
-        localStorage[packagePrefix + '5x5msg'] = parseInt(response['msgId']);
-      }
-    } else {
-      five.alert(response['message'],response['title']);
-    }
-  }, function(src, errorCode){
-    if (errorCode == "") {
-      errorString = " error";
-    } else {
-      errorString = " error ";
-    }
-    five.alert("Sending the startup request failed (" + src + errorString + errorCode + "). Is the server down?","Error");
-  });
   /*******************
 	*                  *
 	* RRR Grid Flipper *
@@ -589,6 +709,18 @@ window.onload = function() {
     }
 }
 $$(document).on('pageInit', '.page[data-page="settings"]', function (e) {
-	$$("#username").val(localStorage[packagePrefix + 'username']);
-	$$("#token").val(localStorage[packagePrefix + 'token']);
-})
+	$$('input[name="color-radio"]').on('change', function () {
+		if (this.checked) {
+			$$('.view').removeClass('theme-pink theme-blue theme-red theme-black theme-gray theme-orange theme-yellow theme-lightblue theme-green');
+			$$('.view').addClass('theme-' + $$(this).val());
+			localStorage[packagePrefix + 'theme'] = $$(this).val();
+		}
+	});
+	$$('input[name="layout-radio"]').on('change', function () {
+		if (this.checked) {
+			$$('.view').removeClass('layout-dark layout-white');
+			$$('.view').addClass(this.value);
+			localStorage[packagePrefix + 'layout'] = this.value;
+		}
+	});
+});
