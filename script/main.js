@@ -405,7 +405,7 @@ function populateList(data) {
 	var fakeSelect = document.createElement("select");
 	var optionString = '<option value="{0}" class="delete_me_sel">{0}</option>';
 	var options = "";
-	for (var key in data['teachers']) {
+	for (var key in data) {
 			options += optionString.format(undoNameSplit(key));
 		}
 		$$(".delete_me_sel").remove();
