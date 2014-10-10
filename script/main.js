@@ -482,7 +482,7 @@ function fixSmartSelect(smartSelect) {
 function logOut() {
 	localStorage[packagePrefix + 'uname'] = "";
 	localStorage[packagePrefix + 'token'] = "";
-	authenticate(false);
+	authenticate(true);
 }
 function connectionStateOn() {
 	++didJustStart;
