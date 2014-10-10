@@ -479,6 +479,11 @@ function fixSmartSelect(smartSelect) {
 	var selectElementSelectedOption = selectElement.children('option[value=\"'+selectElement.val()+'\"]').text();
 	selectText.text(selectElementSelectedOption);
 }
+function logOut() {
+	localStorage[packagePrefix + 'uname'] = "";
+	localStorage[packagePrefix + 'token'] = "";
+	authenticate(false);
+}
 function connectionStateOn() {
 	++didJustStart;
 	connected = true;
@@ -701,7 +706,3 @@ window.onload = function() {
         return false;
     }
 }
-$$(document).on('pageInit', '.page[data-page="settings"]', function (e) {
-	$$("#username").val(localStorage[packagePrefix + 'username']);
-	$$("#token").val(localStorage[packagePrefix + 'token']);
-})
