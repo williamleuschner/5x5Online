@@ -708,17 +708,19 @@ window.onload = function() {
         return false;
     }
 }
-$$('input[name="color-radio"]').on('change', function () {
-  if (this.checked) {
-    $$('.view').removeClass('theme-pink theme-blue theme-red theme-black theme-gray theme-orange theme-yellow theme-lightblue theme-green');
-    $$('.view').addClass('theme-' + $$(this).val());
-		localStorage[packagePrefix + 'theme'] = $$(this).val();
-  }
-});
-$$('input[name="color-radio"]').on('change', function () {
-	if (this.checked) {
-	  $$('.view').removeClass('layout-dark layout-white');
-	  $$('.view').addClass(this.value);
-		localStorage[packagePrefix + 'layout'] = this.value;
-	}
+$$(document).on('pageInit', '.page[data-page="settings"]', function (e) {
+	$$('input[name="color-radio"]').on('change', function () {
+		if (this.checked) {
+			$$('.view').removeClass('theme-pink theme-blue theme-red theme-black theme-gray theme-orange theme-yellow theme-lightblue theme-green');
+			$$('.view').addClass('theme-' + $$(this).val());
+			localStorage[packagePrefix + 'theme'] = $$(this).val();
+		}
+	});
+	$$('input[name="color-radio"]').on('change', function () {
+		if (this.checked) {
+			$$('.view').removeClass('layout-dark layout-white');
+			$$('.view').addClass(this.value);
+			localStorage[packagePrefix + 'layout'] = this.value;
+		}
+	});
 });
