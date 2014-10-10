@@ -404,7 +404,7 @@ function populateList(data) {
 		}
 		$$(".delete_me_sel").remove();
 		$$("#teacherName").append(options);
-		five.initSearchbar('.searchbar');
+		five.initSearchbar('.search');
 }
 function undoNameSplit(toFix) {
 	return toFix.split(", ").reverse().join(" ");
