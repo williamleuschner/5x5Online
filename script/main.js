@@ -475,8 +475,9 @@ function popupError(text) {
 }
 function fixSmartSelect(smartSelect) {
 	var selectElement = $$(smartSelect).children("select");
-	var selectName = $$(smartSelect).children('.item-content').children('.item-inner').children('.item-after');
-	selectName.text(selectElement.val());
+	var selectText = $$(smartSelect).children('.item-content').children('.item-inner').children('.item-after');
+	var selectElementSelectedOption = selectElement.children('option[value='+selectedElement.val()+']').text();
+	selectName.text(selectElementSelectedOption);
 }
 function connectionStateOn() {
 	++didJustStart;
