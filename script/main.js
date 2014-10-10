@@ -476,7 +476,7 @@ function popupError(text) {
 function fixSmartSelect(smartSelect) {
 	var selectElement = $$(smartSelect).children("select");
 	var selectText = $$(smartSelect).children('.item-content').children('.item-inner').children('.item-after');
-	var selectElementSelectedOption = selectElement.children('option[value='+selectedElement.val()+']').text();
+	var selectElementSelectedOption = selectElement.children('option[value='+selectElement.val()+']').text();
 	selectName.text(selectElementSelectedOption);
 }
 function connectionStateOn() {
