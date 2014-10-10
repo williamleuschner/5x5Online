@@ -716,7 +716,7 @@ $$(document).on('pageInit', '.page[data-page="settings"]', function (e) {
 			localStorage[packagePrefix + 'theme'] = $$(this).val();
 		}
 	});
-	$$('input[name="color-radio"]').on('change', function () {
+	$$('input[name="layout-radio"]').on('change', function () {
 		if (this.checked) {
 			$$('.view').removeClass('layout-dark layout-white');
 			$$('.view').addClass(this.value);
