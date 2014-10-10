@@ -395,6 +395,7 @@ function fillAutocompleteSelect() {
 }
 // Populates the autocomplete list
 function populateList(data) {
+	five.destroySearchbar('#formPage');
 	var fakeSelect = document.createElement("select");
 	var optionString = '<option value="{0}" class="delete_me_sel">{0}</option>';
 	var options = "";
