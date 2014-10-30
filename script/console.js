@@ -221,6 +221,7 @@ function addAdministrator() {
 	var newAFname = $$("#addAFname").val();
 	var newALname = $$("#addALname").val();
 	var newASchool = $$("#newASchool").val();
+	var newEmail = $$("#addEmail").val();
 	// Validate form data
 	if (newAFname == "") {
 		five.alert("You must enter a first name.");
@@ -297,7 +298,7 @@ function addTeacher() {
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response) {
 		five.hideIndicator();
-		if (response['s'] == true) {	
+		if (response['s'] == true) {
 			populateLists("teachers", response['data']);
 			bindItems();
 			five.closeModal(".new_teacher_popup");
