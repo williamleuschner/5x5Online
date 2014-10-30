@@ -70,7 +70,8 @@ a.tab-link.active i.icon-school {
   position: relative;
   margin-bottom: -44px;
 }
-/* Because we have panels-overlay inside of .views we need to fix its open position for right panel */
+/* Because we have panels-overlay inside of .views we need to fix its open
+position for right panel */
 body.with-panel-right-reveal .panel-overlay {
   margin-left: 0;
 }
