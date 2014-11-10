@@ -209,7 +209,7 @@ function handleData(name, subject, period, time, b, behaviors, quad, adminCommen
 			b:b,
 			behaviors:behaviors
 		},
-		uname:localStorage[packagePrefix + 'username'],
+		uname:localStorage[packagePrefix + 'uname'],
 		token:localStorage[packagePrefix + 'token']
 	};
 	five.showIndicator();
