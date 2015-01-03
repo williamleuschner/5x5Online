@@ -209,7 +209,7 @@ function handleData(name, subject, period, time, b, behaviors, quad, adminCommen
 			b:b,
 			behaviors:behaviors
 		},
-		uname:localStorage[packagePrefix + 'username'],
+		uname:localStorage[packagePrefix + 'uname'],
 		token:localStorage[packagePrefix + 'token']
 	};
 	five.showIndicator();
@@ -373,7 +373,7 @@ function load5x5(selectedSave) {
 }
 // Requests teacher list for autocomplete
 // function fillAutocompleteSelect() {
-// 	var uname = localStorage[packagePrefix + 'username'];
+// 	var uname = localStorage[packagePrefix + 'uname'];
 // 	var token = localStorage[packagePrefix + 'token'];
 // 	if (uname == undefined || token == undefined || uname == null || token == null) {
 //
@@ -539,7 +539,7 @@ function supports_html5_storage() {
 function saveSettings() {
 	var username = $$("#username").val();
 	var token = $$("#token").val();
-	localStorage[packagePrefix + 'username'] = username;
+	localStorage[packagePrefix + 'uname'] = username;
 	localStorage[packagePrefix + 'token'] = token;
 	mainView.goBack();
 }
