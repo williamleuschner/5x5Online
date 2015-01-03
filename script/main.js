@@ -459,6 +459,7 @@ function authenticate(isForm) {
 			}
 		} else {
 			// Otherwise, tell the user they dun goofed.
+      five.hideIndicator();
 			popupError(response['message']);
 			five.popup(".auth_popup");
 		}
