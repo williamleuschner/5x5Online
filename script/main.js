@@ -404,11 +404,11 @@ function load5x5(selectedSave) {
 // }
 // Populates the autocomplete list
 function populateList(data) {
-	var fakeSelect = document.createElement("select");
 	var optionString = '<option value="{0}" class="delete_me_sel">{0}</option>';
 	var options = "";
-	for (var key in data) {
-			options += optionString.format(undoNameSplit(key));
+  console.log(data)
+	for (var i = 0; i < data.length; i++) {
+			options += optionString.format(data[i][2] + ", " + data[i][1]);
 	}
 	$$(".delete_me_sel").remove();
 	$$("#teacherName").append(options);
@@ -459,6 +459,7 @@ function authenticate(isForm) {
 			}
 		} else {
 			// Otherwise, tell the user they dun goofed.
+      five.hideIndicator();
 			popupError(response['message']);
 			five.popup(".auth_popup");
 		}

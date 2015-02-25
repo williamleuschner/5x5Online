@@ -94,8 +94,8 @@ function populateLists(which, data) {
 			populateLists("teachers", data["teachers"]);
 			break;
 		case "admins":
-			for (var key in data) {
-				listItems += listItemTemplate.format(key, safe_tags(data[key]['token']), "admin");
+			for (var i = 0; i < data.length; i++) {
+				listItems += listItemTemplate.format(data[i][2], safe_tags(data[i][5]), "admin");
 			}
 			listContent = part1.format("a") + listItems + part2;
 			listItems = "";
@@ -103,8 +103,8 @@ function populateLists(which, data) {
 			$$("#insert_list_here_a").append(listContent);
 			break;
 		case "teachers":
-			for (var key in data) {
-				listItems += listItemTemplate.format(key, data[key]['email'], "teacher");
+			for (var i = 0; i < data.length; i++) {
+				listItems += listItemTemplate.format(data[i][2] + ", " + data[i][1], data[i][3], "teacher");
 			}
 			listContent = part1.format("t") + listItems + part2;
 			listItems = "";
@@ -112,9 +112,9 @@ function populateLists(which, data) {
 			$$("#insert_list_here_t").append(listContent);
 			break;
 		case "schools":
-			for (var key in data) {
-				listItems += listItemTemplate.format(key, data[key]['token'], "school");
-				optionList += optionTemplate.format(key);
+			for (var i = 0; i < data.length; i++) {
+				listItems += listItemTemplate.format(data[i][1], "", "school");
+				optionList += optionTemplate.format(data[i][1]);
 			}
 			listContent = part1.format("s") + listItems + part2;
 			listItems = "";
