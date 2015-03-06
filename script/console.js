@@ -75,7 +75,7 @@ function authenticate(isForm) {
 function popupError(text) {
 	if (text === undefined) text = "undefined";
 	$$(".error").text(text);
-	setTimeout(function(){$$(".error").text("")}, 5000);
+	setTimeout(function(){$$(".error").text("");}, 5000);
 }
 // Populates the lists of administrators and teachers
 function populateLists(which, data) {

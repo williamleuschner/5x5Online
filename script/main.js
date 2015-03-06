@@ -26,10 +26,10 @@ function setTimeField() {
 	//Make a date
 	var d = new Date();
 	//Make a string with the current time and date
-	var timestring = (d.getMonth()+1) + "/"
-		+ d.getDate() + "/"
-		+ d.getFullYear() + " "
-		+ d.getHours() + ":";
+	var timestring = (d.getMonth()+1) + "/" +
+		d.getDate() + "/" +
+		d.getFullYear() + " " +
+		d.getHours() + ":";
 	if (d.getMinutes() < 10) {
 		timestring = timestring + "0" + d.getMinutes();
 	} else {
@@ -223,13 +223,13 @@ function handleData(name, subject, period, time, b, behaviors, quad, adminCommen
 		five.alert(response.message, response.title);
 	}, function(src, errorCode){
 		five.hideIndicator();
-		if (errorCode == "") {
+		if (errorCode === "") {
 			errorString = " error";
 		} else {
-			errorString = " error "
+			errorString = " error ";
 		}
 		five.alert("Sending the 5x5 failed (" + src + errorString + errorCode + ").", "Error");
-	})
+	});
 }
 function save5x5() {
 	five.showIndicator();
@@ -279,7 +279,7 @@ function save5x5() {
 	otherSaves = localStorage[packagePrefix + "5x5saves"].split(",");
 	if (otherSaves.indexOf(name) != -1) {
 		five.hideIndicator();
-		five.alert("A 5x5 with this name is already saved.", "Save Error")
+		five.alert("A 5x5 with this name is already saved.", "Save Error");
 		return;
 	}
 	localStorage[packagePrefix + name] = JSON.stringify({'name':name, 'subject':subject, 'period':period, 'time':time, 'behaviors':behaviors, 'b':b, 'quad':rrQuadrant, 'adminComments':adminComments, 'ponder':ponder});
@@ -471,7 +471,7 @@ function authenticate(isForm) {
 function popupError(text) {
 	if (text === undefined) text = "undefined";
 	$$(".error").text(text);
-	setTimeout(function(){$$(".error").text("")}, 5000);
+	setTimeout(function(){$$(".error").text("");}, 5000);
 }
 function fixSmartSelect(smartSelect) {
 	var selectElement = $$(smartSelect).children("select");
