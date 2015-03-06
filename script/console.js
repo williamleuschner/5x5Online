@@ -18,8 +18,8 @@ var sentView = five.addView('.view-sent', {
 	dynamicNavbar: true
 });
 */
-five.params["modalTitle"] = '5x5 Online';
-five.params["modalPopupCloseByOutside"] = false;
+five.params.modalTitle = '5x5 Online';
+five.params.modalPopupCloseByOutside = false;
 //Declare global variables
 var packagePrefix = "com.5x5manage.";
 var ajaxURL = 'http://s0ph0s.linuxd.org/5x5Online/manage';
@@ -55,15 +55,15 @@ function authenticate(isForm) {
 		// Hide the loading indicator
 		five.hideIndicator();
 		// If the login attempt succeeded,
-		if (response['s'] == true) {
+		if (response.s === true) {
 			// Close the login modal, if open.
 			five.closeModal(".auth_popup");
 			// Fill in the lists of stuff with the data the server sent.
-			populateLists("all", response['data']);
+			populateLists("all", response.data);
 			bindItems();
 		} else {
 			// Otherwise, tell the user they dun goofed.
-			popupError(response['message']);
+			popupError(response.message);
 			five.popup(".auth_popup");
 		}
 	}, function(src, errorCode) {
@@ -73,7 +73,7 @@ function authenticate(isForm) {
 	});
 }
 function popupError(text) {
-	if (text == undefined) text = "undefined";
+	if (text === undefined) text = "undefined";
 	$$(".error").text(text);
 	setTimeout(function(){$$(".error").text("")}, 5000);
 }
@@ -89,9 +89,9 @@ function populateLists(which, data) {
 	var optionList = "";
 	switch (which) {
 		case "all":
-			populateLists("schools", data["schools"]);
-			populateLists("admins", data["admins"]);
-			populateLists("teachers", data["teachers"]);
+			populateLists("schools", data.schools);
+			populateLists("admins", data.admins);
+			populateLists("teachers", data.teachers);
 			break;
 		case "admins":
 			for (var i = 0; i < data.length; i++) {
@@ -150,11 +150,11 @@ function removeAdministrator(e) {
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response) {
 		five.hideIndicator();
-		if (response['s'] == true) {
+		if (response.s === true) {
 			populateLists("admins", response['data']);
 			bindItems();
 		} else {
-			five.alert(response['message'],response['title']);
+			five.alert(response.message,response.title);
 		}
 	}, function(src,errorCode) {
 		five.hideIndicator();
@@ -177,11 +177,11 @@ function removeTeacher(e) {
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response) {
 		five.hideIndicator();
-		if (response['s'] == true) {
-			populateLists("teachers", response['data']);
+		if (response.s === true) {
+			populateLists("teachers", response.data);
 			bindItems();
 		} else {
-			five.alert(response['message'],response['title']);
+			five.alert(response.message,response.title);
 		}
 	}, function(src,errorCode) {
 		five.hideIndicator();
@@ -204,11 +204,11 @@ function removeSchool() {
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response) {
 		five.hideIndicator();
-		if (response['s'] == true) {
-			populateLists("schools", response['data']);
+		if (response.s === true) {
+			populateLists("schools", response.data);
 			bindItems();
 		} else {
-			five.alert(response['message'],response['title']);
+			five.alert(response.message,response.title);
 		}
 	}, function(src,errorCode) {
 		five.hideIndicator();
@@ -223,19 +223,19 @@ function addAdministrator() {
 	var newASchool = $$("#newASchool").val();
 	var newEmail = $$("#addEmail").val();
 	// Validate form data
-	if (newAFname == "") {
+	if (newAFname === "") {
 		five.alert("You must enter a first name.");
 		return;
 	}
-	if (newALname == "") {
+	if (newALname === "") {
 		five.alert("You must enter a last name.");
 		return;
 	}
-	if (newEmail == "") {
+	if (newEmail === "") {
 		five.alert("You must enter an email address.")
 		return;
 	}
-	if (newASchool == "") {
+	if (newASchool === "") {
 		five.alert("You must select a school.");
 		return;
 	}
@@ -255,12 +255,12 @@ function addAdministrator() {
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response) {
 		five.hideIndicator();
-		if (response['s'] == true) {
+		if (response.s === true) {
 			populateLists("admins", response['data']);
 			bindItems();
 			five.closeModal(".new_admin_popup");
 		} else {
-			five.alert(response['message'],response['title']);
+			five.alert(response.message,response.title);
 		}
 	}, function(src,errorCode) {
 		five.hideIndicator();
@@ -275,11 +275,11 @@ function addTeacher() {
 	var email = $$("#email").val();
 	var school = $$("#newTSchool").val();
 	// Validate form data
-	if (fname == "" || lname == "" || email == "") {
+	if (fname === "" || lname === "" || email === "") {
 		five.alert("None of the fields can be blank.","Error");
 		return;
 	}
-	if (school == "") {
+	if (school === "") {
 		five.alert("You must select a school.");
 	}
 	// Make request object
@@ -298,12 +298,12 @@ function addTeacher() {
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response) {
 		five.hideIndicator();
-		if (response['s'] == true) {
-			populateLists("teachers", response['data']);
+		if (response.s === true) {
+			populateLists("teachers", response.data);
 			bindItems();
 			five.closeModal(".new_teacher_popup");
 		} else {
-			five.alert(response['message'],response['title']);
+			five.alert(response.message,response.title);
 		}
 	}, function(src,errorCode) {
 		five.hideIndicator();
@@ -313,7 +313,7 @@ function addTeacher() {
 // Adds a school
 function addSchool() {
 	var abbr = $$("#abbr").val();
-	if (abbr == "") {
+	if (abbr === "") {
 		five.alert("You must enter a school name.");
 		return;
 	}
@@ -328,12 +328,12 @@ function addSchool() {
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response) {
 		five.hideIndicator();
-		if (response['s'] == true) {
-			populateLists("schools", response['data']);
+		if (response.s === true) {
+			populateLists("schools", response.data);
 			bindItems();
 			five.closeModal(".new_school_popup");
 		} else {
-			five.alert(response['message'],response['title']);
+			five.alert(response.message,response.title);
 		}
 	}, function(src,errorCode) {
 		five.hideIndicator();
@@ -353,7 +353,7 @@ function startupCheck() {
 		return;
 	}
 	// If there are values saved in local storage, try to authenticate with them before prompting the user
-	if (localStorage[packagePrefix + 'uname'] != "" && localStorage[packagePrefix + 'token'] != "") {
+	if (localStorage[packagePrefix + 'uname'] !== "" && localStorage[packagePrefix + 'token'] !== "") {
 		authenticate(false);
 	} else {
 		five.popup(".auth_popup");
@@ -366,11 +366,11 @@ function safe_tags(str) {
 // Asst. maintenece on page load
 window.onload = function() {
 	// Assign empty strings to local storage for username and token if they don't exist yet.
-	if (localStorage[packagePrefix + "uname"] == undefined) {
+	if (localStorage[packagePrefix + "uname"] === undefined) {
 		localStorage[packagePrefix + "uname"] = "";
 	}
-	if (localStorage[packagePrefix + "token"] == undefined) {
+	if (localStorage[packagePrefix + "token"] === undefined) {
 		localStorage[packagePrefix + "token"] = "";
 	}
 	startupCheck();
-}
+};
