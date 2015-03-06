@@ -34,13 +34,13 @@
         if (implicit) {
           throw new ValueError(message.format('implicit', 'explicit'));
         }
-        value = (_ref = lookup(args, key)) != null ? _ref : '';
+        value = (_ref = lookup(args, key)) !== null ? _ref : '';
       } else {
         implicit = true;
         if (explicit) {
           throw new ValueError(message.format('explicit', 'implicit'));
         }
-        value = (_ref1 = args[idx++]) != null ? _ref1 : '';
+        value = (_ref1 = args[idx++]) !== null ? _ref1 : '';
       }
       if (fn = format.transformers[transformer]) {
         return fn(value);
