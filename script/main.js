@@ -12,9 +12,9 @@ var mainView = five.addView('.view-main', {
 $$('.panel-left').on('open', function() {
 	five.sizeNavbars($$('.view-left'));
 });
-five.params["modalTitle"] = '5x5 Online';
+five.params.modalTitle = '5x5 Online';
 ajaxURL = "http://s0ph0s.linuxd.org/5x5Online.dev/ajax";
-packagePrefix = "com.5x5Online."
+packagePrefix = "com.5x5Online.";
 var connected = false;
 var modalCallbackFinished = false;
 var userDidSkipYesNo = false;
@@ -124,49 +124,49 @@ function submitCheck() {
 	var time = document.getElementById("time").value;
 	//dropdowns
 	var behaviors = {};
-	behaviors["studentEngagement"] = document.getElementById("studentEngagement").value;
-	behaviors["teacherBehavior"] = document.getElementById("teacherBehavior").value;
-	behaviors["essentialQuestion"] = document.getElementById("essentialQuestion").value;
+	behaviors.studentEngagement = document.getElementById("studentEngagement").value;
+	behaviors.teacherBehavior = document.getElementById("teacherBehavior").value;
+	behaviors.essentialQuestion = document.getElementById("essentialQuestion").value;
 	//section 1
 	var b = {};
-	b["procedureManagement"] = document.getElementById("procedureManagement").checked;
-	b["teacherMobile"] = document.getElementById("teacherMobile").checked;
-	b["appropriateTone"] = document.getElementById("appropriateTone").checked;
-	b["usedPraise"] = document.getElementById("usedPraise").checked;
-	b["usedMotivation"] = document.getElementById("usedMotivation").checked;
-	b["conseqPosted"] = document.getElementById("conseqPosted").checked;
-	b["positiveRapport"] = document.getElementById("positiveRapport").checked;
+	b.procedureManagement = document.getElementById("procedureManagement").checked;
+	b.teacherMobile = document.getElementById("teacherMobile").checked;
+	b.appropriateTone = document.getElementById("appropriateTone").checked;
+	b.usedPraise = document.getElementById("usedPraise").checked;
+	b.usedMotivation = document.getElementById("usedMotivation").checked;
+	b.conseqPosted = document.getElementById("conseqPosted").checked;
+	b.positiveRapport = document.getElementById("positiveRapport").checked;
 	//section 2
-	b["diffInstruction"] = document.getElementById("diffInstruction").checked;
-	b["activeStudentPart"] = document.getElementById("activeStudentPart").checked;
-	b["collabLearnStrat"] = document.getElementById("collabLearnStrat").checked;
-	b["activationStrat"] = document.getElementById("activationStrat").checked;
-	b["summStrat"] = document.getElementById("summStrat").checked;
-	b["criticalThinking"] = document.getElementById("criticalThinking").checked;
-	b["feedback"] = document.getElementById("feedback").checked;
-	b["assessment"] = document.getElementById("assessment").checked;
+	b.diffInstruction = document.getElementById("diffInstruction").checked;
+	b.activeStudentPart = document.getElementById("activeStudentPart").checked;
+	b.collabLearnStrat = document.getElementById("collabLearnStrat").checked;
+	b.activationStrat = document.getElementById("activationStrat").checked;
+	b.summStrat = document.getElementById("summStrat").checked;
+	b.criticalThinking = document.getElementById("criticalThinking").checked;
+	b.feedback = document.getElementById("feedback").checked;
+	b.assessment = document.getElementById("assessment").checked;
 	//section 3
-	b["creating"] = document.getElementById("creating").checked;
-	b["evaluating"] = document.getElementById("evaluating").checked;
-	b["analyzing"] = document.getElementById("analyzing").checked;
-	b["applying"] = document.getElementById("applying").checked;
-	b["understanding"] = document.getElementById("understanding").checked;
-	b["remembering"] = document.getElementById("remembering").checked;
+	b.creating = document.getElementById("creating").checked;
+	b.evaluating = document.getElementById("evaluating").checked;
+	b.analyzing = document.getElementById("analyzing").checked;
+	b.applying = document.getElementById("applying").checked;
+	b.understanding = document.getElementById("understanding").checked;
+	b.remembering = document.getElementById("remembering").checked;
 	//section 4
-	b["essays"] = document.getElementById("essays").checked;
-	b["oeQuestions"] = document.getElementById("oeQuestions").checked;
-	b["lessonDrivenPrompts"] = document.getElementById("lessonDrivenPrompts").checked;
+	b.essays = document.getElementById("essays").checked;
+	b.oeQuestions = document.getElementById("oeQuestions").checked;
+	b.lessonDrivenPrompts = document.getElementById("lessonDrivenPrompts").checked;
 	//long fields
 	var adminComments = document.getElementById("adminComments").value;
 	var ponder = document.getElementById("ponder").value;
 	//Things that require calculation
 	var period = getPeriod();
 	//did the user enter a name?
-	if (name == "") {
+	if (name === "") {
 		five.alert('You must enter a teacher name.', 'Error');
 		return;
 	}
-	if (subject == "") {
+	if (subject === "") {
 		five.alert('You must enter a subject.', 'Error');
 		return;
 	}
@@ -175,7 +175,7 @@ function submitCheck() {
 		return;
 	}
 	//Did the user check any of the checkboxes?
-	if ( !(b["procedureManagement"] || b["teacherMobile"] || b["appropriateTone"] || b["usedPraise"] || b["usedMotivation"] || b["conseqPosted"] || b["positiveRapport"] || b["diffInstruction"] || b["activeStudentPart"] || b["collabLearnStrat"] || b["activationStrat"] || b["summStrat"] || b["criticalThinking"] || b["creating"] || b["evaluating"] || b["analyzing"] || b["applying"] || b["understanding"] || b["remembering"] || b["essays"] || b["oeQuestions"] || b["lessonDrivenPrompts"]) ) {
+	if ( !(b.procedureManagement || b.teacherMobile || b.appropriateTone || b.usedPraise || b.usedMotivation || b.conseqPosted || b.positiveRapport || b.diffInstruction || b.activeStudentPart || b.collabLearnStrat || b.activationStrat || b.summStrat || b.criticalThinking || b.creating || b.evaluating || b.analyzing || b.applying || b.understanding || b.remembering || b.essays || b.oeQuestions || b.lessonDrivenPrompts) ) {
 		five.modal({
 			title:"Are You Sure?",
 			text:"You have not selected any checkboxes. Are you sure you want to sumbit?",
@@ -193,7 +193,7 @@ function submitCheck() {
 		});
 		return;
 	}
-	handleData(name, subject, period, time, b, behaviors, rrQuadrant, adminComments, ponder)
+	handleData(name, subject, period, time, b, behaviors, rrQuadrant, adminComments, ponder);
 }
 function handleData(name, subject, period, time, b, behaviors, quad, adminComments, ponder) {
 	var reqData = {
@@ -214,13 +214,13 @@ function handleData(name, subject, period, time, b, behaviors, quad, adminCommen
 	};
 	five.showIndicator();
 	micropost(ajaxURL, reqData, function(response){
-		five.hideIndicator()
-		if (response['s']) {
-			clearForm()
+		five.hideIndicator();
+		if (response.s) {
+			clearForm();
 		} else {
 			console.log("AJAX Error.");
 		}
-		five.alert(response['message'], response['title']);
+		five.alert(response.message, response.title);
 	}, function(src, errorCode){
 		five.hideIndicator();
 		if (errorCode == "") {
@@ -239,38 +239,38 @@ function save5x5() {
 	var time = document.getElementById("time").value;
 	//dropdowns
 	var behaviors = new Object();
-	behaviors["studentEngagement"] = document.getElementById("studentEngagement").value;
-	behaviors["teacherBehavior"] = document.getElementById("teacherBehavior").value;
-	behaviors["essentialQuestion"] = document.getElementById("essentialQuestion").value;
+	behaviors.studentEngagement = document.getElementById("studentEngagement").value;
+	behaviors.teacherBehavior = document.getElementById("teacherBehavior").value;
+	behaviors.essentialQuestion = document.getElementById("essentialQuestion").value;
 	//section 1
 	var b = new Object();
-	b["procedureManagement"] = document.getElementById("procedureManagement").checked;
-	b["teacherMobile"] = document.getElementById("teacherMobile").checked;
-	b["appropriateTone"] = document.getElementById("appropriateTone").checked;
-	b["usedPraise"] = document.getElementById("usedPraise").checked;
-	b["usedMotivation"] = document.getElementById("usedMotivation").checked;
-	b["conseqPosted"] = document.getElementById("conseqPosted").checked;
-	b["positiveRapport"] = document.getElementById("positiveRapport").checked;
+	b.procedureManagement = document.getElementById("procedureManagement").checked;
+	b.teacherMobile = document.getElementById("teacherMobile").checked;
+	b.appropriateTone = document.getElementById("appropriateTone").checked;
+	b.usedPraise = document.getElementById("usedPraise").checked;
+	b.usedMotivation = document.getElementById("usedMotivation").checked;
+	b.conseqPosted = document.getElementById("conseqPosted").checked;
+	b.positiveRapport = document.getElementById("positiveRapport").checked;
 	//section 2
-	b["diffInstruction"] = document.getElementById("diffInstruction").checked;
-	b["activeStudentPart"] = document.getElementById("activeStudentPart").checked;
-	b["collabLearnStrat"] = document.getElementById("collabLearnStrat").checked;
-	b["activationStrat"] = document.getElementById("activationStrat").checked;
-	b["summStrat"] = document.getElementById("summStrat").checked;
-	b["criticalThinking"] = document.getElementById("criticalThinking").checked;
-	b["feedback"] = document.getElementById("feedback").checked;
-	b["assessment"] = document.getElementById("assessment").checked;
+	b.diffInstruction = document.getElementById("diffInstruction").checked;
+	b.activeStudentPart = document.getElementById("activeStudentPart").checked;
+	b.collabLearnStrat = document.getElementById("collabLearnStrat").checked;
+	b.activationStrat = document.getElementById("activationStrat").checked;
+	b.summStrat = document.getElementById("summStrat").checked;
+	b.criticalThinking = document.getElementById("criticalThinking").checked;
+	b.feedback = document.getElementById("feedback").checked;
+	b.assessment = document.getElementById("assessment").checked;
 	//section 3
-	b["creating"] = document.getElementById("creating").checked;
-	b["evaluating"] = document.getElementById("evaluating").checked;
-	b["analyzing"] = document.getElementById("analyzing").checked;
-	b["applying"] = document.getElementById("applying").checked;
-	b["understanding"] = document.getElementById("understanding").checked;
-	b["remembering"] = document.getElementById("remembering").checked;
+	b.creating = document.getElementById("creating").checked;
+	b.evaluating = document.getElementById("evaluating").checked;
+	b.analyzing = document.getElementById("analyzing").checked;
+	b.applying = document.getElementById("applying").checked;
+	b.understanding = document.getElementById("understanding").checked;
+	b.remembering = document.getElementById("remembering").checked;
 	//section 4
-	b["essays"] = document.getElementById("essays").checked;
-	b["oeQuestions"] = document.getElementById("oeQuestions").checked;
-	b["lessonDrivenPrompts"] = document.getElementById("lessonDrivenPrompts").checked;
+	b.essays = document.getElementById("essays").checked;
+	b.oeQuestions = document.getElementById("oeQuestions").checked;
+	b.lessonDrivenPrompts = document.getElementById("lessonDrivenPrompts").checked;
 	//long fields
 	var adminComments = document.getElementById("adminComments").value;
 	var ponder = document.getElementById("ponder").value;
@@ -315,46 +315,46 @@ function load5x5(selectedSave) {
 	otherSaves = localStorage[packagePrefix + "5x5saves"].split(",");
 	toLoad = JSON.parse(localStorage[packagePrefix + selectedSave]);
 
-	document.getElementById("teacherName").value = toLoad['name'];
-	document.getElementById("subject").value = toLoad['subject'];
-	document.getElementById("time").value = toLoad['time'];
+	document.getElementById("teacherName").value = toLoad.name;
+	document.getElementById("subject").value = toLoad.subject;
+	document.getElementById("time").value = toLoad.time;
 	//dropdowns
-	document.getElementById("studentEngagement").value = toLoad['behaviors']['studentEngagement'];
-	document.getElementById("teacherBehavior").value = toLoad['behaviors']['teacherBehavior'];
-	document.getElementById("essentialQuestion").value = toLoad['behaviors']['essentialQuestion'];
+	document.getElementById("studentEngagement").value = toLoad.behaviors.studentEngagement;
+	document.getElementById("teacherBehavior").value = toLoad.behaviors.teacherBehavior;
+	document.getElementById("essentialQuestion").value = toLoad.behaviors.essentialQuestion;
 	fixSmartSelect("#selectEngagement");
 	fixSmartSelect("#selectTeacher");
 	fixSmartSelect("#selectEQ");
 	//section 1
-	document.getElementById("procedureManagement").checked = toLoad['b']['procedureManagement'];
-	document.getElementById("teacherMobile").checked = toLoad['b']['teacherMobile'];
-	document.getElementById("appropriateTone").checked = toLoad['b']['appropriateTone'];
-	document.getElementById("usedPraise").checked = toLoad['b']['usedPraise'];
-	document.getElementById("usedMotivation").checked = toLoad['b']['usedMotivation'];
-	document.getElementById("conseqPosted").checked = toLoad['b']['conseqPosted'];
-	document.getElementById("positiveRapport").checked = toLoad['b']['positiveRapport'];
+	document.getElementById("procedureManagement").checked = toLoad.b.procedureManagement;
+	document.getElementById("teacherMobile").checked = toLoad.b.teacherMobile;
+	document.getElementById("appropriateTone").checked = toLoad.b.appropriateTone;
+	document.getElementById("usedPraise").checked = toLoad.b.usedPraise;
+	document.getElementById("usedMotivation").checked = toLoad.b.usedMotivation;
+	document.getElementById("conseqPosted").checked = toLoad.b.conseqPosted;
+	document.getElementById("positiveRapport").checked = toLoad.b.positiveRapport;
 	//section 2
-	document.getElementById("diffInstruction").checked = toLoad['b']['diffInstruction'];
-	document.getElementById("activeStudentPart").checked = toLoad['b']['activeStudentPart'];
-	document.getElementById("collabLearnStrat").checked = toLoad['b']['collabLearnStrat'];
-	document.getElementById("activationStrat").checked = toLoad['b']['activationStrat'];
-	document.getElementById("summStrat").checked = toLoad['b']['summStrat'];
-	document.getElementById("criticalThinking").checked = toLoad['b']['criticalThinking'];
-	document.getElementById("feedback").checked = toLoad['b']['feedback'];
-	document.getElementById("assessment").checked = toLoad['b']['assessment'];
+	document.getElementById("diffInstruction").checked = toLoad.b.diffInstruction;
+	document.getElementById("activeStudentPart").checked = toLoad.b.activeStudentPart;
+	document.getElementById("collabLearnStrat").checked = toLoad.b.collabLearnStrat;
+	document.getElementById("activationStrat").checked = toLoad.b.activationStrat;
+	document.getElementById("summStrat").checked = toLoad.b.summStrat;
+	document.getElementById("criticalThinking").checked = toLoad.b.criticalThinking;
+	document.getElementById("feedback").checked = toLoad.b.feedback;
+	document.getElementById("assessment").checked = toLoad.b.assessment;
 	//section 3
-	document.getElementById("creating").checked = toLoad['b']['creating'];
-	document.getElementById("evaluating").checked = toLoad['b']['evaluating'];
-	document.getElementById("analyzing").checked = toLoad['b']['analyzing'];
-	document.getElementById("applying").checked = toLoad['b']['applying'];
-	document.getElementById("understanding").checked = toLoad['b']['understanding'];
-	document.getElementById("remembering").checked = toLoad['b']['remembering'];
+	document.getElementById("creating").checked = toLoad.b.creating;
+	document.getElementById("evaluating").checked = toLoad.b.evaluating;
+	document.getElementById("analyzing").checked = toLoad.b.analyzing;
+	document.getElementById("applying").checked = toLoad.b.applying;
+	document.getElementById("understanding").checked = toLoad.b.understanding;
+	document.getElementById("remembering").checked = toLoad.b.remembering;
 	//section 4
-	document.getElementById("essays").checked = toLoad['b']['essays'];
-	document.getElementById("oeQuestions").checked = toLoad['b']['oeQuestions'];
-	document.getElementById("lessonDrivenPrompts").checked = toLoad['b']['lessonDrivenPrompts'];
+	document.getElementById("essays").checked = toLoad.b.essays;
+	document.getElementById("oeQuestions").checked = toLoad.b.oeQuestions;
+	document.getElementById("lessonDrivenPrompts").checked = toLoad.b.lessonDrivenPrompts;
 	//rrFramework
-	rrQuadrant = toLoad['quad'];
+	rrQuadrant = toLoad.quad;
 	for (var i = 0; i < 4; i++) {
 		if (rrQuads[i].getAttribute("value") == rrQuadrant) {
 			rrQuads[i].classList.toggle("selected", true);
@@ -363,8 +363,8 @@ function load5x5(selectedSave) {
 		}
 	}
 	//long fields
-	document.getElementById("adminComments").value = toLoad['adminComments'];
-	document.getElementById("ponder").value = toLoad["ponder"];
+	document.getElementById("adminComments").value = toLoad.adminComments;
+	document.getElementById("ponder").value = toLoad.ponder;
 	console.log(otherSaves.indexOf(selectedSave));
 	otherSaves.splice(otherSaves.indexOf(selectedSave), 1);
 	localStorage.removeItem(selectedSave);
@@ -390,12 +390,12 @@ function load5x5(selectedSave) {
 // 		// Hide the loading indicator
 // 		five.hideIndicator();
 // 		// If the login attempt succeeded,
-// 		if (response['s'] == true) {
+// 		if (response.s == true) {
 // 			// Fill in the lists of stuff with the data the server sent.
-// 			populateList(response['data']);
+// 			populateList(response.data);
 // 		} else {
 // 			// Otherwise, tell the user they dun goofed.
-// 			five.alert(response['message'],response['title']);
+// 			five.alert(response.message,response.title);
 // 		}
 // 	}, function(src, errorCode) {
 // 		five.hideIndicator();
@@ -406,7 +406,7 @@ function load5x5(selectedSave) {
 function populateList(data) {
 	var optionString = '<option value="{0}" class="delete_me_sel">{0}</option>';
 	var options = "";
-  console.log(data)
+  console.log(data);
 	for (var i = 0; i < data.length; i++) {
 			options += optionString.format(data[i][2] + ", " + data[i][1]);
 	}
@@ -427,8 +427,8 @@ function authenticate(isForm) {
 		uname = $$("#username").val();
 		token = $$("#token").val();
 		// then write them to the local storage
-		localStorage[packagePrefix + "uname"] = uname
-		localStorage[packagePrefix + "token"] = token
+		localStorage[packagePrefix + "uname"] = uname;
+		localStorage[packagePrefix + "token"] = token;
 	} else {
 		// read the values from local storage
 		uname = localStorage[packagePrefix + "uname"];
@@ -447,19 +447,19 @@ function authenticate(isForm) {
 		// Hide the loading indicator
 		five.hideIndicator();
 		// If the login attempt succeeded,
-		if (response['s'] == true) {
+		if (response.s === true) {
 			// Close the login modal, if open.
 			five.closeModal(".auth_popup");
 			// Fill in the lists of stuff with the data the server sent.
-			populateList(response['data']['teachers']);
+			populateList(response.data.teachers);
 			//
-			if (parseInt(response['data']['msgId']) > parseInt(localStorage[packagePrefix + '5x5msg'])) {
-				five.alert(response['data']['message'],response['data']['title']);
-				localStorage[packagePrefix + '5x5msg'] = parseInt(response['data']['msgId']);
+			if (parseInt(response.data.msgId) > parseInt(localStorage[packagePrefix + '5x5msg'])) {
+				five.alert(response.data.message,response.data.title);
+				localStorage[packagePrefix + '5x5msg'] = parseInt(response.data.msgId);
 			}
 		} else {
 			// Otherwise, tell the user they dun goofed.
-			popupError(response['message']);
+			popupError(response.message);
 			five.popup(".auth_popup");
 		}
 	}, function(src, errorCode) {
@@ -469,7 +469,7 @@ function authenticate(isForm) {
 	});
 }
 function popupError(text) {
-	if (text == undefined) text = "undefined";
+	if (text === undefined) text = "undefined";
 	$$(".error").text(text);
 	setTimeout(function(){$$(".error").text("")}, 5000);
 }
@@ -492,7 +492,7 @@ function connectionStateOn() {
 	}
 }
 function connectionStateOff() {
-	++didJustStart
+	++didJustStart;
 	connected = false;
 	if (didJustStart > 0) {
 		banner("Internet disconnected.");
@@ -507,7 +507,7 @@ function banner(text) {
     $$('.views').addClass('reduce');
 
     var notification = document.createElement('div');
-    notification.id = "banner"
+    notification.id = "banner";
     notification.innerHTML = text;
     $$('body').prepend(notification);
 
@@ -531,7 +531,7 @@ function banner(text) {
 }
 function supports_html5_storage() {
 	try {
-		return 'localStorage' in window && window['localStorage'] !== null;
+		return 'localStorage' in window && window.localStorage !== null;
 	} catch (e) {
 		return false;
 	}
@@ -632,23 +632,23 @@ window.onload = function() {
 		five.alert("Your browser does not support HTML5 local storage. This web app WILL NOT work.");
 	}
 	//Initializing saves
-	if (localStorage[packagePrefix + '5x5saves'] == undefined) {
+	if (localStorage[packagePrefix + '5x5saves'] === undefined) {
 		localStorage[packagePrefix + '5x5saves'] = [""].toString();
 	}
   //Initializing last message keeper
-  if (localStorage[packagePrefix + '5x5msg'] == undefined) {
+  if (localStorage[packagePrefix + '5x5msg'] === undefined) {
     console.log("Setting local storage for last message to 0.");
     localStorage[packagePrefix + '5x5msg'] = 0;
   }
 	//Create local storage for uname and token
-	if (localStorage[packagePrefix + "uname"] == undefined) {
+	if (localStorage[packagePrefix + "uname"] === undefined) {
 		localStorage[packagePrefix + "uname"] = "";
 	}
-	if (localStorage[packagePrefix + "token"] == undefined) {
+	if (localStorage[packagePrefix + "token"] === undefined) {
 		localStorage[packagePrefix + "token"] = "";
 	}
 	// Log the user in
-	if (localStorage[packagePrefix + 'uname'] != "" && localStorage[packagePrefix + 'token'] != "") {
+	if (localStorage[packagePrefix + 'uname'] !== "" && localStorage[packagePrefix + 'token'] !== "") {
 		console.log("User identity fields not blank. Attempting login...");
 		authenticate(false);
 	} else {
@@ -662,13 +662,13 @@ window.onload = function() {
 	//Notify if update installed
 	if (localStorage[packagePrefix + 'com.5x5Online.updateReady'] == 1) {
 		localStorage[packagePrefix + 'com.5x5Online.updateReady'] = 0;
-		banner("Update installed!")
+		banner("Update installed!");
 	}
-	if (localStorage[packagePrefix + '5x5saves'] == "") {
+	if (localStorage[packagePrefix + '5x5saves'] === "") {
 		console.log("Local storage array of saves was empty. Inserting dummy value...");
 		localStorage[packagePrefix + '5x5saves'] = "dummy";
 	}
-  /*******************
+    /*******************
 	*                  *
 	* RRR Grid Flipper *
 	*                  *
@@ -707,7 +707,7 @@ window.onload = function() {
 
         return false;
     }
-}
+};
 $$(document).on('pageInit', '.page[data-page="settings"]', function (e) {
 	$$('input[name="color-radio"]').on('change', function () {
 		if (this.checked) {
