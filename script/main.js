@@ -276,6 +276,9 @@ function save5x5() {
 	var ponder = document.getElementById("ponder").value;
 	//Calculated values
 	var period = getPeriod();
+	//Swap name back to First Last to keep the save part from breaking
+	nameSplit = name.split(", ");
+	name = nameSplit.reverse().join(" ");
 	otherSaves = localStorage[packagePrefix + "5x5saves"].split(",");
 	if (otherSaves.indexOf(name) != -1) {
 		five.hideIndicator();
